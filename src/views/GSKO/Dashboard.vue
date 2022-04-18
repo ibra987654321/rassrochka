@@ -1,0 +1,117 @@
+<template>
+  <v-card>
+    <v-row>
+      <v-col cols="6">
+        <PieChart
+          :labels="value"
+          :series="amount"
+        />
+      </v-col>
+      <v-col cols="6">
+        <NegativeChart
+          :lables="labels"
+          :data="series"
+        />
+      </v-col>
+    </v-row>
+
+    <v-btn
+      block
+      color="primary"
+      class="mt-6"
+      outlined
+      @click="$router.push({ path: '/GSKO-dashboard/detail' })"
+    >
+      Подробнее
+    </v-btn>
+  </v-card>
+</template>
+
+<script>
+import PieChart from '@/components/useDashboard/PieChart.vue'
+import NegativeChart from '@/components/useDashboard/NegativeChart.vue'
+
+export default {
+  name: 'GSKODashboard',
+  components: {
+    PieChart,
+    NegativeChart,
+  },
+  data: () => ({
+    value: [],
+    amount: [],
+    labels: [],
+    series: [
+      {
+        data: [],
+        name: 'Создано',
+      },
+      {
+        data: [],
+        name: 'Закрыто',
+      },
+      {
+        data: [],
+        name: 'Отменены',
+      },
+    ],
+  }),
+  computed: {
+    done() {
+      return this.date.end
+    },
+    start() {
+      return this.date.start
+    },
+    date() {
+      return this.$store.state
+    },
+  },
+  watch: {
+    done() {
+      this.dateRangeText()
+      this.getCreatedDaily()
+      this.getClosedDaily()
+      this.getCancelledDaily()
+    },
+    start() {
+      this.dateRangeText()
+      this.getCreatedDaily()
+      this.getClosedDaily()
+      this.getCancelledDaily()
+    },
+  },
+  created() {
+    this.dateRangeText()
+  },
+  mounted() {
+    this.getCreatedDaily()
+    this.getClosedDaily()
+    this.getCancelledDaily()
+  },
+  methods: {
+    async dateRangeText() {
+      const AllTT = await this.$store.dispatch('AllCreatedTT')
+      this.value = AllTT.map(i => i.value)
+      this.amount = AllTT.map(i => i.amount)
+    },
+    async getCreatedDaily() {
+      const daily = await this.$store.dispatch('CreatedDaily')
+      this.labels = daily.map(i => i.date)
+      this.series[0].data = daily.map(i => i.amount)
+    },
+    async getClosedDaily() {
+      const daily = await this.$store.dispatch('ClosedDaily')
+      this.series[1].data = daily.map(i => i.amount)
+    },
+    async getCancelledDaily() {
+      const daily = await this.$store.dispatch('CancelledDaily')
+      this.series[2].data = daily.map(i => i.amount)
+    },
+  },
+}
+</script>
+
+<style scoped>
+
+</style>

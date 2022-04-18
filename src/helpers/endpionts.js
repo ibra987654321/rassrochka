@@ -1,0 +1,5 @@
+export const API_V1 = '/demo/api/v1'
+export const TICKETS = '/tickets/'
+export const STATISTICS = '/statistics/'
+export const OWNERS = '/owners/'
+export const TITLES = '/titles/'

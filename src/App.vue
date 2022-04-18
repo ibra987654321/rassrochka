@@ -1,28 +1,56 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <component :is="resolveLayout">
+    <router-view></router-view>
+  </component>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { computed } from '@vue/composition-api'
+import { useRouter } from '@/utils'
+import LayoutBlank from '@/layouts/Blank.vue'
+import LayoutContent from '@/layouts/Content.vue'
+import { getDarkTheme } from '@/helpers/helpers'
+import UpgradeToPro from './components/UpgradeToPro.vue'
 
 export default {
-  name: 'App',
   components: {
-    HelloWorld
-  }
+    LayoutBlank,
+    LayoutContent,
+    UpgradeToPro,
+  },
+  mounted() {
+    const theme = getDarkTheme()
+    if (theme) {
+      if (theme === 'true') {
+        this.$vuetify.theme.dark = true
+      } else {
+        this.$vuetify.theme.dark = false
+      }
+    }
+  },
+  setup() {
+    const { route } = useRouter()
+
+    const resolveLayout = computed(() => {
+      // Handles initial route
+      if (route.value.name === null) return null
+
+      if (route.value.meta.layout === 'blank') return 'layout-blank'
+
+      return 'layout-content'
+    })
+
+    return {
+      resolveLayout,
+    }
+  },
 }
 </script>
-
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.date_range .v-input__slot {
+  margin-bottom: 0;
+}
+.date_range .v-text-field__details {
+  display: none;
 }
 </style>
