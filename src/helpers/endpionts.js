@@ -1,5 +1,11 @@
 export const API_V1 = '/demo/api/v1'
 export const TICKETS = '/tickets/'
-export const STATISTICS = '/statistics/'
+export const STATISTICS = '/statistics'
+export const INCIDENTS = '/incidents/'
+export const STATISTICS_CREATED = '/statistics/created'
+export const STATISTICS_CLOSED = '/statistics/closed'
+export const STATISTICS_CANCELLED = '/statistics/cancelled'
+export const STATISTICS_INCIDENTS_CREATED = '/statistics/incidents/created'
 export const OWNERS = '/owners/'
 export const TITLES = '/titles/'
+

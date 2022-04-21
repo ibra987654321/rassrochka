@@ -1,5 +1,5 @@
 <template>
-  <div id="chart">
+  <div v-if="renderComponent" id="chart">
     <apexchart
       type="area"
       height="500"
@@ -17,10 +17,10 @@ export default {
   components: {
     apexchart: VueApexCharts,
   },
-  props: ['lables', 'data'],
+  props: ['labels', 'data'],
   data() {
     return {
-      listOfData: [],
+      renderComponent: true,
     }
   },
   computed: {
@@ -30,6 +30,7 @@ export default {
     chartOptions() {
       return {
         chart: {
+          width: '100%',
           height: 500,
           type: 'area',
         },
@@ -41,7 +42,7 @@ export default {
         },
         xaxis: {
           type: 'datetime',
-          categories: this.$props.lables,
+          categories: this.$props.labels,
         },
         tooltip: {
           x: {
@@ -51,8 +52,22 @@ export default {
       }
     },
   },
-  created() {
+  watch: {
+    labels() {
+      this.forceRerender()
+    }
   },
+  methods: {
+    forceRerender() {
+      // Remove my-component from the DOM
+      this.renderComponent = false;
+
+      this.$nextTick(() => {
+        // Add the component back in
+        this.renderComponent = true;
+      });
+    }
+  }
 }
 </script>
 

@@ -2,8 +2,6 @@
   <div>
     <vue-apex-charts
       type="pie"
-      :width="680"
-      :height="680"
       :series="series"
       :options="chartOptions"
     ></vue-apex-charts>
@@ -23,7 +21,7 @@ export default {
   },
   data() {
     return {
-      colors: ['#9155fd', '#9c73e8', '#b497ef'],
+      colors: ['#9155fd', '#9c73e8', '#b497ef', '#d0cce5'],
     }
   },
   computed: {

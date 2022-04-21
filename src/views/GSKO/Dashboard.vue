@@ -1,30 +1,80 @@
 <template>
-  <v-card>
-    <v-row>
-      <v-col cols="6">
-        <PieChart
-          :labels="value"
-          :series="amount"
-        />
-      </v-col>
-      <v-col cols="6">
-        <NegativeChart
-          :lables="labels"
-          :data="series"
-        />
-      </v-col>
-    </v-row>
-
-    <v-btn
-      block
-      color="primary"
-      class="mt-6"
-      outlined
-      @click="$router.push({ path: '/GSKO-dashboard/detail' })"
+  <v-row align="center">
+    <v-col
+      class=""
+      cols="12"
     >
-      Подробнее
-    </v-btn>
-  </v-card>
+
+      <v-row>
+        <v-col cols="5">
+          <v-card class="pb-5">
+            <v-card-title>Все ТТ по статусам</v-card-title>
+            <v-card-text>
+              <PieChart
+                :labels="value"
+                :series="amount"
+              />
+              <v-btn
+                block
+                color="primary"
+                class="mt-4"
+                max-width="100px"
+                outlined
+                @click="$router.push({ path: '/GSKO-dashboard/detail' })"
+              >
+                Подробнее
+              </v-btn>
+            </v-card-text>
+          </v-card>
+        </v-col>
+        <v-col cols="7">
+          <v-card>
+            <v-card-title>Все ТТ по дням</v-card-title>
+            <NegativeChart
+              :labels="labels"
+              :data="series"
+            />
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-col>
+    <v-col
+      class=""
+      cols="12"
+    >
+
+      <v-row>
+        <v-col cols="6">
+          <v-card>
+            <v-card-title>Все ТТ по статусам</v-card-title>
+            <PieChart
+              :labels="incidents.value"
+              :series="incidents.amount"
+            />
+          </v-card>
+        </v-col>
+        <v-col cols="6">
+          <v-card>
+            <v-card-title>Массовые инциденты по дням</v-card-title>
+            <NegativeChart
+              :labels="incidents.labels"
+              :data="incidents.series"
+            />
+          </v-card>
+        </v-col>
+      </v-row>
+
+      <v-btn
+        block
+        color="primary"
+        class="mt-6"
+        outlined
+        @click="$router.push({ path: '/GSKO-dashboard/detail' })"
+      >
+        Подробнее
+      </v-btn>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
@@ -55,6 +105,21 @@ export default {
         name: 'Отменены',
       },
     ],
+    incidents: {
+      value: [],
+      amount: [],
+      labels: [],
+      series: [
+        {
+          data: [],
+          name: 'Создано',
+        },
+        {
+          data: [],
+          name: 'Закрыто',
+        },
+      ]
+    }
   }),
   computed: {
     done() {
@@ -73,25 +138,33 @@ export default {
       this.getCreatedDaily()
       this.getClosedDaily()
       this.getCancelledDaily()
+      this.getCreatedIncidents()
+      this.getClosestIncidents()
+      this.getIncidentsByStatus()
     },
     start() {
       this.dateRangeText()
       this.getCreatedDaily()
       this.getClosedDaily()
       this.getCancelledDaily()
+      this.getCreatedIncidents()
+      this.getClosestIncidents()
+      this.getIncidentsByStatus()
     },
   },
-  created() {
-    this.dateRangeText()
-  },
   mounted() {
+    this.dateRangeText()
     this.getCreatedDaily()
     this.getClosedDaily()
     this.getCancelledDaily()
+    this.getCreatedIncidents()
+    this.getClosestIncidents()
+    this.getIncidentsByStatus()
   },
   methods: {
     async dateRangeText() {
       const AllTT = await this.$store.dispatch('AllCreatedTT')
+      console.log(AllTT)
       this.value = AllTT.map(i => i.value)
       this.amount = AllTT.map(i => i.amount)
     },
@@ -107,6 +180,21 @@ export default {
     async getCancelledDaily() {
       const daily = await this.$store.dispatch('CancelledDaily')
       this.series[2].data = daily.map(i => i.amount)
+    },
+    // incidents
+    async getClosestIncidents() {
+      const data = await this.$store.dispatch('GetIncidents', 'closed')
+      this.incidents.series[1].data = data.map(i => i.amount)
+    },
+    async getCreatedIncidents() {
+      const data = await this.$store.dispatch('GetIncidents', 'created')
+      this.incidents.labels = data.map(i => i.date)
+      this.incidents.series[0].data = data.map(i => i.amount)
+    },
+    async getIncidentsByStatus() {
+      const data = await this.$store.dispatch('GetIncidentsByStatus')
+      this.incidents.value = data.map(i => i.value)
+      this.incidents.amount = data.map(i => i.amount)
     },
   },
 }

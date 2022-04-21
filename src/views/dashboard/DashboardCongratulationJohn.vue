@@ -3,10 +3,10 @@
     <v-row class="ma-0 pa-0">
       <v-col cols="8">
         <v-card-title class="text-no-wrap pt-1 ps-2">
-          Congratulations John! 🥳
+          Новая группа ГНО Бишкек стартовала! 🥳
         </v-card-title>
         <v-card-subtitle class="text-no-wrap ps-2">
-          You have won Trophy
+          В состав группы входит 15 человек
         </v-card-subtitle>
         <v-card-text class="d-flex align-center mt-2 pb-2 ps-2">
           <div>
@@ -17,8 +17,9 @@
             <v-btn
               small
               color="primary"
+              class="mt-8"
             >
-              View Sales
+             Посмотреть список участников
             </v-btn>
           </div>
         </v-card-text>

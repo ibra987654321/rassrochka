@@ -9,14 +9,12 @@ import { computed } from '@vue/composition-api'
 import { useRouter } from '@/utils'
 import LayoutBlank from '@/layouts/Blank.vue'
 import LayoutContent from '@/layouts/Content.vue'
-import { getDarkTheme } from '@/helpers/helpers'
-import UpgradeToPro from './components/UpgradeToPro.vue'
+import {getDarkTheme, setDarkTheme} from '@/helpers/helpers'
 
 export default {
   components: {
     LayoutBlank,
     LayoutContent,
-    UpgradeToPro,
   },
   mounted() {
     const theme = getDarkTheme()

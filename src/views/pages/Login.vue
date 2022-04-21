@@ -8,7 +8,7 @@
             class="d-flex align-center"
           >
             <v-img
-              :src="require('@/assets/images/logos/logo.svg')"
+              :src="require('@/assets/images/logos/logo.png')"
               max-height="30px"
               max-width="30px"
               alt="logo"
@@ -63,23 +63,6 @@
               :disabled="loading"
               @click:append="isPasswordVisible = !isPasswordVisible"
             ></v-text-field>
-
-            <div class="d-flex align-center justify-space-between flex-wrap">
-              <v-checkbox
-                label="Remember Me"
-                hide-details
-                class="me-3 mt-1"
-              >
-              </v-checkbox>
-              <!-- forgot link -->
-              <a
-                href="javascript:void(0)"
-                class="mt-1"
-              >
-                Forgot Password?
-              </a>
-            </div>
-
             <v-btn
               block
               color="primary"
@@ -87,7 +70,7 @@
               :loading="loading"
               @click="loader = 'loading'"
             >
-              Login
+              Войти
             </v-btn>
           </v-form>
         </v-card-text>
@@ -116,13 +99,13 @@
       height="289"
       src="@/assets/images/misc/tree-3.png"
     ></v-img>
-    <div class="text-center">
+    <div class="text-center" v-if="$store.state.error">
 
       <v-snackbar
         v-model="snackbar"
         :timeout="timeout"
       >
-        {{ text }}
+        {{ textNotification }}
 
         <template v-slot:action="{ attrs }">
           <v-btn
@@ -131,7 +114,7 @@
             v-bind="attrs"
             @click="snackbar = false"
           >
-            Close
+            Закрыть
           </v-btn>
         </template>
       </v-snackbar>
@@ -143,8 +126,6 @@
 import {
   mdiEyeOutline, mdiEyeOffOutline,
 } from '@mdi/js'
-// eslint-disable-next-line import/no-cycle
-import { useAuth } from '@/use/auth'
 
 export default {
   data: () => ({
@@ -160,7 +141,7 @@ export default {
     },
     snackbar: false,
     text: 'My timeout is set to 2000.',
-    timeout: 2000,
+    timeout: 6000,
   }),
   watch: {
     async loader() {
@@ -172,13 +153,21 @@ export default {
       this.loader = null
     },
   },
+  computed: {
+    textNotification() {
+      this.loading = false
+      return this.text = this.$store.state.error = 401 ? 'Неверный логин или пароль' : 'Серверная ошибка'
+    }
+  },
   methods: {
     submit() {
+      this.snackbar = true
       const formData = {
         email: this.email,
         password: this.password,
       }
-      useAuth(formData).catch(e => console.log(e))
+
+      this.$store.dispatch('login', formData)
     },
   },
 }

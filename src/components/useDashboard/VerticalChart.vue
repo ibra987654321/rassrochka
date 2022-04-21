@@ -3,7 +3,7 @@
     :options="chartOptions"
     :series="series"
     type="bar"
-    height="210"
+    height="200"
   ></vue-apex-charts>
 </template>
 
@@ -28,7 +28,7 @@ export default {
     chartOptions() {
       return {
         chart: {
-          height: 350,
+          height: 320,
           type: 'bar',
         },
         colors: this.$vuetify.theme.currentTheme.primary,

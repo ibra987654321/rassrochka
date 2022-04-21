@@ -81,7 +81,6 @@
                   ></v-textarea>
                 </v-col>
                 <v-col
-                  v-if="editedIndex !== -1"
                   cols="12"
                   sm="12"
                 >
@@ -267,6 +266,13 @@
         </v-card>
       </v-dialog>
     </template>
+    <template v-slot:item.myTask="{ item }">
+      <v-checkbox
+        v-model="item.myTask"
+        class="mt-3"
+        hide-details
+      ></v-checkbox>
+    </template>
     <template v-slot:item.actions="{ item }">
       <v-icon
         small
@@ -360,8 +366,12 @@ export default {
     formTitle() {
       return this.editedIndex === -1 ? 'Добавить' : 'Изменить'
     },
+
   },
   watch: {
+    editedItem() {
+      console.log('edit')
+    },
     dialog(val) {
       // eslint-disable-next-line no-unused-expressions
       val || this.close()
@@ -436,7 +446,6 @@ export default {
         }
         this.$store.dispatch('putTask', editData)
         Object.assign(this.myTasks[this.editedIndex], this.editedItem)
-        console.log(this.editedItem.statusType)
 
         this.close()
       } else {

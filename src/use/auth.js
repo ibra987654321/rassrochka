@@ -21,10 +21,12 @@ export async function useAuth(form) {
     })
       // eslint-disable-next-line no-shadow,consistent-return
       .catch(error => {
-        if (error.response && error.response.status === 401) return '401'
+        if (error.response && error.response.status === 401) {
+          console.log(error.message)
+        }
       })
   } catch (e) {
-    // empty
+    console.log(e.message)
   }
 }
 

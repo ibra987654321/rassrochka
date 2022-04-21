@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-title class="align-start">
-      <span class="font-weight-semibold">Statistics Card</span>
+      <span class="font-weight-semibold">Показатели Контакт-Центра</span>
       <v-spacer></v-spacer>
       <v-btn
         icon
@@ -15,8 +15,8 @@
     </v-card-title>
 
     <v-card-subtitle class="mb-8 mt-n5">
-      <span class="font-weight-semibold text--primary me-1">Total 48.5% Growth</span>
-      <span>😎 this month</span>
+      <span class="font-weight-semibold text--primary me-1">Данные за 18.04.2022</span>
+      <span>😎 апрель</span>
     </v-card-subtitle>
 
     <v-card-text>
@@ -64,28 +64,28 @@ export default {
   setup() {
     const statisticsData = [
       {
-        title: 'Sales',
-        total: '245k',
+        title: 'Поступило в IVR',
+        total: '12 951 (AR% 63.1)',
       },
       {
-        title: 'Customers',
-        total: '12.5k',
+        title: 'Поступило',
+        total: '5241',
       },
       {
-        title: 'Product',
-        total: '1.54k',
+        title: 'Принято',
+        total: '4752',
       },
       {
-        title: 'Revenue',
-        total: '$88k',
+        title: 'LCR',
+        total: '7.2%',
       },
     ]
 
     const resolveStatisticsIconVariation = data => {
-      if (data === 'Sales') return { icon: mdiTrendingUp, color: 'primary' }
-      if (data === 'Customers') return { icon: mdiAccountOutline, color: 'success' }
-      if (data === 'Product') return { icon: mdiLabelOutline, color: 'warning' }
-      if (data === 'Revenue') return { icon: mdiCurrencyUsd, color: 'info' }
+      if (data === 'Поступило в IVR') return { icon: mdiTrendingUp, color: 'primary' }
+      if (data === 'Поступило') return { icon: mdiAccountOutline, color: 'success' }
+      if (data === 'Принято') return { icon: mdiLabelOutline, color: 'warning' }
+      if (data === 'LCR') return { icon: mdiCurrencyUsd, color: 'info' }
 
       return { icon: mdiAccountOutline, color: 'success' }
     }

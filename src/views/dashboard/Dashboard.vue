@@ -16,7 +16,7 @@
     <v-col
       cols="12"
       sm="6"
-      md="8"
+      md="5"
     >
       <dashboard-monthly-t-t></dashboard-monthly-t-t>
     </v-col>
@@ -26,9 +26,16 @@
       md="4"
       sm="6"
     >
-      <dashboard-card-total-earning></dashboard-card-total-earning>
+      <dashboard-incidents-three-month></dashboard-incidents-three-month>
     </v-col>
 
+    <v-col
+      cols="12"
+      md="3"
+      sm="2"
+    >
+      <dashboard-card-total-earning></dashboard-card-total-earning>
+    </v-col>
     <v-col
       cols="12"
       sm="6"
@@ -114,7 +121,6 @@
 </template>
 
 <script>
-// eslint-disable-next-line object-curly-newline
 import { mdiPoll, mdiLabelVariantOutline, mdiCurrencyUsd, mdiHelpCircleOutline } from '@mdi/js'
 import StatisticsCardVertical from '@/components/statistics-card/StatisticsCardVertical.vue'
 
@@ -126,6 +132,7 @@ import DashboardCardTotalEarning from './DashboardCardTotalEarning.vue'
 import DashboardCardDepositAndWithdraw from './DashboardCardDepositAndWithdraw.vue'
 import DashboardCardSalesByCountries from './DashboardCardSalesByCountries.vue'
 import DashboardWeeklyOverview from './DashboardWeeklyOverview.vue'
+import DashboardIncidentsThreeMonth from "@/views/dashboard/DashboardIncidentsThreeMonth";
 
 export default {
   components: {
@@ -137,6 +144,7 @@ export default {
     DashboardCardDepositAndWithdraw,
     DashboardCardSalesByCountries,
     DashboardWeeklyOverview,
+    DashboardIncidentsThreeMonth,
   },
   setup() {
     const totalProfit = {

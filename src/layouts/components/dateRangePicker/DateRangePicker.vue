@@ -2,11 +2,12 @@
   <div class="date_range">
     <v-datetime-picker
       v-model="$store.state.start"
-      label="Start"
+      label="Начало"
       date-format="dd-MM-yyyy"
       time-format="HH:mm:ss"
       :dialog-width="Number(400)"
       :time-picker-props="dateTimeOptions"
+      :text-field-props="textFieldProps"
     >
       <template slot="dateIcon">
         Дата
@@ -34,11 +35,12 @@
     </v-datetime-picker>
     <v-datetime-picker
       v-model="$store.state.end"
-      label="End"
+      label="Конец"
       date-format="dd-MM-yyyy"
       time-format="HH:mm:ss"
       :dialog-width="Number(400)"
       :time-picker-props="dateTimeOptions"
+      :text-field-props="textFieldProps"
     >
       <template slot="dateIcon">
         Дата
@@ -74,6 +76,10 @@ export default {
     dateTimeOptions: {
       format: '24hr',
     },
+    textFieldProps: {
+      outlined: 'outlined',
+      dense: 'dense',
+    }
   }),
   created() {
     // eslint-disable-next-line no-unused-expressions
@@ -87,8 +93,8 @@ div {
   display: flex;
 }
 
-.v-input__slot {
-  margin-bottom: 0 !important;
+.v-toolbar .v-input {
+  width: 400px;
 }
 
 </style>

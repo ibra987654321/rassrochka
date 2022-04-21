@@ -1,11 +1,20 @@
 <template>
   <v-card>
-    <v-card-title>Все Trouble Tickets за 3 месяца</v-card-title>
+    <v-card-title>Все заявки (ТТ) за последние 3 месяца</v-card-title>
     <v-card-text>
       <vertical-chart
         :data="threeMonths.data"
         :value="threeMonths.value"
       ></vertical-chart>
+      <v-btn
+        block
+        color="primary"
+        class="mt-6"
+        outlined
+        @click=""
+      >
+        подробнее
+      </v-btn>
     </v-card-text>
   </v-card>
 </template>

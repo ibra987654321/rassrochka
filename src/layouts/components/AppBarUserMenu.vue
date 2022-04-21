@@ -53,88 +53,88 @@
 
       <v-divider></v-divider>
 
-      <!-- Profile -->
-      <v-list-item link>
-        <v-list-item-icon class="me-2">
-          <v-icon size="22">
-            {{ icons.mdiAccountOutline }}
-          </v-icon>
-        </v-list-item-icon>
-        <v-list-item-content>
-          <v-list-item-title>Profile</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
+<!--      &lt;!&ndash; Profile &ndash;&gt;-->
+<!--      <v-list-item link>-->
+<!--        <v-list-item-icon class="me-2">-->
+<!--          <v-icon size="22">-->
+<!--            {{ icons.mdiAccountOutline }}-->
+<!--          </v-icon>-->
+<!--        </v-list-item-icon>-->
+<!--        <v-list-item-content>-->
+<!--          <v-list-item-title>Profile</v-list-item-title>-->
+<!--        </v-list-item-content>-->
+<!--      </v-list-item>-->
 
-      <!-- Email -->
-      <v-list-item link>
-        <v-list-item-icon class="me-2">
-          <v-icon size="22">
-            {{ icons.mdiEmailOutline }}
-          </v-icon>
-        </v-list-item-icon>
-        <v-list-item-content>
-          <v-list-item-title>Inbox</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
+<!--      &lt;!&ndash; Email &ndash;&gt;-->
+<!--      <v-list-item link>-->
+<!--        <v-list-item-icon class="me-2">-->
+<!--          <v-icon size="22">-->
+<!--            {{ icons.mdiEmailOutline }}-->
+<!--          </v-icon>-->
+<!--        </v-list-item-icon>-->
+<!--        <v-list-item-content>-->
+<!--          <v-list-item-title>Inbox</v-list-item-title>-->
+<!--        </v-list-item-content>-->
+<!--      </v-list-item>-->
 
-      <!-- Chat -->
-      <v-list-item link>
-        <v-list-item-icon class="me-2">
-          <v-icon size="22">
-            {{ icons.mdiChatOutline }}
-          </v-icon>
-        </v-list-item-icon>
-        <v-list-item-content>
-          <v-list-item-title>Chat</v-list-item-title>
-        </v-list-item-content>
+<!--      &lt;!&ndash; Chat &ndash;&gt;-->
+<!--      <v-list-item link>-->
+<!--        <v-list-item-icon class="me-2">-->
+<!--          <v-icon size="22">-->
+<!--            {{ icons.mdiChatOutline }}-->
+<!--          </v-icon>-->
+<!--        </v-list-item-icon>-->
+<!--        <v-list-item-content>-->
+<!--          <v-list-item-title>Chat</v-list-item-title>-->
+<!--        </v-list-item-content>-->
 
-        <v-list-item-action>
-          <v-badge
-            inline
-            color="error"
-            content="2"
-          >
-          </v-badge>
-        </v-list-item-action>
-      </v-list-item>
+<!--        <v-list-item-action>-->
+<!--          <v-badge-->
+<!--            inline-->
+<!--            color="error"-->
+<!--            content="2"-->
+<!--          >-->
+<!--          </v-badge>-->
+<!--        </v-list-item-action>-->
+<!--      </v-list-item>-->
 
-      <v-divider class="my-2"></v-divider>
+<!--      <v-divider class="my-2"></v-divider>-->
 
-      <!-- Settings -->
-      <v-list-item link>
-        <v-list-item-icon class="me-2">
-          <v-icon size="22">
-            {{ icons.mdiCogOutline }}
-          </v-icon>
-        </v-list-item-icon>
-        <v-list-item-content>
-          <v-list-item-title>Settings</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
+<!--      &lt;!&ndash; Settings &ndash;&gt;-->
+<!--      <v-list-item link>-->
+<!--        <v-list-item-icon class="me-2">-->
+<!--          <v-icon size="22">-->
+<!--            {{ icons.mdiCogOutline }}-->
+<!--          </v-icon>-->
+<!--        </v-list-item-icon>-->
+<!--        <v-list-item-content>-->
+<!--          <v-list-item-title>Settings</v-list-item-title>-->
+<!--        </v-list-item-content>-->
+<!--      </v-list-item>-->
 
-      <!-- Pricing -->
-      <v-list-item link>
-        <v-list-item-icon class="me-2">
-          <v-icon size="22">
-            {{ icons.mdiCurrencyUsd }}
-          </v-icon>
-        </v-list-item-icon>
-        <v-list-item-content>
-          <v-list-item-title>Pricing</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
+<!--      &lt;!&ndash; Pricing &ndash;&gt;-->
+<!--      <v-list-item link>-->
+<!--        <v-list-item-icon class="me-2">-->
+<!--          <v-icon size="22">-->
+<!--            {{ icons.mdiCurrencyUsd }}-->
+<!--          </v-icon>-->
+<!--        </v-list-item-icon>-->
+<!--        <v-list-item-content>-->
+<!--          <v-list-item-title>Pricing</v-list-item-title>-->
+<!--        </v-list-item-content>-->
+<!--      </v-list-item>-->
 
-      <!-- FAQ -->
-      <v-list-item link>
-        <v-list-item-icon class="me-2">
-          <v-icon size="22">
-            {{ icons.mdiHelpCircleOutline }}
-          </v-icon>
-        </v-list-item-icon>
-        <v-list-item-content>
-          <v-list-item-title>FAQ</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
+<!--      &lt;!&ndash; FAQ &ndash;&gt;-->
+<!--      <v-list-item link>-->
+<!--        <v-list-item-icon class="me-2">-->
+<!--          <v-icon size="22">-->
+<!--            {{ icons.mdiHelpCircleOutline }}-->
+<!--          </v-icon>-->
+<!--        </v-list-item-icon>-->
+<!--        <v-list-item-content>-->
+<!--          <v-list-item-title>FAQ</v-list-item-title>-->
+<!--        </v-list-item-content>-->
+<!--      </v-list-item>-->
 
       <v-divider class="my-2"></v-divider>
 

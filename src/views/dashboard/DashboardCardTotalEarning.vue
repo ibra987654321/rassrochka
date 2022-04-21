@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-title class="align-start">
-      <span>{{ total.value }} Trouble Tickets</span>
+      <span>Общие показатели за указанный период</span>
       <v-spacer></v-spacer>
 
       <v-btn
@@ -16,68 +16,72 @@
     </v-card-title>
 
     <v-card-text class="my-7">
-      <div class="d-flex align-center">
-        <h1 class="text-4xl font-weight-semibold">
-          {{ total.amount }}
-        </h1>
+      <div class=" mb-9" v-for="count in total" :key="count.id">
+        <div class="d-flex align-center">
+          <h1 class="text-4xl font-weight-semibold">
+            {{ count.amount }}
+          </h1>
 
-        <div class="d-flex align-center mb-n3">
-          <v-icon
-            size="40"
-            color="error"
-          >
-            {{ icons.mdiMenuDown }}
-          </v-icon>
-          <span class="text-base font-weight-medium error--text ms-n2">10%</span>
-        </div>
-      </div>
-
-      <h4 class="mt-2 font-weight-medium">
-        По сравнению с 3514 в прошлом месяце.
-      </h4>
-    </v-card-text>
-
-    <v-card-text>
-      <div
-        v-for="(earning,index) in totalEarning"
-        :key="earning.avatar"
-        :class="`d-flex align-start ${index >0 ? 'mt-8':''}`"
-      >
-        <v-avatar
-          rounded
-          size="38"
-          color="#5e56690a"
-          class="me-4"
-        >
-          <v-img
-            contain
-            :src="earning.avatar"
-            height="20"
-          ></v-img>
-        </v-avatar>
-
-        <div class="d-flex align-center flex-grow-1 flex-wrap">
-          <div>
-            <h4 class="font-weight-medium">
-              {{ earning.title }}
-            </h4>
-            <span class="text-xs text-no-wrap">{{ earning.subtitle }}</span>
-          </div>
-
-          <v-spacer></v-spacer>
-
-          <div class="ms-1">
-            <p class="text--primary font-weight-medium mb-1">
-              {{ earning.earning }}
-            </p>
-            <v-progress-linear
-              :value="earning.progress"
-              :color="earning.color"
-            ></v-progress-linear>
+          <div class="d-flex align-center mb-n3">
+            <v-icon
+              size="40"
+              color="success"
+            >
+              {{ icons.mdiMenuUp }}
+            </v-icon>
+            <span class="text-base font-weight-medium success--text ms-n2">36%</span>
           </div>
         </div>
+
+        <h3 class="mt-2 font-weight-medium">
+          {{ count.value }}
+        </h3>
       </div>
+
     </v-card-text>
+
+<!--    <v-card-text>-->
+<!--      <div-->
+<!--        v-for="(earning,index) in total"-->
+<!--        :key="earning.id"-->
+<!--        :class="`d-flex align-start ${index >0 ? 'mt-8':''}`"-->
+<!--      >-->
+<!--&lt;!&ndash;        <v-avatar&ndash;&gt;-->
+<!--&lt;!&ndash;          rounded&ndash;&gt;-->
+<!--&lt;!&ndash;          size="38"&ndash;&gt;-->
+<!--&lt;!&ndash;          color="#5e56690a"&ndash;&gt;-->
+<!--&lt;!&ndash;          class="me-4"&ndash;&gt;-->
+<!--&lt;!&ndash;        >&ndash;&gt;-->
+<!--&lt;!&ndash;          <v-img&ndash;&gt;-->
+<!--&lt;!&ndash;            contain&ndash;&gt;-->
+<!--&lt;!&ndash;            :src="earning.avatar"&ndash;&gt;-->
+<!--&lt;!&ndash;            height="20"&ndash;&gt;-->
+<!--&lt;!&ndash;          ></v-img>&ndash;&gt;-->
+<!--&lt;!&ndash;        </v-avatar>&ndash;&gt;-->
+
+<!--        <div class="d-flex align-center flex-grow-1 flex-wrap">-->
+<!--          <div>-->
+<!--            <h2 class="font-weight-medium">-->
+<!--              {{ earning.value }}-->
+<!--            </h2>-->
+<!--            <h3 class="text-xs text-no-wrap">{{ earning.amount }}</h3>-->
+<!--          </div>-->
+
+<!--          <v-spacer></v-spacer>-->
+
+<!--          <div class="ms-1">-->
+<!--            <p class="text&#45;&#45;primary font-weight-medium mb-1">-->
+<!--              {{ earning.amount }}-->
+<!--            </p>-->
+<!--            <v-progress-linear-->
+<!--              :value="earning.amount"-->
+<!--              color="primary"-->
+<!--            ></v-progress-linear>-->
+<!--          </div>-->
+<!--          <hr>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </v-card-text>-->
   </v-card>
 </template>
 
@@ -113,33 +117,32 @@ export default {
   methods: {
     async getAllTT() {
       const all = await this.$store.dispatch('GetAllTickets')
-      // eslint-disable-next-line prefer-destructuring
-      this.total = all[0]
+      this.total = all
     },
   },
   setup() {
     const totalEarning = [
       {
         avatar: require('@/assets/images/logos/zipcar.png'),
-        title: 'Zipcar',
-        subtitle: 'Vuejs, React & HTML',
-        earning: '$24,895.65',
+        title: 'INC000000790864',
+        subtitle: 'Глоб кейс 1976610',
+        earning: '14.04.2022 12:10',
         progress: '85',
         color: 'primary',
       },
       {
         avatar: require('@/assets/images/logos/bitbank.png'),
-        title: 'Bitbank',
-        subtitle: 'Sketch, Figma & XD',
-        earning: '$8,6500.20',
+        title: 'INC000000794844',
+        subtitle: 'Глоб кейс 1976514',
+        earning: '07.08.2022 12:10',
         progress: '65',
         color: 'info',
       },
       {
         avatar: require('@/assets/images/logos/aviato.png'),
-        title: 'Aviato',
-        subtitle: 'HTML & angular',
-        earning: '$1,2450.80',
+        title: 'INC000000798457',
+        subtitle: 'Глоб кейс 1976584',
+        earning: '04.02.2022 18:56',
         progress: '30',
         color: 'secondary',
       },
