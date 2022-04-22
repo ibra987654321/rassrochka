@@ -44,16 +44,28 @@
     >
 
       <v-row>
-        <v-col cols="6">
+        <v-col cols="5">
           <v-card>
-            <v-card-title>Все ТТ по статусам</v-card-title>
-            <PieChart
-              :labels="incidents.value"
-              :series="incidents.amount"
-            />
+            <v-card-title>Массовые инциденты по статусам</v-card-title>
+            <v-card-text>
+              <PieChart
+                :labels="incidents.value"
+                :series="incidents.amount"
+              />
+              <v-btn
+                block
+                color="primary"
+                class="mt-6"
+                outlined
+                disabled
+                @click="$router.push({ path: '/GSKO-dashboard/detail' })"
+              >
+                Подробнее
+              </v-btn>
+            </v-card-text>
           </v-card>
         </v-col>
-        <v-col cols="6">
+        <v-col cols="7">
           <v-card>
             <v-card-title>Массовые инциденты по дням</v-card-title>
             <NegativeChart
@@ -63,16 +75,6 @@
           </v-card>
         </v-col>
       </v-row>
-
-      <v-btn
-        block
-        color="primary"
-        class="mt-6"
-        outlined
-        @click="$router.push({ path: '/GSKO-dashboard/detail' })"
-      >
-        Подробнее
-      </v-btn>
     </v-col>
   </v-row>
 </template>

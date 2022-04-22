@@ -8,7 +8,7 @@
             class="d-flex align-center"
           >
             <v-img
-              :src="require('@/assets/images/logos/logo.png')"
+              :src="require('../../../public/logo.png')"
               max-height="30px"
               max-width="30px"
               alt="logo"
