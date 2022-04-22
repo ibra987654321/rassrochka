@@ -10,7 +10,7 @@
           <v-select
             v-model="select"
             class="select"
-            :items="['opened', 'closed', 'cancelled']"
+            :items="['Открытые', 'Закрытые', 'Отмененные']"
             label="Статусы"
             outlined
             @change="GetOwners($event)"
@@ -32,7 +32,7 @@
           <v-select
             v-model="select2"
             class="select"
-            :items="['opened', 'closed', 'cancelled', 'created']"
+            :items="['Открытые', 'Закрытые', 'Отмененные', 'Созданные']"
             label="Тематика"
             outlined
             @change="GetTitles($event)"
@@ -57,9 +57,22 @@ export default {
     barChart,
   },
   data: () => ({
-    select: 'opened',
-    select2: 'opened',
-    items: ['opened', 'closed', 'cancelled'],
+    select: 'Открытые',
+    select2: 'Открытые',
+    items: [
+      {
+        Открытые: 'opened'
+      },
+      {
+        Закрытые: 'closed'
+      },
+      {
+        Отмененные: 'cancelled'
+      },
+      {
+        Созданные: 'created'
+      },
+    ],
     owners: {
       name: [],
       amount: [],
@@ -91,17 +104,23 @@ export default {
     },
   },
   mounted() {
-    this.GetOwners('opened')
-    this.GetTitles('opened')
+    this.GetOwners('Открытые')
+    this.GetTitles('Открытые')
   },
   methods: {
     async GetOwners(status) {
-      const owners = await this.$store.dispatch('GetAllOwners', status)
+      const localSelect = this.items.filter((item) => item[status]) // нахожу нужный элемент из массива
+      const CurrentSelect = Object.values(localSelect[0]) // получаю только его значение
+
+      const owners = await this.$store.dispatch('GetAllOwners', CurrentSelect)
       this.owners.name = owners.map(i => i.value)
       this.owners.amount = owners.map(i => i.amount)
     },
     async GetTitles(status) {
-      const titles = await this.$store.dispatch('GetAllTitles', status)
+      const localSelect = this.items.filter((item) => item[status]) // нахожу нужный элемент из массива
+      const CurrentSelect = Object.values(localSelect[0]) // получаю только его значение
+
+      const titles = await this.$store.dispatch('GetAllTitles', CurrentSelect)
       this.titles.name = titles.map(i => i.value)
       this.titles.amount = titles.map(i => i.amount)
     },

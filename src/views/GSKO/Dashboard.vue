@@ -8,7 +8,7 @@
       <v-row>
         <v-col cols="5">
           <v-card class="pb-5">
-            <v-card-title>Все ТТ по статусам</v-card-title>
+            <v-card-title>Trouble Tickets за выбранный период (по статусам)</v-card-title>
             <v-card-text>
               <PieChart
                 :labels="value"
@@ -29,7 +29,7 @@
         </v-col>
         <v-col cols="7">
           <v-card>
-            <v-card-title>Все ТТ по дням</v-card-title>
+            <v-card-title>Trouble Tickets за выбранный период (по статусам и по дням)</v-card-title>
             <NegativeChart
               :labels="labels"
               :data="series"
@@ -46,7 +46,7 @@
       <v-row>
         <v-col cols="5">
           <v-card>
-            <v-card-title>Массовые инциденты по статусам</v-card-title>
+            <v-card-title>Массовые инциденты за выбранный период (по статусам)</v-card-title>
             <v-card-text>
               <PieChart
                 :labels="incidents.value"
@@ -67,7 +67,7 @@
         </v-col>
         <v-col cols="7">
           <v-card>
-            <v-card-title>Массовые инциденты по дням</v-card-title>
+            <v-card-title>Массовые инциденты за выбранный период (по статусам и по дням)</v-card-title>
             <NegativeChart
               :labels="incidents.labels"
               :data="incidents.series"

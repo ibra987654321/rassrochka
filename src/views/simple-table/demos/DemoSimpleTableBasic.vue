@@ -37,7 +37,7 @@
                 >
                   <v-text-field
                     v-model="editedItem.task"
-                    label="Задание"
+                    label="Задача"
                     outlined
                     dense
                     :prepend-inner-icon="icons.mdiClipboardPlayOutline"
@@ -89,7 +89,7 @@
                     v-model="newTodo"
                     outlined
                     name="newTodo"
-                    label="Type your checkList"
+                    label="Добавить задачи в чек-лист"
                     @keyup.enter="addTodo(editedItem.id)"
                   />
                   <v-data-table
@@ -149,7 +149,7 @@
                   <v-checkbox
                     v-model="editedItem.myTask"
                     class="mt-3"
-                    label="myTask"
+                    label="Личная задача"
                     hide-details
                   ></v-checkbox>
                 </v-col>
@@ -266,12 +266,119 @@
         </v-card>
       </v-dialog>
     </template>
+    <template v-slot:item.task="{ item }">
+      <v-edit-dialog
+        :return-value.sync="item.task"
+        large
+        @open="openItem(item)"
+        @save="save()"
+      >
+        {{ item.task }}
+        <template v-slot:input>
+          <v-text-field
+            v-model="item.task"
+            label="Edit"
+            single-line
+          ></v-text-field>
+        </template>
+      </v-edit-dialog>
+    </template>
+    <template v-slot:item.comments="{ item }">
+      <v-edit-dialog
+        :return-value.sync="item.comments"
+        large
+        @open="openItem(item)"
+        @save="save()"
+      >
+        {{ item.comments }}
+        <template v-slot:input>
+          <v-text-field
+            v-model="item.comments"
+            label="Edit"
+            single-line
+          ></v-text-field>
+        </template>
+      </v-edit-dialog>
+    </template>
+    <template v-slot:item.createDate="{ item }">
+      <v-edit-dialog
+        :return-value.sync="item.createDate"
+        large
+        @open="openItem(item)"
+        @save="save()"
+      >
+        {{ item.createDate }}
+        <template v-slot:input>
+          <v-date-picker
+            v-model="item.createDate"
+          ></v-date-picker>
+        </template>
+      </v-edit-dialog>
+    </template>
+    <template v-slot:item.expirationDate="{ item }">
+      <v-edit-dialog
+        :return-value.sync="item.expirationDate"
+        large
+        @open="openItem(item)"
+        @save="save()"
+      >
+        {{ item.expirationDate }}
+        <template v-slot:input>
+          <v-date-picker
+            v-model="item.expirationDate"
+          ></v-date-picker>
+        </template>
+      </v-edit-dialog>
+    </template>
+    <template v-slot:item.statusType="{ item }">
+      <v-edit-dialog
+        :return-value.sync="item.statusType"
+        large
+        @open="openItem(item)"
+        @save="save()"
+      >
+        {{ localSelect(item.statusType) }}
+        <template v-slot:input>
+          <v-select
+            v-model="item.statusType"
+            outlined
+            dense
+            :prepend-inner-icon="icons.mdiCheckOutline"
+            :items="['Создано','Выполняется', 'Готово', 'Остановлено', 'Удалено', 'Истекло', 'Приостановлено']"
+            label="Статус"
+          >
+            <template v-slot:item="{ item, attrs, on }">
+              <v-list-item
+                v-bind="attrs"
+                v-on="on"
+              >
+                <v-list-item-title
+                  :id="attrs['aria-labelledby']"
+                  v-text="item"
+                ></v-list-item-title>
+              </v-list-item>
+            </template>
+          </v-select>
+        </template>
+      </v-edit-dialog>
+    </template>
     <template v-slot:item.myTask="{ item }">
-      <v-checkbox
-        v-model="item.myTask"
-        class="mt-3"
-        hide-details
-      ></v-checkbox>
+      <v-edit-dialog
+        :return-value.sync="item.myTask"
+        large
+        @open="openItem(item)"
+        @save="save()"
+      >
+        {{ item.myTask }}
+        <template v-slot:input>
+          <v-checkbox
+            v-model="item.myTask"
+            class="mt-3"
+            label="myTask"
+            hide-details
+          ></v-checkbox>
+        </template>
+      </v-edit-dialog>
     </template>
     <template v-slot:item.actions="{ item }">
       <v-icon
@@ -314,6 +421,15 @@ export default {
     dialogDelete: false,
     menu1: false,
     menu2: false,
+    selectItems: [
+      { Выполняется: 'IN_PROGRESS' },
+      { Готово: 'DONE' },
+      { Остановлено: 'STOPPED' },
+      { Создано: 'CREATED' },
+      { Удалено: 'DELETED' },
+      { Истекло: 'EXPIRED' },
+      { Приостановлено: 'HOLD' },
+    ],
     icons: {
       edit: mdiPen,
       deleted: mdiDelete,
@@ -333,11 +449,11 @@ export default {
         text: 'ОПИСАНИЕ',
         value: 'comments',
       },
-      { text: 'ДАТА НАЧАЛО', value: 'createDate' },
-      { text: 'ДАТА ЗАВЕРШЕНИЕ', value: 'expirationDate' },
-      { text: 'STATUS', value: 'statusType' },
-      { text: 'MY TASK', value: 'myTask' },
-      { text: 'ACTIONS', value: 'actions', sortable: false },
+      { text: 'ДАТА НАЧАЛА', value: 'createDate' },
+      { text: 'ДАТА ЗАВЕРШЕНИЯ', value: 'expirationDate' },
+      { text: 'СТАТУС', value: 'statusType' },
+      { text: 'ЛИЧНАЯ ЗАДАЧА', value: 'myTask' },
+      { text: 'ДЕЙСТВИЕ', value: 'actions', sortable: false },
     ],
     myTasks: [],
     editedIndex: -1,
@@ -369,9 +485,6 @@ export default {
 
   },
   watch: {
-    editedItem() {
-      console.log('edit')
-    },
     dialog(val) {
       // eslint-disable-next-line no-unused-expressions
       val || this.close()
@@ -385,7 +498,6 @@ export default {
   created() {
     this.initialize()
   },
-
   methods: {
     async initialize() {
       this.myTasks = await this.$store.dispatch('getPersonalTask').then(i => i)
@@ -394,6 +506,18 @@ export default {
         i.createDate = new Date(i.createDate).toISOString().slice(0, 10)
         i.expirationDate = new Date(i.expirationDate).toISOString().slice(0, 10)
       })
+    },
+    localSelect(select) {
+      const isCyrillic = /[а-я]/i.test(select) // определение языка на кирилицу
+      if (isCyrillic) {
+        const localSelect = this.selectItems.filter((item) => item[select]) // нахожу нужный элемент из массива
+        const isLatinSelect = Object.values(localSelect[0]) // получаю только его значение
+        return isLatinSelect[0]
+      } else {
+        const localSelect = this.selectItems.filter(i => Object.values(i) == select) // нахожу нужный элемент из массива
+        const isCyrillicSelect = Object.keys(localSelect[0]) // получаю только его ключ
+        return isCyrillicSelect[0]
+      }
     },
 
     async editItem(item) {
@@ -432,6 +556,11 @@ export default {
       })
     },
 
+    openItem(item) {
+      this.editedItem = item
+      this.editedIndex = this.myTasks.indexOf(item)
+    },
+
     save() {
       if (this.editedIndex > -1) {
         const editData = {
@@ -441,7 +570,7 @@ export default {
           expirationDate: new Date(new Date(this.editedItem.expirationDate).setDate(new Date(this.editedItem.expirationDate).getDate() + 1)).toISOString(),
           id: this.editedItem.id,
           myTask: this.editedItem.myTask,
-          status: this.editedItem.statusType,
+          status: this.localSelect(this.editedItem.statusType), // эта функция возвращает нужный select,
           task: this.editedItem.task,
         }
         this.$store.dispatch('putTask', editData)

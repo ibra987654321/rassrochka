@@ -2,7 +2,7 @@
   <div id="chart">
     <apexchart
       type="bar"
-      height="900"
+      height="700"
       :options="chartOptions"
       :series="series"
     ></apexchart>
@@ -28,7 +28,7 @@ export default {
       return {
         chart: {
           type: 'bar',
-          height: 900,
+          height: 700,
         },
         plotOptions: {
           bar: {
@@ -63,7 +63,7 @@ export default {
           position: 'top',
           style: {
             colors: ['#000000'],
-            fontSize: '16px',
+            fontSize: '18px',
             fontWeight: 'bold',
           },
           formatter(val, opt) {

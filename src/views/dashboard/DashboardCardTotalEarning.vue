@@ -1,18 +1,18 @@
 <template>
   <v-card>
     <v-card-title class="align-start">
-      <span>Общие показатели за указанный период</span>
+      <span>Показатели за выбранный период</span>
       <v-spacer></v-spacer>
 
-      <v-btn
-        icon
-        small
-        class="me-n3 mt-n2"
-      >
-        <v-icon>
-          {{ icons.mdiDotsVertical }}
-        </v-icon>
-      </v-btn>
+<!--      <v-btn-->
+<!--        icon-->
+<!--        small-->
+<!--        class="me-n3 mt-n2"-->
+<!--      >-->
+<!--        <v-icon>-->
+<!--          {{ icons.mdiDotsVertical }}-->
+<!--        </v-icon>-->
+<!--      </v-btn>-->
     </v-card-title>
 
     <v-card-text class="my-7">

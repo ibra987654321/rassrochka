@@ -17,7 +17,7 @@
             ></v-img>
 
             <h2 class="text-2xl font-weight-semibold">
-              Aza
+              AZA
             </h2>
           </router-link>
         </v-card-title>
@@ -41,9 +41,10 @@
               :error-messages="errorMessages"
               outlined
               :disabled="loading"
-              label="Email"
-              placeholder="john@example.com"
+              label="Windows Login"
+              placeholder="BAtamanov"
               hide-details
+              @keyup.enter="loader = 'loading'"
               class="mb-3"
             ></v-text-field>
 
@@ -61,6 +62,7 @@
               hide-details
               required
               :disabled="loading"
+              @keyup.enter="loader = 'loading'"
               @click:append="isPasswordVisible = !isPasswordVisible"
             ></v-text-field>
             <v-btn

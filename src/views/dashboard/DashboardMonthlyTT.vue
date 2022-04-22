@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-card-title>Все заявки (ТТ) за последние 3 месяца</v-card-title>
+    <v-card-title>Все Trouble Tickets за 3 месяца</v-card-title>
     <v-card-text>
       <vertical-chart
         :data="threeMonths.data"
@@ -11,7 +11,7 @@
         color="primary"
         class="mt-6"
         outlined
-        @click=""
+        @click="$router.push({ path: '/GSKO-dashboard' })"
       >
         подробнее
       </v-btn>

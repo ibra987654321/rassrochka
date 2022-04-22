@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-title class="align-start">
-      <span>Массовые инциденты за 3 месяца</span>
+      <span>Все массовые инциденты за 3 месяца</span>
     </v-card-title>
 
     <v-card-text>
@@ -15,7 +15,7 @@
         color="primary"
         class="mt-6"
         outlined
-        @click=""
+        @click="$router.push({ path: '/GSKO-dashboard' })"
       >
         подробнее
       </v-btn>
