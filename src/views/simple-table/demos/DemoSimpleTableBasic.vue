@@ -445,10 +445,7 @@ export default {
         sortable: false,
         value: 'task',
       },
-      {
-        text: 'ОПИСАНИЕ',
-        value: 'comments',
-      },
+      { text: 'ОПИСАНИЕ', value: 'comments',},
       { text: 'ДАТА НАЧАЛА', value: 'createDate' },
       { text: 'ДАТА ЗАВЕРШЕНИЯ', value: 'expirationDate' },
       { text: 'СТАТУС', value: 'statusType' },

@@ -8,4 +8,6 @@ export const STATISTICS_CANCELLED = '/statistics/cancelled'
 export const STATISTICS_INCIDENTS_CREATED = '/statistics/incidents/created'
 export const OWNERS = '/owners/'
 export const TITLES = '/titles/'
+export const INDICATOR ='/getIndicators/'
+export const CALLS_INDICATORS ='/getCallsIndicators/'
 

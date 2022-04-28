@@ -5,8 +5,10 @@ import table from '@/store/table'
 import createTask from '@/store/createTask'
 import personalTasks from '@/store/personalTasks'
 import GSKO from '@/store/GSKO/GSKO'
+import Monitoring from "@/store/monitoring";
 import { environment } from '@/environments/environment'
-import { STATISTICS_CREATED,
+import {
+  CALLS_INDICATORS, STATISTICS_CREATED,
   STATISTICS_INCIDENTS_CREATED,
   TICKETS
 } from '@/helpers/endpionts'
@@ -65,6 +67,13 @@ export default new Vuex.Store({
       }).then(r => r.data)
       return data
     },
+    getCallsIndicators(store) {
+      const lustDate = new Date(new Date(store.state.end).setDate(new Date(store.state.end).getDate() - 1)).toISOString().substr(0, 10)
+      const data = axios(`${environment.bekaApi + CALLS_INDICATORS + lustDate}`, {
+        method: 'GET',
+      }).then(r => r.data)
+      return data
+    },
   },
   getters: {
     error: state => state.error,
@@ -77,5 +86,6 @@ export default new Vuex.Store({
     createTask,
     personalTasks,
     GSKO,
+    Monitoring
   },
 })

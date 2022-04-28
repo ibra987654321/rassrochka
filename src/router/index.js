@@ -28,10 +28,22 @@ const routes = [
     component: () => import('../views/GSKO/Detaile.vue'),
   },
   {
+    path: '/monitoring',
+    name: 'Monitoring',
+    meta: { layout: 'main', auth: true },
+    component: () => import('../views/Monitoring/MonitoringDashboard.vue'),
+  },
+  {
     path: '/detaile',
     name: 'detaile',
     meta: { layout: 'main', auth: true },
     component: () => import('../views/dashboard/DashboardDetaile.vue'),
+  },
+  {
+    path: '/commands',
+    name: 'Commands',
+    meta: { layout: 'main', auth: true },
+    component: () => import('../views/Commands/Commands.vue'),
   },
   {
     path: '/typography',
@@ -100,7 +112,6 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  // mode: 'history',
   base: process.env.BASE_URL,
   routes,
 })

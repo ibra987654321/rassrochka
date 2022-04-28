@@ -72,6 +72,18 @@
           target="_blank"
         ></nav-menu-link>
       </nav-menu-group>
+      <nav-menu-section-title title="Мониторинг"></nav-menu-section-title>
+      <nav-menu-link
+        title="Мониторинг"
+        :to="{ name: 'Monitoring' }"
+        :icon="icons.mdiAlphaTBoxOutline"
+      ></nav-menu-link>
+      <nav-menu-section-title title="Приказы"></nav-menu-section-title>
+      <nav-menu-link
+        title="Приказы"
+        :to="{ name: 'Commands' }"
+        :icon="icons.mdiAlphaTBoxOutline"
+      ></nav-menu-link>
       <nav-menu-section-title title="USER INTERFACE"></nav-menu-section-title>
       <nav-menu-link
         title="Typography"

@@ -9,7 +9,6 @@ export default {
   mutations: {},
   actions: {
     postTask({ commit }, option) {
-      console.log(option)
       try {
         axios({
           method: 'POST',
