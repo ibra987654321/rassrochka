@@ -347,6 +347,7 @@ export default {
 
     },
     async uploadFile(file, id) {
+      console.log(this.currentFile.target.files[0])
       if (file) {
          await this.$store.dispatch('downloadFile', file)
       }else {

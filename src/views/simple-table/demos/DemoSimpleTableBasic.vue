@@ -52,7 +52,7 @@
                     outlined
                     dense
                     :prepend-inner-icon="icons.mdiCheckOutline"
-                    :items="['CREATED','IN_PROGRESS', 'DONE', 'STOPPED', 'DELETED', 'EXPIRED', 'HOLD']"
+                    :items="['DEFAULTER','EXPIRED', 'DONE', 'DELAY', 'WAIT']"
                     label="Статус"
                   >
                     <template v-slot:item="{ item, attrs, on }">

@@ -1,6 +1,7 @@
 <template>
   <component :is="resolveLayout">
     <router-view></router-view>
+    <TheSnackbars/>
   </component>
 </template>
 
@@ -10,11 +11,13 @@ import { useRouter } from '@/utils'
 import LayoutBlank from '@/layouts/Blank.vue'
 import LayoutContent from '@/layouts/Content.vue'
 import {getDarkTheme, setDarkTheme} from '@/helpers/helpers'
+import TheSnackbars from "@/components/TheSnackbars";
 
 export default {
   components: {
     LayoutBlank,
     LayoutContent,
+    TheSnackbars
   },
   mounted() {
     const theme = getDarkTheme()

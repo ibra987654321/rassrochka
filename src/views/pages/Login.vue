@@ -17,7 +17,7 @@
             ></v-img>
 
             <h2 class="text-2xl font-weight-semibold">
-              AZA
+              Rassrochka.kg
             </h2>
           </router-link>
         </v-card-title>
@@ -25,7 +25,7 @@
         <!-- title -->
         <v-card-text>
           <p class="text-2xl font-weight-semibold text--primary mb-2">
-            Добро пожаловать в AzaDash! 👋🏻
+            Добро пожаловать в Rassrochka.kg! 👋🏻
           </p>
           <p class="mb-2">
             Пожалуйста, войдите в свою учетную запись и начните приключение
@@ -41,8 +41,7 @@
               :error-messages="errorMessages"
               outlined
               :disabled="loading"
-              label="Windows Login"
-              placeholder="BAtamanov"
+              label="Логин"
               hide-details
               @keyup.enter="loader = 'loading'"
               class="mb-3"
@@ -56,7 +55,7 @@
                 () => !!password && password.length <= 20 || 'Address must be less than 25 characters',
               ]"
               :type="isPasswordVisible ? 'text' : 'password'"
-              label="Password"
+              label="Пароль"
               placeholder="············"
               :append-icon="isPasswordVisible ? icons.mdiEyeOffOutline : icons.mdiEyeOutline"
               hide-details
@@ -165,7 +164,7 @@ export default {
     submit() {
       this.snackbar = true
       const formData = {
-        email: this.email,
+        username: this.email,
         password: this.password,
       }
 

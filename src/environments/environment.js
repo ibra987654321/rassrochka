@@ -3,5 +3,6 @@ export const environment = {
   authAPI: 'http://10.16.230.114:8076',
   exampleAPI: 'http://172.28.141.23:8008/api/v1',
   testAPI: 'http://172.28.141.23:8090',
-  bekaApi: 'http://10.16.230.114:8090'
+  bekaApi: 'http://10.16.230.114:8090',
+  propApi: 'http://10.16.230.114:8080/rassrochka/api/v1'
 }

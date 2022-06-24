@@ -152,6 +152,7 @@
             <v-btn
               color="primary"
               class="me-3 mt-4"
+              @click="save()"
             >
               Save changes
             </v-btn>
@@ -191,10 +192,15 @@ export default {
       accountDataLocale.value = JSON.parse(JSON.stringify(props.accountData))
     }
 
+    const save = () => {
+      console.log(accountDataLocale)
+    }
+
     return {
       status,
       accountDataLocale,
       resetForm,
+      save,
       icons: {
         mdiAlertOutline,
         mdiCloudUploadOutline,

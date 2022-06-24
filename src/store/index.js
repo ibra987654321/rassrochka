@@ -1,19 +1,25 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+
+import profiles from "@/store/profiles";
+import detail from "@/store/detail";
+import callProfile from "@/store/callProfile";
+
 import table from '@/store/table'
 import createTask from '@/store/createTask'
 import personalTasks from '@/store/personalTasks'
 import GSKO from '@/store/GSKO/GSKO'
 import Monitoring from "@/store/monitoring";
 import { environment } from '@/environments/environment'
-import {
-  CALLS_INDICATORS, STATISTICS_CREATED,
+import { STATISTICS_CREATED,
   STATISTICS_INCIDENTS_CREATED,
   TICKETS
 } from '@/helpers/endpionts'
 import { setToken } from '@/helpers/helpers'
 import router from '@/router'
+import userController from "@/store/userController";
+
 
 Vue.use(Vuex)
 
@@ -22,19 +28,26 @@ export default new Vuex.Store({
     start: new Date(),
     end: new Date(Date.now()),
     error: '',
+    snackbars: {
+      snackbar: false,
+      text: '',
+      timeout: 10,
+    }
   },
   mutations: {
     setError(state, error) {
       state.error = error
+      state.snackbars.snackbar = true
+      state.snackbars.text = error
+      state.snackbars.timeout = 1000
     },
   },
   actions: {
     login({ commit }, payload) {
-      const login = axios(`${environment.authAPI}/demo/auth`, {
+      const login = axios(`${environment.propApi}/login/auth`, {
         method: 'POST',
         data: {
-          username: payload.email,
-          password: payload.password,
+          ...payload
         },
       }).then(res => {
         if (res.data.token) {
@@ -86,6 +99,10 @@ export default new Vuex.Store({
     createTask,
     personalTasks,
     GSKO,
-    Monitoring
+    Monitoring,
+    profiles,
+    detail,
+    callProfile,
+    userController
   },
 })

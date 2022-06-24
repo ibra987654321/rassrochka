@@ -16,28 +16,22 @@ const routes = [
     component: () => import('../views/dashboard/Dashboard'),
   },
   {
-    path: '/GSKO-dashboard',
-    name: 'GSKO-dashboard',
+    path: '/detail/:id',
+    name: 'detail',
     meta: { layout: 'main', auth: true },
-    component: () => import('../views/GSKO/Dashboard.vue'),
+    component: () => import('../components/Detail'),
   },
   {
-    path: '/GSKO-dashboard/detail',
-    name: 'Detaile',
+    path: '/calling',
+    name: 'calling',
     meta: { layout: 'main', auth: true },
-    component: () => import('../views/GSKO/Detaile.vue'),
+    component: () => import('../views/Calling'),
   },
   {
-    path: '/monitoring',
-    name: 'Monitoring',
+    path: '/users',
+    name: 'users',
     meta: { layout: 'main', auth: true },
-    component: () => import('../views/Monitoring/MonitoringDashboard.vue'),
-  },
-  {
-    path: '/detaile',
-    name: 'detaile',
-    meta: { layout: 'main', auth: true },
-    component: () => import('../views/dashboard/DashboardDetaile.vue'),
+    component: () => import('../views/UserControl'),
   },
   {
     path: '/commands',
@@ -45,12 +39,7 @@ const routes = [
     meta: { layout: 'main', auth: true },
     component: () => import('../views/Commands/Commands.vue'),
   },
-  {
-    path: '/typography',
-    name: 'typography',
-    meta: { layout: 'main', auth: true },
-    component: () => import('../views/typography/Typography.vue'),
-  },
+
   {
     path: '/icons',
     name: 'icons',

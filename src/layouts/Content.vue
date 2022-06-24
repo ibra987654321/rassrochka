@@ -10,24 +10,23 @@
     >
       <div class="boxed-container w-full">
         <div class="d-flex align-center mx-6">
-<!--          &lt;!&ndash; Left Content &ndash;&gt;-->
-<!--          <v-app-bar-nav-icon-->
-<!--            class="d-block d-lg-none me-2"-->
-<!--            @click="isDrawerOpen = !isDrawerOpen"-->
-<!--          ></v-app-bar-nav-icon>-->
-<!--          <v-text-field-->
-<!--            rounded-->
-<!--            dense-->
-<!--            outlined-->
-<!--            :prepend-inner-icon="icons.mdiMagnify"-->
-<!--            class="app-bar-search flex-grow-0"-->
-<!--            hide-details-->
-<!--          ></v-text-field>-->
-<!--          <v-spacer></v-spacer>-->
+          <!-- Left Content -->
+          <v-app-bar-nav-icon
+            class="d-block d-lg-none me-2"
+            @click="isDrawerOpen = !isDrawerOpen"
+          ></v-app-bar-nav-icon>
+          <v-text-field
+            rounded
+            dense
+            outlined
+            :prepend-inner-icon="icons.mdiMagnify"
+            class="app-bar-search flex-grow-0"
+            hide-details
+          ></v-text-field>
+          <v-spacer></v-spacer>
 
 <!--          &lt;!&ndash; Right Content &ndash;&gt;-->
-          <date-range-picker></date-range-picker>
-          <v-spacer></v-spacer>
+<!--          <date-range-picker></date-range-picker>-->
           <theme-switcher></theme-switcher>
           <app-bar-user-menu></app-bar-user-menu>
         </div>
@@ -39,43 +38,6 @@
         <slot></slot>
       </div>
     </v-main>
-
-<!--    <v-footer-->
-<!--      app-->
-<!--      inset-->
-<!--      color="transparent"-->
-<!--      absolute-->
-<!--      height="56"-->
-<!--      class="px-0"-->
-<!--    >-->
-<!--      <div class="boxed-container w-full">-->
-<!--        <div class="mx-6 d-flex justify-space-between">-->
-<!--          <span>-->
-<!--            &copy; 2021 <a-->
-<!--              href="https://themeselection.com"-->
-<!--              class="text-decoration-none"-->
-<!--              target="_blank"-->
-<!--            >ThemeSelection</a></span>-->
-<!--          <span class="d-sm-inline d-none">-->
-<!--            <a-->
-<!--              href="https://themeselection.com/products/category/download-free-admin-templates/"-->
-<!--              target="_blank"-->
-<!--              class="me-6 text&#45;&#45;secondary text-decoration-none"-->
-<!--            >Freebies</a>-->
-<!--            <a-->
-<!--              href="https://themeselection.com/blog/"-->
-<!--              target="_blank"-->
-<!--              class="me-6 text&#45;&#45;secondary text-decoration-none"-->
-<!--            >Blog</a>-->
-<!--            <a-->
-<!--              href="https://github.com/themeselection/materio-vuetify-vuejs-admin-template-free/blob/main/LICENSE"-->
-<!--              target="_blank"-->
-<!--              class="text&#45;&#45;secondary text-decoration-none"-->
-<!--            >MIT Licence</a>-->
-<!--          </span>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </v-footer>-->
   </v-app>
 </template>
 
