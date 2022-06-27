@@ -19,13 +19,13 @@
                 <v-icon color="primary">
                   {{ icons.mdiAccountOutline }}
                 </v-icon>
-                <span class="ms-3">{{ datas.fullName }}</span>
+                <span class="ms-3">{{ $props.detailData.fullName }}</span>
               </p>
               <p class="d-flex align-center mb-0">
                 <v-icon color="primary">
                   {{ icons.mdiLockOpenOutline }}
                 </v-icon>
-                <span class="ms-3">{{ datas.address }}</span>
+                <span class="ms-3">{{ $props.detailData.address }}</span>
               </p>
             </div>
 
@@ -41,13 +41,13 @@
                 <v-icon color="primary">
                   {{ icons.mdiStarOutline }}
                 </v-icon>
-                <span class="ms-3">{{ datas.brotherType }}</span>
+                <span class="ms-3">{{ $props.detailData.brotherType }}</span>
               </p>
               <p class="d-flex align-center mb-0">
                 <v-icon color="primary">
                   {{ icons.mdiPhone }}
                 </v-icon>
-                <span class="ms-3">{{ datas.phoneNumber }}</span>
+                <span class="ms-3">{{ $props.detailData.phoneNumber }}</span>
               </p>
             </div>
           </v-card-actions>
@@ -60,12 +60,10 @@
 import {mdiLockOpenOutline, mdiStarOutline, mdiTrendingUp,mdiAccountOutline, mdiPhone} from '@mdi/js'
 export default {
   props: {
-    id: ''
+    detailData: []
   },
   name: "MoreInfo",
   data: () => ({
-    data: [],
-    uid: '',
     icons: {
       mdiLockOpenOutline,
       mdiStarOutline,
@@ -74,15 +72,6 @@ export default {
       mdiPhone
     }
   }),
-  computed: {
-    datas() {
-      if (this.$props.id != undefined) {
-        const data = this.$store.dispatch('getBrothersById', this.$props.id)
-        data.then(r => this.data = r[0])
-        return this.data
-      }
-    }
-  },
 
 }
 </script>

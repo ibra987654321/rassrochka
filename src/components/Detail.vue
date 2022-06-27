@@ -96,7 +96,6 @@ export default {
   mounted() {
     this.canId = this.$route.params.id
     this.$store.dispatch('getInformation', this.canId).then(r => {
-
       this.credit = r.data
       this.profile = r.data[0].profileDb
       r.data.map( i => {

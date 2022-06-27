@@ -2,7 +2,13 @@
   <v-card>
     <v-card-title>Контроль кредитами</v-card-title>
     <v-card-text>
-      <table-for-edit :data="data" :fields="fields" :edit-items="editItem" :put-dispatch="'putCreditInformation'"></table-for-edit>
+      <table-for-edit
+        :data="data"
+        :fields="fields"
+        :edit-items="editItem"
+        :put-dispatch="'putCreditInformation'"
+        @update="update()"
+      ></table-for-edit>
     </v-card-text>
   </v-card>
 </template>
@@ -37,9 +43,17 @@ export default {
     }
   }),
   created() {
-    this.$store.dispatch('getCallProfile').then(r => {
-      this.data = r
-    })
+    this.initialize()
+  },
+  methods:{
+    initialize() {
+      this.$store.dispatch('getCallProfile').then(r => {
+        this.data = r
+      })
+    },
+    update() {
+      this.initialize()
+    }
   }
 }
 </script>

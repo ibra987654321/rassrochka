@@ -60,33 +60,6 @@ export default new Vuex.Store({
 
       return login
     },
-    GetAllTickets(store) {
-      const tickets = axios(`${environment.testAPI + TICKETS}all/${store.state.start.toISOString().slice(0, 19)}/${store.state.end.toISOString().slice(0, 19)}`, {
-        method: 'GET',
-      }).then(r => r.data)
-
-      return tickets
-    },
-    GetThreeMonths() {
-      const monthly = axios(`${environment.testAPI + STATISTICS_CREATED}/three-months`, {
-        method: 'GET',
-      }).then(r => r.data)
-
-      return monthly
-    },
-    GetIncidentsThreeMonth(_) {
-      const data = axios(`${environment.testAPI + STATISTICS_INCIDENTS_CREATED}/three-months`, {
-        method: 'GET',
-      }).then(r => r.data)
-      return data
-    },
-    getCallsIndicators(store) {
-      const lustDate = new Date(new Date(store.state.end).setDate(new Date(store.state.end).getDate() - 1)).toISOString().substr(0, 10)
-      const data = axios(`${environment.bekaApi + CALLS_INDICATORS + lustDate}`, {
-        method: 'GET',
-      }).then(r => r.data)
-      return data
-    },
   },
   getters: {
     error: state => state.error,

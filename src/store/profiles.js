@@ -23,8 +23,14 @@ export default {
     },
   },
   actions: {
+    // getAllProfiles(_, payload) {
+    //  const data = axios(`${environment.propApi + PROFILES}/findProfileByDate/${payload.start}/${payload.end}`, {
+    //     method: 'GET',
+    //   }).then(r => r.data)
+    //   return data
+    // },
     getAllProfiles() {
-     const data = axios(`${environment.propApi + PROFILES}/findAll`, {
+      const data = axios(`${environment.propApi + PROFILES}/findAll`, {
         method: 'GET',
       }).then(r => r.data)
       return data
@@ -91,7 +97,7 @@ export default {
         data: {
           ...option
         },
-      }).then(r => console.log(r))
+      }).then(r => r)
     },
     postForm5({state, commit}, option) {
       axios(`${environment.propApi + CREDIT}/addCredit`, {

@@ -59,6 +59,7 @@ export default {
   components: { VerticalChart, TableClients },
   data: () => ({
     data: [],
+    date: new Date(Date.now()).toISOString(),
     icons: {
       mdiMagnify
     },
@@ -86,7 +87,11 @@ export default {
   },
   methods: {
     updateData() {
-      this.$store.dispatch('getAllProfiles').then(r => {
+      const date = {
+        start: new Date(new Date(this.date).setDate(new Date(this.date).getDay() - 30)).toISOString(),
+        end: this.date
+      }
+      this.$store.dispatch('getAllProfiles', date).then(r => {
         this.data = r
       })
     },

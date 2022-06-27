@@ -128,6 +128,8 @@ export default {
   }),
   computed: {
     header() {
+      this.initialize()
+      this.editedItem.password = ''
       return this.headers = this.$props.fields
     },
     // nameErrors () {
@@ -150,7 +152,6 @@ export default {
 
   created () {
     this.editItems = this.$props.editItems
-    this.initialize()
   },
 
   methods: {

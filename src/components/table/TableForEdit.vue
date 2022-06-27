@@ -22,7 +22,7 @@
                   cols="12"
                   sm="8"
                 >
-                  <more-info :id="editedItem.id"></more-info>
+                  <more-info :detailData="detailData"></more-info>
                 </v-col>
                 <v-col
                   cols="12"
@@ -32,6 +32,7 @@
                   <v-select
                     :items="['Истекший', 'Ожидание']"
                     v-model="editedItem.statusType"
+                    @change="editSelect = true"
                     label="Статус"
                     dense
                     outlined
@@ -110,9 +111,6 @@
     <template v-slot:item.comment="item" >
       {{ item.value }}
     </template>
-    <template v-slot:item.statusType="item" >
-     {{ statusTransform(item.value) }}
-    </template>
     <template v-slot:item.actions="item">
       <v-icon
         small
@@ -151,12 +149,14 @@ export default {
   data: () => ({
     date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
     menu: false,
+    editSelect: false,
     statusType: 0,
     icons: {mdiDelete, mdiPencil},
     dialog: false,
     dialogDelete: false,
     headers: [],
     desserts: [],
+    detailData: [],
     editedIndex: -1,
     editedItem: {},
     items: [
@@ -196,6 +196,7 @@ export default {
   }),
   computed: {
     header() {
+      this.initialize()
       return this.headers = this.$props.fields
     },
   },
@@ -207,33 +208,19 @@ export default {
     dialogDelete (val) {
       val || this.closeDelete()
     },
-    'statusType' (val) {
-      console.log(val)
-      // this.statusTransform(val)
-    }
   },
 
   created () {
     this.editItems = this.$props.editItems
-    this.initialize()
   },
 
   methods: {
     initialize () {
       this.desserts = this.$props.data
     },
-    statusTransform(str) {
-      if(/^\s*(\w+)\s*$/.test(str) === true)  {
-        const localSelect = this.itemsEn.filter((item) => item[str]) // нахожу нужный элемент из массива
-        const CurrentSelect = Object.values(localSelect[0]) // получаю только его значение
-        return CurrentSelect[0]
-      } else {
-        const localSelect = this.items.filter((item) => item[str]) // нахожу нужный элемент из массива
-        const CurrentSelect = Object.values(localSelect[0]) // получаю только его значение
-        return CurrentSelect[0]
-      }
-    },
     editItem (item) {
+      const data = this.$store.dispatch('getBrothersById', item.id)
+      data.then(r => this.detailData = r[0])
       this.editedIndex = this.desserts.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialog = true
@@ -269,17 +256,24 @@ export default {
     save () {
       if (this.editedIndex > -1) {
         Object.assign(this.desserts[this.editedIndex], this.editedItem)
-        const localSelect = this.items.filter((item) => item[this.editedItem.statusType]) // нахожу нужный элемент из массива
-        const CurrentSelect = Object.values(localSelect[0]) // получаю только его значение
+        const localSelect = this.items.filter((item) => item[this.editedItem.statusType])
+        let CurrentSelect = []
+        if (this.editSelect) {
+          CurrentSelect = Object.values(localSelect[0])
+        } else {
+          CurrentSelect = ['WAIT']
+        }
+
         const creditData = Object.assign(this.desserts[this.editedIndex], this.editedItem)
         const data = {
           comment: creditData.comment,
           debt: creditData.debt,
-          id: creditData.id,
+          id: creditData.mcId,
           payDate: creditData.payDate,
           statusType: CurrentSelect[0]
         }
-        this.$store.dispatch(this.$props.putDispatch, data)
+        this.$store.dispatch('putCreditInformation', data)
+        this.$emit('update')
       } else {
         this.desserts.push(this.editedItem)
       }

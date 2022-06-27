@@ -30,9 +30,10 @@ export default {
       return data
     },
     putCreditInformation(_,  payload) {
+      console.log(payload)
       const data = axios({
         method: 'PUT',
-        url: `${environment.propApi + '/api/v1' + CREDIT}/month/editMontCredit`,
+        url: `${environment.propApi + CREDIT}/month/editMontCredit`,
         // headers: {
         //   'Content-Type': 'application/json',
         //   Authorization: `Bearer ${getToken()}`,
