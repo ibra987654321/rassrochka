@@ -39,21 +39,25 @@
     >
       <nav-menu-link
         title="Главная"
+        v-if="decode === 'ROLE_USER' || 'ROLE_ADMIN'"
         :to="{ name: 'dashboard' }"
         :icon="icons.mdiHomeOutline"
       ></nav-menu-link>
       <nav-menu-link
         title="Новая заявка"
+        v-if="decode === 'ROLE_USER' || 'ROLE_ADMIN'"
         :to="{ name: 'pages-account-settings'}"
         :icon="icons.mdiAccountCogOutline"
       ></nav-menu-link>
       <nav-menu-link
         title="Обзвон "
+        v-if="decode === 'ROLE_USER' || 'ROLE_ADMIN' "
         :to="{ name: 'calling'}"
         :icon="icons.mdiEyeOutline"
       ></nav-menu-link>
       <nav-menu-link
         title="Пользователи "
+        v-if="decode === 'ROLE_ADMIN'"
         :to="{ name: 'users'}"
         :icon="icons.mdiFileOutline"
       ></nav-menu-link>
@@ -100,11 +104,11 @@
 <!--        :to="{ name: 'icons' }"-->
 <!--        :icon="icons.mdiEyeOutline"-->
 <!--      ></nav-menu-link>-->
-      <nav-menu-link
-        title="Cards"
-        :to="{ name: 'cards' }"
-        :icon="icons.mdiCreditCardOutline"
-      ></nav-menu-link>
+<!--      <nav-menu-link-->
+<!--        title="Cards"-->
+<!--        :to="{ name: 'cards' }"-->
+<!--        :icon="icons.mdiCreditCardOutline"-->
+<!--      ></nav-menu-link>-->
 <!--      <nav-menu-link-->
 <!--        title="Tables"-->
 <!--        :to="{ name: 'simple-table' }"-->
@@ -134,6 +138,7 @@ import {
 import NavMenuSectionTitle from './components/NavMenuSectionTitle.vue'
 import NavMenuGroup from './components/NavMenuGroup.vue'
 import NavMenuLink from './components/NavMenuLink.vue'
+import {decodeJWT} from "@/use/auth";
 
 export default {
   components: {
@@ -148,7 +153,9 @@ export default {
     },
   },
   setup() {
+    const decode = decodeJWT().roles[0]
     return {
+      decode,
       icons: {
         mdiHomeOutline,
         mdiAlphaTBoxOutline,

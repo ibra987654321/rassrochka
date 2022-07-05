@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import { getToken } from '@/helpers/helpers'
+import {getToken, Role} from '@/helpers/helpers'
+import {decodeJWT} from "@/use/auth";
 
 Vue.use(VueRouter)
 
@@ -12,25 +13,25 @@ const routes = [
   {
     path: '/dashboard',
     name: 'dashboard',
-    meta: { layout: 'main', auth: true },
+    meta: { layout: 'main', auth: true, authorize: [Role.User, Role.Admin] },
     component: () => import('../views/dashboard/Dashboard'),
   },
   {
     path: '/detail/:id',
     name: 'detail',
-    meta: { layout: 'main', auth: true },
+    meta: { layout: 'main', auth: true, authorize: [Role.User, Role.Admin] },
     component: () => import('../components/Detail'),
   },
   {
     path: '/calling',
     name: 'calling',
-    meta: { layout: 'main', auth: true },
+    meta: { layout: 'main', auth: true, authorize: [Role.User, Role.Admin] },
     component: () => import('../views/Calling'),
   },
   {
     path: '/users',
     name: 'users',
-    meta: { layout: 'main', auth: true },
+    meta: { layout: 'main', auth: true, authorize: [Role.Admin] },
     component: () => import('../views/UserControl'),
   },
   {
@@ -67,7 +68,7 @@ const routes = [
   {
     path: '/pages/account-settings',
     name: 'pages-account-settings',
-    meta: { layout: 'main', auth: true },
+    meta: { layout: 'main', auth: true, authorize: [Role.User, Role.Admin] },
     component: () => import('../views/pages/account-settings/AccountSettings.vue'),
   },
   {
@@ -107,11 +108,20 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   const requireAuth = to.matched.some(record => record.meta.auth)
+  // const role = to.matched[0].meta.authorize[0]
   const currentUser = getToken()
-
+  // to.matched.some(r => {
+  //   r.meta.authorize.map(i => {
+  //       console.log(decodeJWT().roled[0] === i)
+  //   })
+  // })
   if (requireAuth && !currentUser) {
     next('/pages/login')
-  } else {
+  }
+  // else if(decodeJWT().roles[0] !== role) {
+  //   next('/dashboard')
+  // }
+  else {
     next()
   }
 })

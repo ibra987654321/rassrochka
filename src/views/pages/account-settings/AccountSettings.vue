@@ -30,22 +30,6 @@
             :is="'Form' + n"
             @newcredit="newPerson"
           ></component>
-
-<!--          <v-btn-->
-<!--            color="primary"-->
-<!--            @click="nextStep(n)"-->
-<!--            :disabled="$store.state.profiles.doneCard"-->
-<!--          >-->
-<!--            Далее-->
-<!--          </v-btn>-->
-
-<!--          <v-btn-->
-<!--            @click="prevStep(n)"-->
-<!--            :disabled="$store.state.profiles.doneCard"-->
-<!--            text-->
-<!--          >-->
-<!--            Назад-->
-<!--          </v-btn>-->
         </v-stepper-content>
       </v-stepper-items>
     </v-stepper>
@@ -65,6 +49,7 @@ import Form5 from "@/views/pages/account-settings/Form5";
 import AccountSettingsAccount from './AccountSettingsAccount.vue'
 
 import AccountSettingsInfo from './AccountSettingsInfo.vue'
+import {decodeJWT} from "@/use/auth";
 
 export default {
   components: {

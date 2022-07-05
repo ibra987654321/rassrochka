@@ -15,18 +15,7 @@
             class="d-block d-lg-none me-2"
             @click="isDrawerOpen = !isDrawerOpen"
           ></v-app-bar-nav-icon>
-          <v-text-field
-            rounded
-            dense
-            outlined
-            :prepend-inner-icon="icons.mdiMagnify"
-            class="app-bar-search flex-grow-0"
-            hide-details
-          ></v-text-field>
           <v-spacer></v-spacer>
-
-<!--          &lt;!&ndash; Right Content &ndash;&gt;-->
-<!--          <date-range-picker></date-range-picker>-->
           <theme-switcher></theme-switcher>
           <app-bar-user-menu></app-bar-user-menu>
         </div>

@@ -260,7 +260,7 @@
 <script>
 import {mdiAlertOutline, mdiCloudUploadOutline} from "@mdi/js";
 import { validationMixin } from 'vuelidate'
-import { required, minLength, numeric } from 'vuelidate/lib/validators'
+import { required, minLength, numeric, maxLength } from 'vuelidate/lib/validators'
 
 
 export default {
@@ -273,7 +273,7 @@ export default {
       phone: {required, numeric},
       factAddress: {required, minLength: minLength(5)},
       passportSeries: {required, minLength: minLength(5)},
-      passportInn: {required, minLength: minLength(14)},
+      passportInn: {required, minLength: minLength(14), maxLength: maxLength(14)},
       passportAddress: {required, minLength: minLength(5)},
       passportDepartment: {required, minLength: minLength(5)},
       workAddress: {required, minLength: minLength(5)},
@@ -316,42 +316,43 @@ export default {
     factAddressError () {
       const errors = []
       if (!this.$v.account.factAddress.$dirty) return errors
-      !this.$v.account.factAddress.minLength && errors.push('Это поле на должно быть меньше 5. Сейчас ' + this.account.factAddress.length)
+      !this.$v.account.factAddress.minLength && errors.push('Это поле нe должно быть меньше 5. Сейчас ' + this.account.factAddress.length)
       !this.$v.account.factAddress.required && errors.push('Поле не должно быть пустым.')
       return errors
     },
     passportSeriesError () {
       const errors = []
       if (!this.$v.account.passportSeries.$dirty) return errors
-      !this.$v.account.passportSeries.minLength && errors.push('Это поле на должно быть меньше 5. Сейчас ' + this.account.passportSeries.length)
+      !this.$v.account.passportSeries.minLength && errors.push('Это поле нe должно быть меньше 5. Сейчас ' + this.account.passportSeries.length)
       !this.$v.account.passportSeries.required && errors.push('Поле не должно быть пустым.')
       return errors
     },
     passportInnError () {
       const errors = []
       if (!this.$v.account.passportInn.$dirty) return errors
-      !this.$v.account.passportInn.minLength && errors.push('Это поле на должно быть меньше 14. Сейчас ' + this.account.passportInn.length)
+      !this.$v.account.passportInn.minLength && errors.push('Это поле нe должно быть меньше 14. Сейчас ' + this.account.passportInn.length)
+      !this.$v.account.passportInn.maxLength && errors.push('Это поле нe должно быть больше 14. Сейчас ' + this.account.passportInn.length)
       !this.$v.account.passportInn.required && errors.push('Поле не должно быть пустым.')
       return errors
     },
     passportAddressError () {
       const errors = []
       if (!this.$v.account.passportAddress.$dirty) return errors
-      !this.$v.account.passportAddress.minLength && errors.push('Это поле на должно быть меньше 5. Сейчас ' + this.account.passportAddress.length)
+      !this.$v.account.passportAddress.minLength && errors.push('Это поле нe должно быть меньше 5. Сейчас ' + this.account.passportAddress.length)
       !this.$v.account.passportAddress.required && errors.push('Поле не должно быть пустым.')
       return errors
     },
     passportDepartmentError () {
       const errors = []
       if (!this.$v.account.passportDepartment.$dirty) return errors
-      !this.$v.account.passportDepartment.minLength && errors.push('Это поле на должно быть меньше 5. Сейчас ' + this.account.passportDepartment.length)
+      !this.$v.account.passportDepartment.minLength && errors.push('Это поле нe должно быть меньше 5. Сейчас ' + this.account.passportDepartment.length)
       !this.$v.account.passportDepartment.required && errors.push('Поле не должно быть пустым.')
       return errors
     },
     workAddressError () {
       const errors = []
       if (!this.$v.account.workAddress.$dirty) return errors
-      !this.$v.account.workAddress.minLength && errors.push('Это поле на должно быть меньше 5. Сейчас ' + this.account.workAddress.length)
+      !this.$v.account.workAddress.minLength && errors.push('Это поле нe должно быть меньше 5. Сейчас ' + this.account.workAddress.length)
       !this.$v.account.workAddress.required && errors.push('Поле не должно быть пустым.')
       return errors
     },

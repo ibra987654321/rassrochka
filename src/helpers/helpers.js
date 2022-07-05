@@ -10,3 +10,7 @@ export const getDarkTheme = () => localStorage.getItem('dark_theme')
 export const setDarkTheme = theme => {
   localStorage.setItem('dark_theme', theme)
 }
+export const Role = {
+  Admin: 'ROLE_ADMIN',
+  User: 'ROLE_USER'
+}
