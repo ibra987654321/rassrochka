@@ -11,10 +11,10 @@ export default {
       const data = axios({
         method: 'GET',
         url: `${environment.propApi + PROFILES}/findCallProfile`,
-        // headers: {
-        //   'Content-Type': 'application/json',
-        //   Authorization: `Bearer ${getToken()}`,
-        // },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getToken()}`,
+        },
       }).then(r => r.data)
       return data
     },
@@ -22,10 +22,10 @@ export default {
       const data = axios({
         method: 'GET',
         url: `${environment.propApi + BROTHER}/getBrothersById/${id}`,
-        // headers: {
-        //   'Content-Type': 'application/json',
-        //   Authorization: `Bearer ${getToken()}`,
-        // },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getToken()}`,
+        },
       }).then(r => r.data)
       return data
     },
