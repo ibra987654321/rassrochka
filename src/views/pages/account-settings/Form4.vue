@@ -89,8 +89,8 @@ export default {
   name: "Form4",
   data:() => ({
     owner: {
-      deviceOwner: 'Курманов Дастан',
-      deviceOwnerIp: '21354687985',
+      deviceOwner: '',
+      deviceOwnerIp: '',
       deviceId: ''
     },
   }),

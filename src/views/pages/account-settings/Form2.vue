@@ -115,10 +115,10 @@ export default {
   name: "Form2",
   data:() => ({
     brother: {
-      fullName: 'Бегалиев Аманат',
-      phoneNumber: '0702154875',
-      address: 'Бишкек Аламедин',
-      brotherType: 'Сестра',
+      fullName: '',
+      phoneNumber: '',
+      address: '',
+      brotherType: '',
       profileId: ''
     },
     menu2: false,

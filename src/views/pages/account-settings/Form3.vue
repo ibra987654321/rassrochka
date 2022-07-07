@@ -116,10 +116,10 @@ export default {
   name: "Form3",
   data:() => ({
     device: {
-      deviceImei: '1234567891234',
-      deviceMemory: '16гб',
-      deviceModel: 'Iphone',
-      devicePrice: '35000',
+      deviceImei: '',
+      deviceMemory: '',
+      deviceModel: '',
+      devicePrice: '',
       profileId: '',
     },
     items: ['4гб','8гб','16гб','32гб','64гб','128гб','256гб','512гб','1тб',]

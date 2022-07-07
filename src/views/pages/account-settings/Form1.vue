@@ -281,14 +281,14 @@ export default {
   },
   data:() => ({
     account: {
-      fullName: 'Бегалиев Аманат',
-      phone: '0702154875',
-      factAddress: 'Бишкек',
-      passportSeries: 'AN1234567',
-      passportInn: '12345678912547',
-      passportAddress: 'Бишкек',
-      passportDepartment: 'MKK 50-09',
-      workAddress: 'Бишкек SkyMobile',
+      fullName: '',
+      phone: '',
+      factAddress: '',
+      passportSeries: '',
+      passportInn: '',
+      passportAddress: '',
+      passportDepartment: '',
+      workAddress: '',
       passportDate: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)
     },
     menu2: false,
