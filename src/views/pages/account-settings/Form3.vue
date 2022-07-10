@@ -14,6 +14,10 @@
             <v-text-field
               v-model="device.deviceImei"
               label="Имей"
+              required
+              @input="$v.device.deviceImei.$touch()"
+              @blur="$v.device.deviceImei.$touch()"
+              :error-messages="ImeiError"
               dense
               outlined
             ></v-text-field>
@@ -26,6 +30,10 @@
             <v-text-field
               v-model="device.deviceModel"
               label="Имя телефона"
+              required
+              @input="$v.device.deviceModel.$touch()"
+              @blur="$v.device.deviceModel.$touch()"
+              :error-messages="ModelError"
               dense
               outlined
             ></v-text-field>
@@ -40,6 +48,10 @@
               :items="items"
               v-model="device.deviceMemory"
               label="Память"
+              required
+              @input="$v.device.deviceMemory.$touch()"
+              @blur="$v.device.deviceMemory.$touch()"
+              :error-messages="MemoryErrors"
               dense
               outlined
             ></v-select>
@@ -52,45 +64,20 @@
             <v-text-field
               v-model="device.devicePrice"
               label="Цена"
+              required
+              @input="$v.device.devicePrice.$touch()"
+              @blur="$v.device.devicePrice.$touch()"
+              :error-messages="PriceError"
               dense
               outlined
             ></v-text-field>
           </v-col>
-
-
-
-<!--          &lt;!&ndash; alert &ndash;&gt;-->
-<!--          <v-col cols="12">-->
-<!--            <v-alert-->
-<!--              color="warning"-->
-<!--              text-->
-<!--              class="mb-0"-->
-<!--            >-->
-<!--              <div class="d-flex align-start">-->
-<!--                <v-icon color="warning">-->
-<!--                  {{ icons.mdiAlertOutline }}-->
-<!--                </v-icon>-->
-
-<!--                <div class="ms-3">-->
-<!--                  <p class="text-base font-weight-medium mb-1">-->
-<!--                    Заполните все поля-->
-<!--                  </p>-->
-<!--                  <a-->
-<!--                    href="javascript:void(0)"-->
-<!--                    class="text-decoration-none warning&#45;&#45;text"-->
-<!--                  >-->
-<!--                    <span class="text-sm">Resend Confirmation</span>-->
-<!--                  </a>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </v-alert>-->
-<!--          </v-col>-->
-
           <v-col cols="12">
             <v-btn
               color="primary"
               class="me-3 mt-4"
               @click="save()"
+              :disabled="$v.$invalid"
             >
               Сохранить
             </v-btn>
@@ -111,9 +98,19 @@
 </template>
 
 <script>
-
+import { validationMixin } from 'vuelidate'
+import { required, minLength, numeric, maxLength } from 'vuelidate/lib/validators'
 export default {
   name: "Form3",
+  mixins: [validationMixin],
+  validations: {
+    device: {
+      deviceImei: {required,numeric, minLength: minLength(12), maxLength: maxLength(20)},
+      deviceMemory: {required,  minLength: minLength(2)},
+      deviceModel: {required, minLength: minLength(3)},
+      devicePrice: {required},
+    },
+  },
   data:() => ({
     device: {
       deviceImei: '',
@@ -126,6 +123,37 @@ export default {
 
 
   }),
+  computed: {
+    MemoryErrors () {
+      const errors = []
+      if (!this.$v.device.deviceMemory.$dirty) return errors
+      !this.$v.device.deviceMemory.minLength && errors.push('Это поле не должно быть меньше 2. Сейчас ' + this.device.deviceMemory.length)
+      !this.$v.device.deviceMemory.required && errors.push('Поле не должно быть пустым.')
+      return errors
+    },
+    ImeiError () {
+      const errors = []
+      if (!this.$v.device.deviceImei.$dirty) return errors
+      !this.$v.device.deviceImei.numeric && errors.push('Только цифры')
+      !this.$v.device.deviceImei.minLength && errors.push('Это поле не должно быть меньше 12. Сейчас ' + this.device.deviceImei.length)
+      !this.$v.device.deviceImei.maxLength && errors.push('Это поле нe должно быть больше 20. Сейчас ' + this.device.deviceImei.length)
+      !this.$v.device.deviceImei.required && errors.push('Поле не должно быть пустым.')
+      return errors
+    },
+    ModelError () {
+      const errors = []
+      if (!this.$v.device.deviceModel.$dirty) return errors
+      !this.$v.device.deviceModel.minLength && errors.push('Это поле не должно быть меньше 3. Сейчас ' + this.device.deviceModel.length)
+      !this.$v.device.deviceModel.required && errors.push('Поле не должно быть пустым.')
+      return errors
+    },
+    PriceError () {
+      const errors = []
+      if (!this.$v.device.devicePrice.$dirty) return errors
+      !this.$v.device.devicePrice.required && errors.push('Поле не должно быть пустым.')
+      return errors
+    },
+  },
   methods: {
     save() {
       this.device.profileId = this.$store.state.profiles.profileId.id

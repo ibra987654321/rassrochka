@@ -272,7 +272,7 @@ export default {
       fullName: {required, minLength: minLength(10)},
       phone: {required, numeric},
       factAddress: {required, minLength: minLength(5)},
-      passportSeries: {required, minLength: minLength(5)},
+      passportSeries: {required, minLength: minLength(5), maxLength: maxLength(15)},
       passportInn: {required, minLength: minLength(14), maxLength: maxLength(14)},
       passportAddress: {required, minLength: minLength(5)},
       passportDepartment: {required, minLength: minLength(5)},
@@ -324,6 +324,7 @@ export default {
       const errors = []
       if (!this.$v.account.passportSeries.$dirty) return errors
       !this.$v.account.passportSeries.minLength && errors.push('Это поле нe должно быть меньше 5. Сейчас ' + this.account.passportSeries.length)
+      !this.$v.account.passportSeries.maxLength && errors.push('Это поле нe должно быть больше 15. Сейчас ' + this.account.passportSeries.length)
       !this.$v.account.passportSeries.required && errors.push('Поле не должно быть пустым.')
       return errors
     },

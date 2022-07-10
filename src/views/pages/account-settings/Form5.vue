@@ -46,7 +46,7 @@
             ></v-select>
           </v-col>
         </v-row>
-        <table-for-price v-if="priceForMonth !== ''" :data="priceForMonth"></table-for-price>
+        <table-for-price v-if="showTable" :data="priceForMonth"></table-for-price>
         <v-btn
           color="primary"
           class="me-3 mt-4"
@@ -74,13 +74,13 @@
          >
            Перейти в список
          </v-btn>
-         <v-btn
-           color="primary"
-           class="me-3 mt-4"
-           @click="newCredit()"
-         >
-           Заново
-         </v-btn>
+<!--         <v-btn-->
+<!--           color="primary"-->
+<!--           class="me-3 mt-4"-->
+<!--           @click="newCredit()"-->
+<!--         >-->
+<!--           Заново-->
+<!--         </v-btn>-->
        </div>
      </div>
 
@@ -120,6 +120,7 @@ export default {
     percentPrice: '',
     dateRange: '',
     brother: '',
+    showTable: false,
     creditData: {},
     monthForPay: ['Первый месяц', 'Второй месяц', 'Третий месяц'],
     zeroPayment: '',
@@ -146,6 +147,7 @@ export default {
   },
   computed: {
     doneCard() {
+      this.showTable = false
       return this.$store.state.profiles.doneCard
     }
   },
@@ -399,7 +401,7 @@ export default {
           new Paragraph({
             children: [
               new TextRun({
-                text:`Индивидуальный предприниматель Сыдыгалиева Венера Нарынбековна, действующая на основании Добровольного патента на занятие предпринимательской деятельностью №ДПЭ 90414-003/22 от 14.02.2022.г., именуемый(ая) в дальнейшем "Продавец", с одной стороны, и гражданин Кыргызской Республики "${this.$store.state.profiles.profileId.fullName}", паспорт серии:"${this.$store.state.profiles.profileId.passportInn}", выдан: "${this.$store.state.profiles.profileId.passportDepartment}", дата выдачи_"${this.$store.state.profiles.profileId.passportDate}", тел:_"${this.$store.state.profiles.profileId.phone}", место работы_"${this.$store.state.profiles.profileId.workAddress}", проживающий(ая) по адре-су: "${this.$store.state.profiles.profileId.factAddress}", прописанный(ая) по адресу: "${this.$store.state.profiles.profileId.passportAddress}", именуемый(ая) в дальнейшем "Покупатель", с другой стороны, совместно именуемые «Стороны», заключили настоящий Договор купли-продажи телефона с рассрочкой платежа (далее по тексту – Договор) о нижеследующем:
+                text:`Индивидуальный предприниматель Сыдыгалиева Венера Нарынбековна, действующая на основании Добровольного патента на занятие предпринимательской деятельностью №ДПЭ 90414-003/22 от 14.02.2022.г., именуемый(ая) в дальнейшем "Продавец", с одной стороны, и гражданин Кыргызской Республики "${this.$store.state.profiles.profileId.fullName}", паспорт серии:"${this.$store.state.profiles.profileId.passportSeries}", выдан: "${this.$store.state.profiles.profileId.passportDepartment}", дата выдачи_"${this.$store.state.profiles.profileId.passportDate}", тел:_"${this.$store.state.profiles.profileId.phone}", место работы_"${this.$store.state.profiles.profileId.workAddress}", проживающий(ая) по адре-су: "${this.$store.state.profiles.profileId.factAddress}", прописанный(ая) по адресу: "${this.$store.state.profiles.profileId.passportAddress}", именуемый(ая) в дальнейшем "Покупатель", с другой стороны, совместно именуемые «Стороны», заключили настоящий Договор купли-продажи телефона с рассрочкой платежа (далее по тексту – Договор) о нижеследующем:
                 `,
                 break: 1,
               }),
@@ -589,6 +591,7 @@ export default {
       });
     },
     calculator(price, month) {
+      this.showTable = true
       this.priceForMonth = []
         const zero = price - this.zeroPayment
         const percentPlus = (zero / 100) * this.selectedPercent
@@ -633,6 +636,9 @@ export default {
       this.$emit('newcredit')
     }
   },
+  beforeDestroy() {
+    this.$store.state.profiles.doneCard = false
+  }
 }
 </script>
 
