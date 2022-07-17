@@ -78,7 +78,7 @@
           >
             <v-text-field
               v-model="device.cloudLogin"
-              label="Логин"
+              label="Логин аккаунта"
               required
               @input="$v.device.cloudLogin.$touch()"
               @blur="$v.device.cloudLogin.$touch()"
@@ -93,7 +93,7 @@
           >
             <v-text-field
               v-model="device.cloudPass"
-              label="Пароль"
+              label="Пароль аккаунта"
               required
               @input="$v.device.cloudPass.$touch()"
               @blur="$v.device.cloudPass.$touch()"

@@ -32,7 +32,7 @@ export default {
       {text:'Цена', value: 'devicePrice' },
       {text:'Взнос', value: 'zeroPayment' },
       {text:'Коммент', value: 'comment' },
-      {text:'Агент', value: 'salesmanLogin' },
+      {text:'Продавец', value: 'salesmanLogin' },
       { text: 'Действия', value: 'actions', sortable: false },
     ],
     editItem: {

@@ -24,7 +24,7 @@ export default {
       {text:'Статус', value: 'status' },
       {text:'Номер', value: 'phoneNumber' },
       {text:'Дата', value: 'date' },
-      {text:'Амин', value: 'adminLogin' },
+      {text:'Админ', value: 'adminLogin' },
       { text: 'Действия', value: 'actions', sortable: false },
     ],
     editItem: {

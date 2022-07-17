@@ -1,12 +1,13 @@
 <template>
   <v-card>
-    <v-card-title>Контроль профилями</v-card-title>
+    <v-card-title>База клиентов</v-card-title>
     <v-card-text>
       <div class="d-flex">
         <v-text-field
           rounded
           dense
           outlined
+          placeholder="Поиск по ФИО или ИНН"
           ref="search"
           v-model="search"
           :prepend-inner-icon="icons.mdiMagnify"
@@ -17,7 +18,7 @@
           rounded
           dense
           outlined
-          placeholder="Поиск по Imei"
+          placeholder="Поиск по IMEI"
           ref="searchImei"
           v-model="searchImei"
           :prepend-inner-icon="icons.mdiMagnify"
@@ -87,9 +88,9 @@ export default {
       {text:'№', value: 'id' },
       {text:'Дата', value: 'registrationDate' },
       {text:'ФИО', value: 'fullName' },
-      {text:'Имей', value: 'deviceImei' },
-      {text:'Агент', value: 'salesmanLogin' },
-      {text:'Actions', value: 'actions', sortable: true},
+      {text:'IMEI', value: 'deviceImei' },
+      {text:'Продавец', value: 'salesmanLogin' },
+      {text:'Действия', value: 'actions', sortable: true},
     ],
     search: '',
     searchImei: ''

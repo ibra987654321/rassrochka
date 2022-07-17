@@ -86,7 +86,7 @@
           >
             <v-text-field
               v-model="account.factAddress"
-              label="Адрес прожвания"
+              label="Адрес проживания"
               dense
               required
               @input="$v.account.factAddress.$touch()"

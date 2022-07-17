@@ -55,7 +55,7 @@ export default {
       {text:'Дата закрытия', value: 'payDate' },
       {text:'Статус', value: 'statusType' },
       {text:'Комментарии', value: 'comment' },
-      {text: 'Дейстия', value: 'actions', sortable: false},
+      {text: 'Действия', value: 'actions', sortable: false},
     ],
     editItem: {
       payDate: '',
