@@ -76,10 +76,15 @@ export default {
       deviceOwnerIp: {required,  minLength: minLength(3), maxLength: maxLength(20)},
     },
   },
+  // owner: {
+  //   deviceOwner: 'center',
+  //   deviceOwnerIp: 'ugyguyguyg686876876',
+  //   deviceId: ''
+  // },
   data:() => ({
     owner: {
-      deviceOwner: 'center',
-      deviceOwnerIp: 'ugyguyguyg686876876',
+      deviceOwner: '',
+      deviceOwnerIp: '',
       deviceId: ''
     },
   }),

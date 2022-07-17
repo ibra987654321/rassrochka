@@ -112,12 +112,19 @@ export default {
       brotherType: {required, minLength: minLength(3), maxLength: maxLength(20)},
     },
   },
+  // brother: {
+  //   fullName: 'Amanat Begaliev',
+  //   phoneNumber: '0772548575',
+  //   address: 'Alamedin rayonu',
+  //   brotherType: 'Brat',
+  //   profileId: ''
+  // },
   data:() => ({
     brother: {
-      fullName: 'Amanat Begaliev',
-      phoneNumber: '0772548575',
-      address: 'Alamedin rayonu',
-      brotherType: 'Brat',
+      fullName: '',
+      phoneNumber: '',
+      address: '',
+      brotherType: '',
       profileId: ''
     },
     menu2: false,
