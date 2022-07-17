@@ -3,7 +3,7 @@
     flat
     class="pa-3 mt-2"
   >
-    <h2>Родственник</h2>
+    <h2>Поручитель</h2>
     <v-card-text>
       <v-form class="multi-col-validation mt-6">
         <v-row>
@@ -45,7 +45,7 @@
           >
             <v-text-field
               v-model="brother.address"
-              label="Адресс прожвания"
+              label="Адрес прожвания"
               required
               @input="$v.brother.address.$touch()"
               @blur="$v.brother.address.$touch()"
@@ -114,10 +114,10 @@ export default {
   },
   data:() => ({
     brother: {
-      fullName: '',
-      phoneNumber: '',
-      address: '',
-      brotherType: '',
+      fullName: 'Amanat Begaliev',
+      phoneNumber: '0772548575',
+      address: 'Alamedin rayonu',
+      brotherType: 'Brat',
       profileId: ''
     },
     menu2: false,

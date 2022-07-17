@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-card-title>Контроль кредитами</v-card-title>
+    <v-card-title>Просроченные кредиты</v-card-title>
     <v-card-text>
       <table-for-edit
         :data="data"

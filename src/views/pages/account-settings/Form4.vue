@@ -3,7 +3,7 @@
     flat
     class="pa-3 mt-2"
   >
-    <h2>Телефон</h2>
+    <h2>Дилер</h2>
     <v-card-text>
       <v-form class="multi-col-validation mt-6">
         <v-row>
@@ -13,7 +13,7 @@
           >
             <v-text-field
               v-model="owner.deviceOwner"
-              label="Поставшик"
+              label="Название дилера"
               required
               @input="$v.owner.deviceOwner.$touch()"
               @blur="$v.owner.deviceOwner.$touch()"
@@ -29,7 +29,7 @@
           >
             <v-text-field
               v-model="owner.deviceOwnerIp"
-              label="ИП поставшика"
+              label="ИП дилера"
               required
               @input="$v.owner.deviceOwnerIp.$touch()"
               @blur="$v.owner.deviceOwnerIp.$touch()"
@@ -78,8 +78,8 @@ export default {
   },
   data:() => ({
     owner: {
-      deviceOwner: '',
-      deviceOwnerIp: '',
+      deviceOwner: 'center',
+      deviceOwnerIp: 'ugyguyguyg686876876',
       deviceId: ''
     },
   }),

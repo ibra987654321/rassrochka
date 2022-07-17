@@ -32,7 +32,7 @@
             text
             @click="dialog = false"
           >
-            I accept
+            Закрыть
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -51,12 +51,11 @@ export default {
   data:() => ({
     dialog: false,
     fields: [
-      {text:'Месяцы', value: 'payDate' },
       {text:'Должен', value: 'debt' },
-      {text:'Дата закрытия', value: 'debtClosedDate' },
+      {text:'Дата закрытия', value: 'payDate' },
       {text:'Статус', value: 'statusType' },
       {text:'Комментарии', value: 'comment' },
-      {text: 'Actions', value: 'actions', sortable: false},
+      {text: 'Дейстия', value: 'actions', sortable: false},
     ],
     editItem: {
       payDate: '',

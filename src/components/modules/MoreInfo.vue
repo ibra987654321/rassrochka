@@ -9,7 +9,7 @@
           order="2"
           order-lg="1"
         >
-          <v-card-title>Доп лицо</v-card-title>
+          <v-card-title>Поручитель</v-card-title>
           <v-card-text>
             <v-divider></v-divider>
           </v-card-text>

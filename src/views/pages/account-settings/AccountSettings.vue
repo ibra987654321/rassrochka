@@ -7,7 +7,6 @@
             :key="`${n}-step`"
             :complete="e1 > n"
             :step="n"
-            editable
           >
            {{ stepName[n - 1] }}
           </v-stepper-step>
@@ -37,7 +36,6 @@
 </template>
 
 <script>
-import { mdiAccountOutline, mdiCardAccountDetailsOutline, mdiInformationOutline } from '@mdi/js'
 
 import Form1 from "@/views/pages/account-settings/Form1";
 import Form2 from "@/views/pages/account-settings/Form2";
@@ -49,7 +47,6 @@ import Form5 from "@/views/pages/account-settings/Form5";
 import AccountSettingsAccount from './AccountSettingsAccount.vue'
 
 import AccountSettingsInfo from './AccountSettingsInfo.vue'
-import {decodeJWT} from "@/use/auth";
 
 export default {
   components: {
@@ -65,7 +62,7 @@ export default {
     return {
       e1: 1,
       steps: 5,
-      stepName: ['Профиль', 'Поручитель', 'Телефон', 'Поставщик', 'Заемщик']
+      stepName: ['Профиль', 'Поручитель', 'Телефон', 'Дилер', 'Кредит']
     }
   },
 
@@ -95,40 +92,19 @@ export default {
     newPerson() {
       this.e1 = 1
       this.$store.state.profiles.doneCard = false
-    }
+    },
+    // dialog() {
+    //   this.$router.push({name: 'calling'})
+    // }
   },
-  setup() {
-    // account settings data
-    const accountSettingData = {
-      account: {
-        avatarImg: require('@/assets/images/avatars/1.png'),
-        username: 'Бегалиев Аманат',
-        name: '0702154875',
-        email: 'Бишкек',
-        role: '2154854222541',
-        status: '2154854222541',
-        company: 'Бишкек',
-        company1: 'MKK 50-09',
-      },
-      information: {
-        bio: 'The name’s John Deo. I am a tireless seeker of knowledge, occasional purveyor of wisdom and also, coincidentally, a graphic designer. Algolia helps businesses across industries quickly create relevant 😎, scaLabel 😀, and lightning 😍 fast search and discovery experiences.',
-        birthday: 'February 22, 1995',
-        phone: '954-006-0844',
-        website: 'https://themeselection.com/',
-        country: 'USA',
-        languages: ['English', 'Spanish'],
-        gender: 'male',
-      },
-    }
-
-    return {
-      accountSettingData,
-      icons: {
-        mdiAccountOutline,
-        mdiCardAccountDetailsOutline,
-        mdiInformationOutline,
-      },
-    }
-  },
+  // beforeRouteLeave(to, from, next) {
+  //   if (from.name === 'pages-account-settings' && (to.name === 'calling' || to.name === 'users' || to.name === 'dashboard') ) {
+  //     const dialog = this.$store.state.dialog
+  //     dialog.dialog = true
+  //     dialog.title = 'Предупреждение'
+  //     dialog.text = 'Если покинете эту страницу все данные удалятся!'
+  //     dialog.routeName = to.name
+  //   }
+  // }
 }
 </script>

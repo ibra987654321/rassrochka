@@ -86,7 +86,7 @@
           >
             <v-text-field
               v-model="account.factAddress"
-              label="Адресс прожвания"
+              label="Адрес прожвания"
               dense
               required
               @input="$v.account.factAddress.$touch()"
@@ -136,7 +136,7 @@
               v-model="account.passportAddress"
               dense
               outlined
-              label="Адресс по паспорту"
+              label="Адрес по паспорту"
               required
               @input="$v.account.passportAddress.$touch()"
               @blur="$v.account.passportAddress.$touch()"
@@ -190,7 +190,7 @@
               <template v-slot:activator="{ on, attrs }">
                 <v-text-field
                   v-model="account.passportDate"
-                  label="Дата выдачи "
+                  label="Дата выдачи паспорта"
                   readonly
                   dense
                   outlined
@@ -203,33 +203,6 @@
                 @input="menu2 = false"
               ></v-date-picker>
             </v-menu>
-          </v-col>
-
-          <!-- alert -->
-          <v-col cols="12">
-            <v-alert
-              color="warning"
-              text
-              class="mb-0"
-            >
-              <div class="d-flex align-start">
-                <v-icon color="warning">
-                  {{ icons.mdiAlertOutline }}
-                </v-icon>
-
-                <div class="ms-3">
-                  <p class="text-base font-weight-medium mb-1">
-                    Заполните все поля
-                  </p>
-                  <a
-                    href="javascript:void(0)"
-                    class="text-decoration-none warning--text"
-                  >
-                    <span class="text-sm">Resend Confirmation</span>
-                  </a>
-                </div>
-              </div>
-            </v-alert>
           </v-col>
 
           <v-col cols="12">
@@ -281,14 +254,14 @@ export default {
   },
   data:() => ({
     account: {
-      fullName: '',
-      phone: '',
-      factAddress: '',
-      passportSeries: '',
-      passportInn: '',
-      passportAddress: '',
-      passportDepartment: '',
-      workAddress: '',
+      fullName: 'Azamat Bekesov',
+      phone: '0771548785',
+      factAddress: 'bishkek',
+      passportSeries: 'AN94587',
+      passportInn: '88455458555566',
+      passportAddress: 'Alamedin',
+      passportDepartment: 'MKK=24',
+      workAddress: 'beeline',
       passportDate: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)
     },
     menu2: false,

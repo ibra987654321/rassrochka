@@ -22,24 +22,28 @@ export default {
     },
   },
   actions: {
-    // getAllProfiles(_, payload) {
-    //  const data = axios(`${environment.propApi + PROFILES}/findProfileByDate/${payload.start}/${payload.end}`, {
-    //     method: 'GET',
-    //   }).then(r => r.data)
-    //   return data
-    // },
-    getAllProfiles() {
-      const data = axios(`${environment.propApi + PROFILES}/findAll`, {
+    getAllProfiles(_, payload) {
+     const data = axios(`${environment.propApi + PROFILES}/getDtoForMain/${payload.start}/${payload.end}`, {
         method: 'GET',
-          headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${getToken()}`,
-        },
+       headers: {
+         'Content-Type': 'application/json',
+         Authorization: `Bearer ${getToken()}`,
+       },
       }).then(r => r.data)
       return data
     },
+    // getAllProfiles() {
+    //   const data = axios(`${environment.propApi + PROFILES}/findAll`, {
+    //     method: 'GET',
+    //       headers: {
+    //       'Content-Type': 'application/json',
+    //       Authorization: `Bearer ${getToken()}`,
+    //     },
+    //   }).then(r => r.data)
+    //   return data
+    // },
     searchProfilesByName(_, name) {
-      const data = axios(`${environment.propApi + PROFILES}/findByFullName/${name}`, {
+      const data = axios(`${environment.propApi + PROFILES}/getDtoForMainByFullName/${name}`, {
         method: 'GET',
           headers: {
           'Content-Type': 'application/json',
@@ -49,9 +53,19 @@ export default {
       return data
     },
     searchProfilesByInn(_, inn) {
-      const data = axios(`${environment.propApi + PROFILES}/findByPassportInn/${inn}`, {
+      const data = axios(`${environment.propApi + PROFILES}/getDtoForMainByPassInn/${inn}`, {
         method: 'GET',
           headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getToken()}`,
+        },
+      }).then(r => r.data)
+      return data
+    },
+    searchProfilesByImei(_, imei) {
+      const data = axios(`${environment.propApi + PROFILES}/getDtoForMainByDeviceImei/${imei}`, {
+        method: 'GET',
+        headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${getToken()}`,
         },

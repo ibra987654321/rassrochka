@@ -13,6 +13,17 @@
           class="app-bar-search flex-grow-0 mb-3"
           hide-details
         ></v-text-field>
+        <v-text-field
+          rounded
+          dense
+          outlined
+          placeholder="Поиск по Imei"
+          ref="searchImei"
+          v-model="searchImei"
+          :prepend-inner-icon="icons.mdiMagnify"
+          class="app-bar-search flex-grow-0 mb-3 ml-3"
+          hide-details
+        ></v-text-field>
 <!--        <v-btn-->
 <!--          color="blue darken-1"-->
 <!--          text-->
@@ -33,17 +44,24 @@
         :headers="fields"
         :items="data"
         :items-per-page="20"
+        item-key="itemKey"
         class="elevation-1"
       >
-        <template v-slot:item.actions="item">
+        <template v-slot:item.actions="item" >
           <v-btn
             color="primary"
             small
-            class="me-3 mt-4"
             @click="$router.push('/detail/' + item.item.id)"
           >
             Подробнее
           </v-btn>
+        </template>
+        <template v-slot:item.registrationDate="item" >
+          {{new Date(item.item.registrationDate).toLocaleString('ru', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        })}}
         </template>
       </v-data-table>
     </v-card-text>
@@ -52,10 +70,12 @@
 
 <script>
 import VerticalChart from '@/components/useDashboard/VerticalChart.vue'
-import TableClients from "@/components/table/TableClients";
-import {mdiMagnify} from '@mdi/js'
+import TableClients from '@/components/table/TableClients'
+import { mdiMagnify } from '@mdi/js'
+
 export default {
-  name: "ControlClients",
+  name: 'ControlClients',
+  // eslint-disable-next-line vue/no-unused-components
   components: { VerticalChart, TableClients },
   data: () => ({
     data: [],
@@ -65,13 +85,14 @@ export default {
     },
     fields: [
       {text:'№', value: 'id' },
+      {text:'Дата', value: 'registrationDate' },
       {text:'ФИО', value: 'fullName' },
-      {text:'ИНН', value: 'passportInn' },
-      {text:'Номер', value: 'phone' },
+      {text:'Имей', value: 'deviceImei' },
       {text:'Агент', value: 'salesmanLogin' },
-      {text: 'Actions', value: 'actions', sortable: false},
+      {text:'Actions', value: 'actions', sortable: true},
     ],
-    search: ''
+    search: '',
+    searchImei: ''
   }),
   created() {
     this.updateData()
@@ -80,6 +101,13 @@ export default {
     search(val) {
       if (val !== '') {
         this.searchData(val)
+      } else {
+        this.updateData()
+      }
+    },
+    searchImei(val) {
+      if (val !== '') {
+        this.searchByImei(val)
       } else {
         this.updateData()
       }
@@ -106,7 +134,11 @@ export default {
           this.data = r
         })
       }
-
+    },
+    searchByImei(val) {
+      this.$store.dispatch('searchProfilesByImei', val).then(r => {
+        this.data = r
+      })
     }
   }
 }

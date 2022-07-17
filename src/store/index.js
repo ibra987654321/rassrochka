@@ -32,6 +32,12 @@ export default new Vuex.Store({
       snackbar: false,
       text: '',
       timeout: 10,
+    },
+    dialog: {
+      dialog: false,
+      title: '',
+      text:'',
+      routeName: ''
     }
   },
   mutations: {

@@ -2,6 +2,7 @@
   <component :is="resolveLayout">
     <router-view></router-view>
     <TheSnackbars/>
+    <DynamicModal/>
   </component>
 </template>
 
@@ -12,12 +13,14 @@ import LayoutBlank from '@/layouts/Blank.vue'
 import LayoutContent from '@/layouts/Content.vue'
 import {getDarkTheme, setDarkTheme} from '@/helpers/helpers'
 import TheSnackbars from "@/components/TheSnackbars";
+import DynamicModal from '@/components/modules/DynamicModal'
 
 export default {
   components: {
     LayoutBlank,
     LayoutContent,
-    TheSnackbars
+    TheSnackbars,
+    DynamicModal
   },
   mounted() {
     const theme = getDarkTheme()

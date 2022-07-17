@@ -91,7 +91,7 @@
                   <v-col cols="12" order="2" order-lg="1" md="9"  sm="12">
                     <v-card-text class="pt-5">
                       <h6 class="text-sm font-weight-medium">
-                        Дата регистрации профиля | {{profile.registrationDate.slice(0, 10)}} <br>
+                        Дата регистрации профиля | {{new Date(profile.registrationDate).toLocaleString('ru', {year: 'numeric', month: 'long', day: 'numeric'})}} <br>
                         Продавец | {{profile.salesmanLogin}} <br>
                         Количество кредита | {{item != '' ? credit.length : 0}}
                       </h6>
@@ -142,6 +142,8 @@
                 <div class="d-flex flex-column">
                   <span class="text-sm"> Память | {{i[0].deviceDb.deviceMemory}}</span>
                   <span class="text-sm"> Imei | {{i[0].deviceDb.deviceImei}}</span>
+                  <span class="text-sm"> Логин | {{i[0].deviceDb.cloudLogin}}</span>
+                  <span class="text-sm"> Пароль | {{i[0].deviceDb.cloudPass}}</span>
                 </div>
               </v-card-text>
               <v-card-text class="text--primary text-base">

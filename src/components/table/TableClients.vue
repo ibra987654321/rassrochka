@@ -34,7 +34,7 @@
                     md="6"
                     >
                     <v-select
-                      :items="['Неплательщик','Истекший', 'Оплачен', 'Задержан', 'Ожидание']"
+                      :items="[ 'Оплачен', 'Ожидание']"
                       v-model="editedItem.statusType"
                       label="Статус"
                       dense

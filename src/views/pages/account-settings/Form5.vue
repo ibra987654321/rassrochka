@@ -14,7 +14,7 @@
             <v-text-field
               v-model="zeroPayment"
               dense
-              label="Первый взнос"
+              label="Первоначальный взнос"
               outlined
             ></v-text-field>
           </v-col>
@@ -27,7 +27,7 @@
             <v-select
               :items="[1,2,3]"
               v-model="selectedMonth"
-              label="Месяц"
+              label="Месяцы"
               dense
               outlined
             ></v-select>
@@ -38,12 +38,41 @@
             sm="3"
           >
             <v-select
-              :items="[10, 20, 30, 40, 50]"
+              :items="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50]"
               v-model="selectedPercent"
-              label="Процент"
+              label="Проценты"
               dense
               outlined
             ></v-select>
+          </v-col>
+          <v-col
+            cols="12"
+            md="6"
+          >
+            <v-menu
+              v-model="menu"
+              :close-on-content-click="false"
+              :nudge-right="40"
+              transition="scale-transition"
+              offset-y
+              min-width="auto"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-text-field
+                  v-model="creditDate"
+                  label="Дата выдачи "
+                  readonly
+                  dense
+                  outlined
+                  v-bind="attrs"
+                  v-on="on"
+                ></v-text-field>
+              </template>
+              <v-date-picker
+                v-model="creditDate"
+                @input="menu = false"
+              ></v-date-picker>
+            </v-menu>
           </v-col>
         </v-row>
         <table-for-price v-if="showTable" :data="priceForMonth"></table-for-price>
@@ -119,6 +148,8 @@ export default {
     priceForMonth: [],
     percentPrice: '',
     dateRange: '',
+    menu: false,
+    creditDate: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
     brother: '',
     showTable: false,
     creditData: {},
@@ -138,6 +169,9 @@ export default {
       this.calculator(this.device.devicePrice, event)
     },
     selectedPercent() {
+      this.calculator(this.device.devicePrice, this.selectedMonth)
+    },
+    creditDate() {
       this.calculator(this.device.devicePrice, this.selectedMonth)
     }
   },
@@ -390,7 +424,7 @@ export default {
                 break: 2,
               }),
               new TextRun({
-                text: "\t \t \t \t \t \t \t \t \t" + new Date().toLocaleString('ru', {
+                text: "\t \t \t \t \t \t \t \t \t" + new Date(this.creditDate).toLocaleString('ru', {
                   year: 'numeric',
                   month: 'long',
                   day: 'numeric'
@@ -606,7 +640,7 @@ export default {
         }
         const dateRange = []
         foo.map(i => {
-          const date = new Date(Date.now())
+          const date = new Date(this.creditDate)
           dateRange.push(new Date(date.setMonth(date.getMonth() + i)).toISOString())
         })
       this.dateRange = dateRange[dateRange.length - 1]
@@ -628,6 +662,7 @@ export default {
           this.creditData ={
             deviceId: this.device.id,
             monthCreditDbList: monthCreditDbList,
+            registrationDate: new Date(this.creditDate).toISOString(),
             zeroPayment: Number(this.zeroPayment)
           }
 
