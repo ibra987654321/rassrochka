@@ -41,6 +41,18 @@
                       outlined
                     ></v-select>
                   </v-col>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="6"
+                  >
+                    <v-text-field
+                      v-model="editedItem.debtReport"
+                      label="Оплата"
+                      dense
+                      outlined
+                    ></v-text-field>
+                  </v-col>
                 </v-row>
               </v-container>
             </v-card-text>
@@ -187,6 +199,7 @@ export default {
   },
 
   created () {
+    console.log(this.$props.data)
     this.editItems = this.$props.editItems
     this.initialize()
 
@@ -240,6 +253,7 @@ export default {
           comment: creditData.comment,
           debt: creditData.debt,
           id: creditData.id,
+          debtReport: Number(creditData.debtReport),
           payDate: creditData.payDate,
           statusType: CurrentSelect[0]
         }

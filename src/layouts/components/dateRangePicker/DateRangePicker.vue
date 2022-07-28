@@ -1,6 +1,7 @@
 <template>
-  <div class="date_range">
+  <div class="date_range justify-lg-space-around">
     <v-datetime-picker
+      class="date"
       v-model="$store.state.start"
       label="Начало"
       date-format="dd-MM-yyyy"
@@ -34,6 +35,7 @@
       </template>
     </v-datetime-picker>
     <v-datetime-picker
+      class="date"
       v-model="$store.state.end"
       label="Конец"
       date-format="dd-MM-yyyy"
@@ -96,5 +98,8 @@ div {
 .v-toolbar .v-input {
   width: 400px;
 }
-
+.date {
+  width: 100%;
+  max-width: 300px;
+}
 </style>

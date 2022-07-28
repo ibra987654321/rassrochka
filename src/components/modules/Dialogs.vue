@@ -52,6 +52,7 @@ export default {
     dialog: false,
     fields: [
       {text:'Должен', value: 'debt' },
+      {text:'Оплачен', value: 'debtReport' },
       {text:'Дата закрытия', value: 'payDate' },
       {text:'Статус', value: 'statusType' },
       {text:'Комментарии', value: 'comment' },
@@ -60,6 +61,7 @@ export default {
     editItem: {
       payDate: '',
       debt: '',
+      debtReport: 0,
       debtClosedDate: '',
       statusType: '',
       comment: '',

@@ -12,19 +12,17 @@ import personalTasks from '@/store/personalTasks'
 import GSKO from '@/store/GSKO/GSKO'
 import Monitoring from "@/store/monitoring";
 import { environment } from '@/environments/environment'
-import { STATISTICS_CREATED,
-  STATISTICS_INCIDENTS_CREATED,
-  TICKETS
-} from '@/helpers/endpionts'
 import { setToken } from '@/helpers/helpers'
 import router from '@/router'
 import userController from "@/store/userController";
+import report from '@/store/report'
 
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    loading: false,
     start: new Date(),
     end: new Date(Date.now()),
     error: '',
@@ -47,6 +45,11 @@ export default new Vuex.Store({
       state.snackbars.text = error
       state.snackbars.timeout = 1000
     },
+    setSnackbars(state, text) {
+      state.snackbars.snackbar = true
+      state.snackbars.text = text
+      state.snackbars.timeout = 1000
+    }
   },
   actions: {
     login({ commit }, payload) {
@@ -82,6 +85,7 @@ export default new Vuex.Store({
     profiles,
     detail,
     callProfile,
-    userController
+    userController,
+    report
   },
 })

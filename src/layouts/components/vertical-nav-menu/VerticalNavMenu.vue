@@ -61,6 +61,12 @@
         :to="{ name: 'users'}"
         :icon="icons.mdiFileOutline"
       ></nav-menu-link>
+      <nav-menu-link
+        title="Отчет "
+        v-if="decode === 'ROLE_ADMIN'"
+        :to="{ name: 'report'}"
+        :icon="icons.mdiFileOutline"
+      ></nav-menu-link>
 <!--      <nav-menu-group-->
 <!--        title="Pages"-->
 <!--        :icon="icons.mdiFileOutline"-->

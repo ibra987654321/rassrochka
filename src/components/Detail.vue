@@ -156,6 +156,43 @@
           </div>
         </v-card>
       </v-col>
+      <v-col
+        sm="4"
+        cols="12"
+      >
+        <v-card class="d-flex align-center"  >
+          <div class="d-flex justify-space-between flex-wrap flex-md-nowrap flex-column flex-md-row">
+            <div class="w-100">
+              <v-card-title>
+                Статус
+              </v-card-title>
+              <v-card-text >
+                <div class="d-flex flex-column w-100">
+                  <v-select
+                    v-model="statusType"
+                    label="Статус"
+                    :items="status"
+                    outlined
+                    @change="generatorRu($event)"
+                  >
+                  </v-select>
+                  <v-textarea
+                    label="Комментарий"
+                    v-model="blackList.comments"
+                    outlined
+                  >
+                  </v-textarea>
+                  <v-btn
+                    color="primary"
+                    @click="addStatus"
+                    :loading="$store.state.loading"
+                  >Отправить</v-btn>
+                </div>
+              </v-card-text>
+            </div>
+          </div>
+        </v-card>
+      </v-col>
     </v-row>
   </div>
 </template>
@@ -177,7 +214,45 @@ export default {
     rating: 5,
     icons: {
       mdiHelpCircleOutline
-    }
+    },
+    blackList: {
+      comments: "",
+      id: 0,
+      statusType: ""
+    },
+    statusType: '',
+    status : ['Добросовестный', 'Подсудимый', 'Аферист', 'Затягивает', 'Ожидание'],
+    statusRu : [
+      {
+        Добросовестный: 'DEFAULTER'
+      },
+      {
+        Подсудимый: 'PRISONER'
+      },
+      {
+        Аферист: 'FRAUD'
+      },
+      {
+        Затягивает: 'DELAY'
+      },
+    ],
+    statusEn: [
+      {
+        PRISONER: 'Подсудимый ',
+      },
+      {
+        DEFAULTER: 'Добросовестный ',
+      },
+      {
+        FRAUD: 'Аферист',
+      },
+      {
+        DELAY: 'Затягивает',
+      },
+      {
+        WAIT: 'Ожидание',
+      },
+    ],
   }),
   mounted() {
     this.canId = this.$route.params.id
@@ -186,14 +261,33 @@ export default {
       this.profile = r.data[0].profileDb
       r.data.map( i => {
         this.$store.dispatch('getCreditInformation', i.id).then(s => {
+         this.generatorEn(s.data[0].statusType)
+         this.blackList.id = s.data[0].id
          this.item.push(s.data)
         })
       })
     })
   },
+  methods : {
+    addStatus() {
+      this.$store.dispatch('creditBlackList', this.blackList)
+        .then(() => {
+          this.blackList.comments = ''
+        })
+    },
+    generatorEn(value) {
+      const localSelect = this.statusEn.filter((item) => item[value]) // нахожу нужный элемент из массива
+      const CurrentSelect = Object.values(localSelect[0]) // получаю только его значение
+      this.statusType = CurrentSelect[0]
+    },
+    generatorRu(value) {
+      const localSelect = this.statusRu.filter((item) => item[value]) // нахожу нужный элемент из массива
+      const CurrentSelect = Object.values(localSelect[0]) // получаю только его значение
+      this.blackList.statusType = CurrentSelect[0]
+    },
+  }
 }
 </script>
 
 <style scoped>
-
 </style>

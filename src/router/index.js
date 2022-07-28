@@ -35,10 +35,10 @@ const routes = [
     component: () => import('../views/UserControl'),
   },
   {
-    path: '/commands',
-    name: 'Commands',
-    meta: { layout: 'main', auth: true },
-    component: () => import('../views/Commands/Commands.vue'),
+    path: '/report',
+    name: 'report',
+    meta: { layout: 'main', auth: true, authorize: [Role.Admin] },
+    component: () => import('../views/Report.vue'),
   },
 
   {

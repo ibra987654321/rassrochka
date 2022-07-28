@@ -89,6 +89,7 @@ export default {
       {text:'Дата', value: 'registrationDate' },
       {text:'ФИО', value: 'fullName' },
       {text:'IMEI', value: 'deviceImei' },
+      {text:'Статус', value: 'statusType' },
       {text:'Продавец', value: 'salesmanLogin' },
       {text:'Действия', value: 'actions', sortable: true},
     ],

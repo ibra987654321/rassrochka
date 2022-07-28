@@ -43,5 +43,26 @@ export default {
       }).then(r => r)
       return data
     },
+    creditBlackList(store,  payload) {
+      store.rootState.loading = true
+      const data = axios({
+        method: 'POST',
+        url: `${environment.propApi + CREDIT}/addBlackList`,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getToken()}`,
+        },
+        data: {
+          ...payload
+        }
+      }).then(r => {
+         store.rootState.loading = false
+        store.commit('setSnackbars', 'Статус успешно изменен')
+      }).catch(error => {
+         store.rootState.loading = false
+        store.commit('setError', error.response.status)
+      })
+      return data
+    },
   },
 }

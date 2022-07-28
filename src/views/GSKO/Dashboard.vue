@@ -166,7 +166,6 @@ export default {
   methods: {
     async dateRangeText() {
       const AllTT = await this.$store.dispatch('AllCreatedTT')
-      console.log(AllTT)
       this.value = AllTT.map(i => i.value)
       this.amount = AllTT.map(i => i.amount)
     },
