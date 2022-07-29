@@ -98,8 +98,8 @@ div {
 .v-toolbar .v-input {
   width: 400px;
 }
-.date {
-  width: 100%;
-  max-width: 300px;
-}
+/*.date {*/
+/*  width: 100%;*/
+/*  max-width: 300px;*/
+/*}*/
 </style>

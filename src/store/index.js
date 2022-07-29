@@ -48,12 +48,12 @@ export default new Vuex.Store({
     setSnackbars(state, text) {
       state.snackbars.snackbar = true
       state.snackbars.text = text
-      state.snackbars.timeout = 1000
+      state.snackbars.timeout = 2000
     }
   },
   actions: {
     login({ commit }, payload) {
-      const login = axios(`${environment.propApi}/login/auth`, {
+      const login = axios(`${environment.testAPI}/login/auth`, {
         method: 'POST',
         data: {
           ...payload

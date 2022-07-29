@@ -164,7 +164,7 @@
           <div class="d-flex justify-space-between flex-wrap flex-md-nowrap flex-column flex-md-row">
             <div class="w-100">
               <v-card-title>
-                Статус
+                Черный список
               </v-card-title>
               <v-card-text >
                 <div class="d-flex flex-column w-100">
@@ -218,30 +218,30 @@ export default {
     blackList: {
       comments: "",
       id: 0,
-      statusType: ""
+      statusType: ''
     },
     statusType: '',
-    status : ['Добросовестный', 'Подсудимый', 'Аферист', 'Затягивает', 'Ожидание'],
-    statusRu : [
+    status: ['Добросовестный', 'Подсудимый', 'Аферист', 'Затягивает', 'Ожидание'],
+    statusRu: [
       {
-        Добросовестный: 'DEFAULTER'
+        Добросовестный: 'DEFAULTER',
       },
       {
-        Подсудимый: 'PRISONER'
+        Подсудимый: 'PRISONER',
       },
       {
-        Аферист: 'FRAUD'
+        Аферист: 'FRAUD',
       },
       {
-        Затягивает: 'DELAY'
+        Затягивает: 'DELAY',
       },
     ],
     statusEn: [
       {
-        PRISONER: 'Подсудимый ',
+        PRISONER: 'Подсудимый',
       },
       {
-        DEFAULTER: 'Добросовестный ',
+        DEFAULTER: 'Добросовестный',
       },
       {
         FRAUD: 'Аферист',
@@ -259,16 +259,18 @@ export default {
     this.$store.dispatch('getInformation', this.canId).then(r => {
       this.credit = r.data
       this.profile = r.data[0].profileDb
-      r.data.map( i => {
+      // eslint-disable-next-line array-callback-return
+      r.data.map(i => {
         this.$store.dispatch('getCreditInformation', i.id).then(s => {
-         this.generatorEn(s.data[0].statusType)
-         this.blackList.id = s.data[0].id
-         this.item.push(s.data)
+          this.blackList.comments = s.data[0].comments
+          this.generatorEn(s.data[0].statusType)
+          this.blackList.id = s.data[0].id
+          this.item.push(s.data)
         })
       })
     })
   },
-  methods : {
+  methods: {
     addStatus() {
       this.$store.dispatch('creditBlackList', this.blackList)
         .then(() => {
@@ -276,16 +278,18 @@ export default {
         })
     },
     generatorEn(value) {
-      const localSelect = this.statusEn.filter((item) => item[value]) // нахожу нужный элемент из массива
+      const localSelect = this.statusEn.filter(item => item[value]) // нахожу нужный элемент из массива
       const CurrentSelect = Object.values(localSelect[0]) // получаю только его значение
+      // eslint-disable-next-line prefer-destructuring
       this.statusType = CurrentSelect[0]
     },
     generatorRu(value) {
-      const localSelect = this.statusRu.filter((item) => item[value]) // нахожу нужный элемент из массива
+      const localSelect = this.statusRu.filter(item => item[value]) // нахожу нужный элемент из массива
       const CurrentSelect = Object.values(localSelect[0]) // получаю только его значение
+      // eslint-disable-next-line prefer-destructuring
       this.blackList.statusType = CurrentSelect[0]
     },
-  }
+  },
 }
 </script>
 

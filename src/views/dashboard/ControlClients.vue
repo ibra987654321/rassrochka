@@ -64,6 +64,9 @@
           day: 'numeric'
         })}}
         </template>
+        <template v-slot:item.statusType="item" >
+          {{item.item.statusType | status}}
+        </template>
       </v-data-table>
     </v-card-text>
   </v-card>

@@ -5,87 +5,107 @@
     class="elevation-1"
   >
     <template v-slot:top="item">
-        <v-dialog
-          v-model="dialog"
-          max-width="500px"
-        >
-          <v-card>
-            <v-card-title>
-              <span class="text-h5">Погашение</span>
-            </v-card-title>
+      <v-dialog
+        v-model="dialog"
+        max-width="500px"
+      >
+        <v-card>
+          <v-card-title>
+            <span class="text-h5">Погашение</span>
+          </v-card-title>
 
-            <v-card-text>
-              <v-container>
-                <v-row>
-                  <v-col
-                    cols="12"
-                    sm="12"
-                  >
-                    <v-textarea
-                      v-model="editedItem.comment"
-                      label="Комментарии"
-                      dense
-                      outlined
-                    ></v-textarea>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="6"
-                    >
-                    <v-select
-                      :items="[ 'Оплачен', 'Ожидание']"
-                      v-model="editedItem.statusType"
-                      label="Статус"
-                      dense
-                      outlined
-                    ></v-select>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="6"
-                  >
-                    <v-text-field
-                      v-model="editedItem.debtReport"
-                      label="Оплата"
-                      dense
-                      outlined
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-              </v-container>
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn
-                color="blue darken-1"
-                text
-                @click="close"
-              >
-                Отмена
-              </v-btn>
-              <v-btn
-                color="blue darken-1"
-                text
-                @click="save"
-              >
-                Сохранить
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-        <v-dialog v-model="dialogDelete" max-width="500px">
-          <v-card>
-            <v-card-title class="text-h5">Вы уверены что хотите удалить?</v-card-title>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="closeDelete">Отмена</v-btn>
-              <v-btn color="blue darken-1" text @click="deleteItemConfirm">Да</v-btn>
-              <v-spacer></v-spacer>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
+          <v-card-text>
+            <v-container>
+              <v-row>
+                <v-col
+                  cols="12"
+                  sm="12"
+                >
+                  <v-textarea
+                    v-model="editedItem.comment"
+                    label="Комментарии"
+                    dense
+                    outlined
+                  ></v-textarea>
+                </v-col>
+                <v-col
+                  cols="12"
+                  sm="6"
+                  md="6"
+                >
+                  <v-select
+                    v-model="editedItem.statusType"
+                    :items="[ 'Оплачен', 'Ожидание']"
+                    label="Статус"
+                    dense
+                    outlined
+                  ></v-select>
+                </v-col>
+                <v-col
+                  cols="12"
+                  sm="6"
+                  md="6"
+                >
+                  <v-text-field
+                    v-model="editedItem.debtReport"
+                    label="Оплата"
+                    dense
+                    outlined
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+              color="blue darken-1"
+              text
+              @click="close"
+            >
+              Отмена
+            </v-btn>
+            <v-btn
+              color="blue darken-1"
+              text
+              @click="save"
+            >
+              Сохранить
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+      <v-dialog
+        v-model="dialogDelete"
+        max-width="500px"
+      >
+        <v-card>
+          <v-card-title class="text-h5">
+            Вы уверены что хотите удалить?
+          </v-card-title>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+              color="blue darken-1"
+              text
+              @click="closeDelete"
+            >
+              Отмена
+            </v-btn>
+            <v-btn
+              color="blue darken-1"
+              text
+              @click="deleteItemConfirm"
+            >
+              Да
+            </v-btn>
+            <v-spacer></v-spacer>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </template>
+    <template v-slot:item.statusType="item">
+        {{ item.item.statusType | status }}
     </template>
     <template v-slot:item.actions="item">
       <v-icon
@@ -95,12 +115,6 @@
       >
         {{ icons.mdiPencil }}
       </v-icon>
-<!--      <v-icon-->
-<!--        small-->
-<!--        @click="deleteItem(item.item)"-->
-<!--      >-->
-<!--        {{ icons.mdiDelete }}-->
-<!--      </v-icon>-->
     </template>
     <template v-slot:no-data>
       <v-btn
@@ -114,20 +128,21 @@
 </template>
 
 <script>
-import {mdiDelete, mdiPencil} from "@mdi/js";
+import { mdiDelete, mdiPencil } from '@mdi/js'
 
 export default {
+  name: 'TableClients',
   props: {
     data: Array,
     fields: Array,
     getDispatch: String,
     putDispatch: String,
     postDispatch: String,
-    editItems: Object
+    editItems: Object,
   },
-  name: "TableClients",
   data: () => ({
-    icons: {mdiDelete, mdiPencil},
+    icons: { mdiDelete, mdiPencil },
+
     // status: [false, false, false],
     dialog: false,
     dialogDelete: false,
@@ -137,116 +152,87 @@ export default {
     editedItem: {},
     items: [
       {
-        Неплательщик: 'DEFAULTER'
+        Неплательщик: 'DEFAULTER',
       },
       {
-        Истекший: 'EXPIRED'
+        Истекший: 'EXPIRED',
       },
       {
-        Оплачен: 'DONE'
+        Оплачен: 'DONE',
       },
       {
-        Задержан: 'DELAY'
+        Задержан: 'DELAY',
       },
       {
-        Ожидание: 'WAIT'
-      }
-    ],
-    itemsEn: [
-      {
-        DEFAULTER: 'Неплательщик',
+        Ожидание: 'WAIT',
       },
-      {
-        EXPIRED: 'Истекший',
-      },
-      {
-        DONE: 'Оплачен',
-      },
-      {
-        DELAY: 'Задержан',
-      },
-      {
-        WAIT: 'Ожидание',
-      }
     ],
   }),
   computed: {
     header() {
+      // eslint-disable-next-line no-return-assign,vue/no-side-effects-in-computed-properties
       return this.headers = this.$props.fields
     },
-    status: {
-      get: function (value) {
-        const localSelect = this.itemsEn.filter((item) => item[value]) // нахожу нужный элемент из массива
-        const CurrentSelect = Object.values(localSelect[0]) // получаю только его значение
-        return CurrentSelect[0]
-      },
-      // сеттер:
-      set: function (newValue) {
-        const localSelect = this.items.filter((item) => item[newValue]) // нахожу нужный элемент из массива
-        const CurrentSelect = Object.values(localSelect[0]) // получаю только его значение
-       return CurrentSelect[0]
-      }
-    }
   },
 
   watch: {
-    dialog (val) {
+    dialog(val) {
+      // eslint-disable-next-line no-unused-expressions
       val || this.close()
     },
-    dialogDelete (val) {
+    dialogDelete(val) {
+      // eslint-disable-next-line no-unused-expressions
       val || this.closeDelete()
     },
   },
 
-  created () {
-    console.log(this.$props.data)
+  created() {
+    // eslint-disable-next-line array-callback-return
     this.editItems = this.$props.editItems
     this.initialize()
-
   },
 
   methods: {
-    initialize () {
+    initialize() {
       this.desserts = this.$props.data
     },
-
-    editItem (item) {
+    editItem(item) {
       this.editedIndex = this.desserts.indexOf(item)
-      this.editedItem = Object.assign({}, item)
+      this.editedItem = { ...item }
       this.dialog = true
     },
 
-    deleteItem (item) {
+    deleteItem(item) {
       this.editedIndex = this.desserts.indexOf(item)
-      this.editedItem = Object.assign({}, item)
+      this.editedItem = { ...item }
       this.dialogDelete = true
     },
 
-    deleteItemConfirm () {
+    deleteItemConfirm() {
       this.desserts.splice(this.editedIndex, 1)
       this.closeDelete()
     },
 
-    close () {
+    close() {
       this.dialog = false
       this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem)
+        this.editedItem = { ...this.defaultItem }
         this.editedIndex = -1
       })
     },
 
-    closeDelete () {
+    closeDelete() {
       this.dialogDelete = false
       this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem)
+        this.editedItem = { ...this.defaultItem }
         this.editedIndex = -1
       })
     },
 
-    save () {
+    save() {
       if (this.editedIndex > -1) {
         Object.assign(this.desserts[this.editedIndex], this.editedItem)
-        const localSelect = this.items.filter((item) => item[this.editedItem.statusType]) // нахожу нужный элемент из массива
+        const localSelect = this.items.filter(item => item[this.editedItem.statusType]) // нахожу нужный элемент из массива
         const CurrentSelect = Object.values(localSelect[0]) // получаю только его значение
         const creditData = Object.assign(this.desserts[this.editedIndex], this.editedItem)
         const data = {
@@ -255,13 +241,14 @@ export default {
           id: creditData.id,
           debtReport: Number(creditData.debtReport),
           payDate: creditData.payDate,
-          statusType: CurrentSelect[0]
+          statusType: CurrentSelect[0],
         }
-        this.$store.dispatch('putCreditInformation', data)
+        this.$store.dispatch('putCreditInformation', data).then(() => {
+          this.close()
+        })
       } else {
         this.desserts.push(this.editedItem)
       }
-      this.close()
     },
   },
 }

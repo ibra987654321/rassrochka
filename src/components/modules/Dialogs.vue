@@ -41,22 +41,24 @@
 </template>
 
 <script>
-import TableClients from "@/components/table/TableClients";
+// eslint-disable-next-line import/extensions
+import TableClients from '@/components/table/TableClients';
+
 export default {
-  name: "Dialogs",
+  name: 'Dialogs',
   props: ['data'],
   components: {
-    TableClients
+    TableClients,
   },
   data:() => ({
     dialog: false,
     fields: [
-      {text:'Должен', value: 'debt' },
-      {text:'Оплачен', value: 'debtReport' },
-      {text:'Дата закрытия', value: 'payDate' },
-      {text:'Статус', value: 'statusType' },
-      {text:'Комментарии', value: 'comment' },
-      {text: 'Действия', value: 'actions', sortable: false},
+      { text: 'Должен', value: 'debt' },
+      { text: 'Оплачен', value: 'debtReport' },
+      { text: 'Дата закрытия', value: 'payDate' },
+      { text: 'Статус', value: 'statusType' },
+      { text: 'Комментарии', value: 'comment' },
+      { text: 'Действия', value: 'actions', sortable: false},
     ],
     editItem: {
       payDate: '',
@@ -65,18 +67,13 @@ export default {
       debtClosedDate: '',
       statusType: '',
       comment: '',
-    }
+    },
   }),
   computed: {
     datas() {
       return this.$props.data
-    }
+    },
   },
-  // watch: {
-  //   dialog() {
-  //     console.log(this.$props.data)
-  //   }
-  // }
 }
 </script>
 
