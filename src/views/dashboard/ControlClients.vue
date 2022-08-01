@@ -61,7 +61,9 @@
           {{new Date(item.item.registrationDate).toLocaleString('ru', {
           year: 'numeric',
           month: 'long',
-          day: 'numeric'
+          day: 'numeric',
+          hour: 'numeric',
+          minute: 'numeric'
         })}}
         </template>
         <template v-slot:item.statusType="item" >
@@ -137,6 +139,8 @@ export default {
       } else {
         this.$store.dispatch('searchProfilesByName', val).then(r => {
           this.data = r
+          console.log(r)
+
         })
       }
     },

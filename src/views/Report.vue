@@ -27,6 +27,9 @@
         class="elevation-1"
       ></v-data-table>
     </v-card-text>
+    <v-card-text>
+      <p style="font-size: 20px;">{{count.length !== 0 ? `Общая сумма: ${ count } сом` : `Нет данных`}}</p>
+    </v-card-text>
   </v-card>
 </template>
 
@@ -92,9 +95,10 @@ export default {
         r.map(s => {
           this.count.push(s.debtReport)
         })
-        console.log(this.count.reduce((a, b) => a + b))
         if (r.length === 0) {
           this.$store.commit('setSnackbars', 'За выбранный период у этого продавца нет данных')
+        } else {
+          this.count = this.count.reduce((a, b) => a + b)
         }
       })
     },
@@ -105,7 +109,9 @@ export default {
         r.map(s => {
           this.count.push(s.debtReport)
         })
-        console.log(this.count.reduce((a, b) => a + b))
+        if (this.count.length !== 0) {
+          this.count = this.count.reduce((a, b) => a + b)
+        }
       })
     },
   },

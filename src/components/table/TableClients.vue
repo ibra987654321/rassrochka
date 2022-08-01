@@ -51,6 +51,8 @@
                     label="Оплата"
                     dense
                     outlined
+                    aria-required="true"
+                    numeric
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -142,14 +144,16 @@ export default {
   },
   data: () => ({
     icons: { mdiDelete, mdiPencil },
-
-    // status: [false, false, false],
     dialog: false,
     dialogDelete: false,
     headers: [],
     desserts: [],
     editedIndex: -1,
-    editedItem: {},
+    editedItem: {
+      comment: '',
+      statusType: '',
+      debtReport: '',
+    },
     items: [
       {
         Неплательщик: 'DEFAULTER',
@@ -188,7 +192,7 @@ export default {
 
   created() {
     // eslint-disable-next-line array-callback-return
-    this.editItems = this.$props.editItems
+    this.editedItem.debtReport = ''
     this.initialize()
   },
 
@@ -228,26 +232,41 @@ export default {
         this.editedIndex = -1
       })
     },
+    isAN(value) {
+      if (value instanceof Number)
+      // eslint-disable-next-line no-param-reassign,brace-style
+      { value = value.valueOf() }
 
+      // eslint-disable-next-line no-restricted-globals
+      return isFinite(value) && value === parseInt(value, 10)
+    },
     save() {
-      if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem)
-        const localSelect = this.items.filter(item => item[this.editedItem.statusType]) // нахожу нужный элемент из массива
-        const CurrentSelect = Object.values(localSelect[0]) // получаю только его значение
-        const creditData = Object.assign(this.desserts[this.editedIndex], this.editedItem)
-        const data = {
-          comment: creditData.comment,
-          debt: creditData.debt,
-          id: creditData.id,
-          debtReport: Number(creditData.debtReport),
-          payDate: creditData.payDate,
-          statusType: CurrentSelect[0],
+      const regexp = /[а-яё]/i
+      console.log(Number(this.editedItem.debtReport))
+      // eslint-disable-next-line no-restricted-globals
+      console.log(regexp.test(this.editedItem.statusType) && !isNaN(Number(this.editedItem.debtReport)))
+      if (regexp.test(this.editedItem.statusType) && !isNaN(Number(this.editedItem.debtReport))) {
+        if (this.editedIndex > -1) {
+          Object.assign(this.desserts[this.editedIndex], this.editedItem)
+          const localSelect = this.items.filter(item => item[this.editedItem.statusType]) // нахожу нужный элемент из массива
+          const CurrentSelect = Object.values(localSelect[0]) // получаю только его значение
+          const creditData = Object.assign(this.desserts[this.editedIndex], this.editedItem)
+          const data = {
+            comment: creditData.comment,
+            debt: creditData.debt,
+            id: creditData.id,
+            debtReport: Number(creditData.debtReport),
+            payDate: creditData.payDate,
+            statusType: CurrentSelect[0],
+          }
+          this.$store.dispatch('putCreditInformation', data).then(() => {
+            this.close()
+          })
+        } else {
+          this.desserts.push(this.editedItem)
         }
-        this.$store.dispatch('putCreditInformation', data).then(() => {
-          this.close()
-        })
       } else {
-        this.desserts.push(this.editedItem)
+        this.$store.commit('setSnackbars', 'Выберите статус и пишите сумму оплаты')
       }
     },
   },

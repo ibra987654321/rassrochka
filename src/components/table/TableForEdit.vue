@@ -140,18 +140,18 @@ export default {
     data: Array,
     fields: Array,
     putDispatch: String,
-    editItems: Object
+    editItems: Object,
   },
-  name: "TableForEdit",
+  name: 'TableForEdit',
   components: {
-    MoreInfo
+    MoreInfo,
   },
   data: () => ({
     date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
     menu: false,
     editSelect: false,
     statusType: 0,
-    icons: {mdiDelete, mdiPencil},
+    icons: { mdiDelete, mdiPencil },
     dialog: false,
     dialogDelete: false,
     headers: [],
@@ -161,20 +161,20 @@ export default {
     editedItem: {},
     items: [
       {
-        Неплательщик: 'DEFAULTER'
+        Неплательщик: 'DEFAULTER',
       },
       {
-        Истекший: 'EXPIRED'
+        Истекший: 'EXPIRED',
       },
       {
-        Оплачен: 'DONE'
+        Оплачен: 'DONE',
       },
       {
-        Задержан: 'DELAY'
+        Задержан: 'DELAY',
       },
       {
-        Ожидание: 'WAIT'
-      }
+        Ожидание: 'WAIT',
+      },
     ],
     itemsEn: [
       {
@@ -191,86 +191,89 @@ export default {
       },
       {
         WAIT: 'Ожидание',
-      }
+      },
     ],
   }),
   computed: {
     header() {
       this.initialize()
+      // eslint-disable-next-line vue/no-side-effects-in-computed-properties,no-return-assign
       return this.headers = this.$props.fields
     },
   },
 
   watch: {
-    dialog (val) {
+    dialog(val) {
+      // eslint-disable-next-line no-unused-expressions
       val || this.close()
     },
-    dialogDelete (val) {
+    dialogDelete(val) {
+      // eslint-disable-next-line no-unused-expressions
       val || this.closeDelete()
     },
   },
 
-  created () {
+  created() {
     this.editItems = this.$props.editItems
   },
-
   methods: {
-    initialize () {
+    initialize() {
       this.desserts = this.$props.data
     },
-    editItem (item) {
+    editItem(item) {
       const data = this.$store.dispatch('getBrothersById', item.id)
+      // eslint-disable-next-line no-return-assign,prefer-destructuring
       data.then(r => this.detailData = r[0])
       this.editedIndex = this.desserts.indexOf(item)
-      this.editedItem = Object.assign({}, item)
+      this.editedItem = { ...item }
       this.dialog = true
     },
 
-    deleteItem (item) {
+    deleteItem(item) {
       this.editedIndex = this.desserts.indexOf(item)
-      this.editedItem = Object.assign({}, item)
+      this.editedItem = { ...item }
       this.dialogDelete = true
     },
 
-    deleteItemConfirm () {
+    deleteItemConfirm() {
       this.desserts.splice(this.editedIndex, 1)
       this.closeDelete()
     },
 
-    close () {
+    close() {
       this.dialog = false
       this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem)
+        this.editedItem = { ...this.defaultItem }
         this.editedIndex = -1
       })
     },
 
-    closeDelete () {
+    closeDelete() {
       this.dialogDelete = false
       this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem)
+        this.editedItem = { ...this.defaultItem }
         this.editedIndex = -1
       })
     },
 
-    save () {
+    save() {
       if (this.editedIndex > -1) {
         Object.assign(this.desserts[this.editedIndex], this.editedItem)
-        const localSelect = this.items.filter((item) => item[this.editedItem.statusType])
+        const localSelect = this.items.filter(item => item[this.editedItem.statusType])
         let CurrentSelect = []
         if (this.editSelect) {
           CurrentSelect = Object.values(localSelect[0])
         } else {
           CurrentSelect = ['WAIT']
         }
-
         const creditData = Object.assign(this.desserts[this.editedIndex], this.editedItem)
+        console.log(creditData)
         const data = {
           comment: creditData.comment,
           debt: creditData.debt,
           id: creditData.mcId,
           payDate: creditData.payDate,
-          statusType: CurrentSelect[0]
+          statusType: CurrentSelect[0],
         }
         this.$store.dispatch('putCreditInformation', data)
         this.$emit('update')
