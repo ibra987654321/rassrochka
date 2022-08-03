@@ -51,7 +51,13 @@
             cols="12"
             md="6"
           >
+            <v-checkbox
+              v-model="checkDate"
+              label="Выбрать прошлую дату"
+            >
+            </v-checkbox>
             <v-menu
+              v-if="checkDate"
               v-model="menu"
               :close-on-content-click="false"
               :nudge-right="40"
@@ -133,7 +139,7 @@ import {
   Document,
   Paragraph,
   Packer,
-  TextRun, HeadingLevel, AlignmentType, TabStopType, TabStopPosition, Table, TableRow, TableCell,
+  TextRun, AlignmentType, Table, TableRow, TableCell,
 } from 'docx'
 import { saveAs } from 'file-saver'
 
@@ -141,6 +147,7 @@ export default {
   name: 'Form5',
   components: {
     TableForPrice,
+    // eslint-disable-next-line vue/no-unused-components
     WidthType,
     BorderStyle,
     Document,
@@ -150,6 +157,7 @@ export default {
     saveAs,
   },
   data: () => ({
+    checkDate: false,
     selectedMonth: null,
     selectedPercent: 10,
     priceForMonth: [],
@@ -679,19 +687,15 @@ export default {
         }
         monthCreditDbList.push(data)
       })
-      console.log(new Date())
-      console.log(this.creditDate)
-      console.log(this.toIsoString(new Date(this.creditDate)))
       this.creditData = {
         deviceId: this.device.id,
         monthCreditDbList,
-        registrationDate: this.toIsoString(this.creditDate),
+        registrationDate: this.checkDate ? new Date(this.creditDate).toISOString() : this.toIsoString(new Date()),
         zeroPayment: Number(this.zeroPayment),
       }
     },
     toIsoString(date) {
       const tzo = -date.getTimezoneOffset()
-      const dif = tzo >= 0 ? '+' : '-'
       const pad = function (num) {
         return (num < 10 ? '0' : '') + num
       }
@@ -702,8 +706,7 @@ export default {
       }T${pad(date.getHours())
       }:${pad(date.getMinutes())
       }:${pad(date.getSeconds())
-      }${dif}${pad(Math.floor(Math.abs(tzo) / 60))
-      }:${pad(Math.abs(tzo) % 60)}`
+      }.${pad(Math.floor(Math.abs(tzo) / 60))}0Z`
     },
   },
 }
