@@ -5,6 +5,9 @@ export default function statusFilter(value) {
     if (!regexp.test(value)) {
       const itemsEn = [
         {
+          ACTIVE: 'Активный',
+        },
+        {
           DEFAULTER: 'Неплательщик',
         },
         {

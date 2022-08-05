@@ -58,13 +58,7 @@
           </v-btn>
         </template>
         <template v-slot:item.registrationDate="item" >
-          {{new Date(item.item.registrationDate).toLocaleString('ru', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-          hour: 'numeric',
-          minute: 'numeric'
-        })}}
+          {{item.item.registrationDate | date}}
         </template>
         <template v-slot:item.statusType="item" >
           {{item.item.statusType | status}}

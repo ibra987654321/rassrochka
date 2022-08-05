@@ -32,6 +32,39 @@
                   {{profile.factAddress}}
                 </v-card-subtitle>
               </div>
+              <v-dialog
+                v-model="dialog"
+                width="500"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    color="primary"
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    Удалить профиль
+                  </v-btn>
+                </template>
+
+                <v-card>
+                  <v-card-title class="text-h5 grey lighten-2">
+                    Вы уверены что хотите удалить?
+                  </v-card-title>
+
+                  <v-divider></v-divider>
+
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                      color="primary"
+                      text
+                      @click="deleteProfile(profile.id)"
+                    >
+                      Удалить
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
             </div>
           </v-card-text>
         </v-card>
@@ -114,8 +147,6 @@
                     </v-card-text>
                   </v-col>
                 </v-row>
-
-
               </v-card>
             </v-col>
           </v-row>
@@ -198,22 +229,23 @@
 </template>
 
 <script>
-import Dialogs from "@/components/modules/Dialogs";
-import {mdiHelpCircleOutline} from "@mdi/js";
+import Dialogs from '@/components/modules/Dialogs'
+import { mdiHelpCircleOutline } from '@mdi/js'
 
 export default {
-  name: "Detail",
+  name: 'Detail',
   components: {
-    Dialogs
+    Dialogs,
   },
   data:() => ({
+    dialog: false,
     canId: '',
     profile: '',
     credit: '',
     item: [],
     rating: 5,
     icons: {
-      mdiHelpCircleOutline
+      mdiHelpCircleOutline,
     },
     blackList: {
       comments: "",
@@ -288,6 +320,11 @@ export default {
       const CurrentSelect = Object.values(localSelect[0]) // получаю только его значение
       // eslint-disable-next-line prefer-destructuring
       this.blackList.statusType = CurrentSelect[0]
+    },
+    deleteProfile(id) {
+      this.$store.dispatch('deleteProfile', id)
+        .then(() => this.$router.push({ name: 'dashboard' }))
+        .catch(e => this.$store.commit('setSnackbars', `Ошибка${e.message}`))
     },
   },
 }

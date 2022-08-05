@@ -1,152 +1,151 @@
 <template>
-  <v-data-table
-    :headers="header"
-    :items="desserts"
-    class="elevation-1"
-    item-key="name"
-  >
-    <template v-slot:top="item">
-      <v-dialog
-        v-model="dialog"
-        max-width="800px"
-      >
-        <v-card>
-          <v-card-title>
-            <span class="text-h5">Обзвон</span>
-          </v-card-title>
-
-          <v-card-text>
-            <v-container>
-              <v-row>
-                <v-col
-                  cols="12"
-                  sm="8"
-                >
-                  <more-info :detailData="detailData"></more-info>
-                </v-col>
-                <v-col
-                  cols="12"
-                  sm="4"
-                  class="d-flex flex-column align-content-center"
-                >
-                  <v-select
-                    :items="['Истекший', 'Ожидание']"
-                    v-model="editedItem.statusType"
-                    @change="editSelect = true"
-                    label="Статус"
-                    dense
-                    outlined
-                  ></v-select>
-                  <v-menu
-                    v-model="menu"
-                    :close-on-content-click="false"
-                    :nudge-right="40"
-                    transition="scale-transition"
-                    offset-y
-                    min-width="auto"
+  <div>
+    <v-data-table
+      :headers="header"
+      :items="desserts"
+      class="elevation-1"
+      item-key="names"
+      :loading="$store.state.loading"
+    >
+      <template v-slot:top>
+        <v-dialog
+          v-model="dialog"
+          max-width="800px"
+        >
+          <v-card>
+            <v-card-title>
+              <span class="text-h5">Обзвон</span>
+            </v-card-title>
+            <v-card-text>
+              <v-container>
+                <v-row>
+                  <v-col
+                    cols="12"
+                    sm="8"
                   >
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-text-field
+                    <more-info :detailData="detailData"></more-info>
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="4"
+                    class="d-flex flex-column align-content-center"
+                  >
+                    <v-select
+                      :items="['Истекший', 'Ожидание']"
+                      v-model="editedItem.statusType"
+                      @change="editSelect = true"
+                      label="Статус"
+                      dense
+                      outlined
+                    ></v-select>
+                    <v-menu
+                      v-model="menu"
+                      :close-on-content-click="false"
+                      :nudge-right="40"
+                      transition="scale-transition"
+                      offset-y
+                      min-width="auto"
+                    >
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                          v-model="editedItem.payDate"
+                          label="Дата продления"
+                          readonly
+                          outlined
+                          dense
+                          v-bind="attrs"
+                          v-on="on"
+                        ></v-text-field>
+                      </template>
+                      <v-date-picker
                         v-model="editedItem.payDate"
-                        label="Дата продления"
-                        readonly
-                        outlined
-                        dense
-                        v-bind="attrs"
-                        v-on="on"
-                      ></v-text-field>
-                    </template>
-                    <v-date-picker
-                      v-model="editedItem.payDate"
-                      @input="menu = false"
-                    ></v-date-picker>
-                  </v-menu>
-                </v-col>
-                <v-col
-                  cols="12"
-                  sm="12"
-                >
-                  <v-textarea
-                    v-model="editedItem.comment"
-                    label="Комментарии"
-                    dense
-                    outlined
-                  ></v-textarea>
-                </v-col>
+                        @input="menu = false"
+                      ></v-date-picker>
+                    </v-menu>
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="12"
+                  >
+                    <v-textarea
+                      v-model="editedItem.comment"
+                      label="Комментарии"
+                      dense
+                      outlined
+                    ></v-textarea>
+                  </v-col>
 
-              </v-row>
-            </v-container>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn
-              color="blue darken-1"
-              text
-              @click="close"
-            >
-              Отмена
-            </v-btn>
-            <v-btn
-              color="blue darken-1"
-              text
-              @click="save"
-            >
-              Сохранить
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-      <v-dialog v-model="dialogDelete" max-width="500px">
-        <v-card>
-          <v-card-title class="text-h5">Вы уверены что хотите удалить?</v-card-title>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" text @click="closeDelete">Отмена</v-btn>
-            <v-btn color="blue darken-1" text @click="deleteItemConfirm">Да</v-btn>
-            <v-spacer></v-spacer>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-    </template>
-    <template v-slot:item.comment="item" >
-      {{ item.value }}
-    </template>
-    <template v-slot:item.actions="item">
-      <v-icon
-        small
-        class="mr-2"
-        @click="editItem(item.item, item.index + 1)"
-      >
-        {{ icons.mdiPencil }}
-      </v-icon>
-    </template>
-    <template v-slot:no-data>
-      <v-btn
-        color="primary"
-        @click="initialize"
-      >
-        Обновить
-      </v-btn>
-    </template>
-  </v-data-table>
+                </v-row>
+              </v-container>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                color="blue darken-1"
+                text
+                @click="close"
+              >
+                Отмена
+              </v-btn>
+              <v-btn
+                color="blue darken-1"
+                text
+                @click="save"
+              >
+                Сохранить
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </template>
+      <template v-slot:item.statusType="item" >
+        {{ item.item.statusType | status}}
+      </template>
+      <template v-slot:item.payDate="item" >
+        {{ item.item.payDate | date }}
+      </template>
+      <template v-slot:item.actions="item">
+        <v-icon
+          small
+          class="mr-2"
+          @click="editItem(item.item, item.index + 1)"
+        >
+          {{ icons.mdiPencil }}
+        </v-icon>
+      </template>
+      <template v-slot:no-data>
+        <v-btn
+          color="primary"
+          @click="initialize"
+        >
+          Обновить
+        </v-btn>
+      </template>
+    </v-data-table>
+  </div>
 </template>
 
 <script>
-import {mdiDelete, mdiPencil} from "@mdi/js";
-import MoreInfo from "@/components/modules/MoreInfo";
+import { mdiDelete, mdiPencil } from '@mdi/js'
+// eslint-disable-next-line import/extensions
+import MoreInfo from '@/components/modules/MoreInfo'
 
 export default {
   props: {
-    data: Array,
     fields: Array,
     putDispatch: String,
     editItems: Object,
+    id: Number,
+    profileId: Number,
   },
   name: 'TableForEdit',
   components: {
     MoreInfo,
   },
+
   data: () => ({
+    expanded: [],
+    singleExpand: false,
     date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
     menu: false,
     editSelect: false,
@@ -154,7 +153,14 @@ export default {
     icons: { mdiDelete, mdiPencil },
     dialog: false,
     dialogDelete: false,
-    headers: [],
+    header: [
+      { text: 'Должен', value: 'debt' },
+      { text: 'Оплачен', value: 'debtReport' },
+      { text: 'Дата закрытия', value: 'payDate' },
+      { text: 'Статус', value: 'statusType' },
+      { text: 'Комментарии', value: 'comment' },
+      { text: 'Действия', value: 'actions', sortable: false},
+    ],
     desserts: [],
     detailData: [],
     editedIndex: -1,
@@ -195,35 +201,44 @@ export default {
     ],
   }),
   computed: {
-    header() {
-      this.initialize()
-      // eslint-disable-next-line vue/no-side-effects-in-computed-properties,no-return-assign
-      return this.headers = this.$props.fields
+    creditId() {
+      return this.$props.id
     },
   },
-
+  mounted() {
+    this.initialize()
+    this.getBrothersData()
+  },
   watch: {
+    creditId(val) {
+      if (val !== undefined) {
+        this.initialize()
+        this.getBrothersData()
+      }
+    },
     dialog(val) {
       // eslint-disable-next-line no-unused-expressions
       val || this.close()
     },
-    dialogDelete(val) {
-      // eslint-disable-next-line no-unused-expressions
-      val || this.closeDelete()
-    },
   },
 
-  created() {
-    this.editItems = this.$props.editItems
-  },
   methods: {
     initialize() {
-      this.desserts = this.$props.data
+      this.$store.dispatch('getMonthCreditById', this.$props.id)
+        .then(r => {
+          this.desserts = r
+        })
+    },
+    getBrothersData() {
+      this.$store.state.loading = true
+      const data = this.$store.dispatch('getBrothersById', this.$props.profileId)
+      // eslint-disable-next-line no-return-assign,prefer-destructuring
+      data.then(r => {
+        this.detailData = r[0]
+        this.$store.state.loading = false
+      })
     },
     editItem(item) {
-      const data = this.$store.dispatch('getBrothersById', item.id)
-      // eslint-disable-next-line no-return-assign,prefer-destructuring
-      data.then(r => this.detailData = r[0])
       this.editedIndex = this.desserts.indexOf(item)
       this.editedItem = { ...item }
       this.dialog = true
@@ -271,7 +286,7 @@ export default {
         const data = {
           comment: creditData.comment,
           debt: creditData.debt,
-          id: creditData.mcId,
+          id: creditData.id,
           payDate: creditData.payDate,
           statusType: CurrentSelect[0],
         }

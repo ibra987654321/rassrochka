@@ -3,35 +3,29 @@
 </template>
 
 <script>
-import TableForUsers from "@/components/table/TableForUsers";
-// import { required, minLength } from 'vuelidate/lib/validators'
+// eslint-disable-next-line import/extensions
+import TableForUsers from '@/components/table/TableForUsers'
+
 export default {
-  name: "UserControl",
-  // validations: {
-  //   USER: {
-  //     username: {required, minLength: minLength(5)},
-  //     password: {required, minLength: minLength(5)},
-  //     phoneNumber: {required},
-  //   },
-  // },
+  name: 'UserControl',
   components: {
-    TableForUsers
+    TableForUsers,
   },
-  data: () =>  ({
+  data: () => ({
     data: [],
     fields: [
-      {text:'Пользователь', value: 'username' },
-      {text:'Статус', value: 'status' },
-      {text:'Номер', value: 'phoneNumber' },
-      {text:'Дата', value: 'date' },
-      {text:'Админ', value: 'adminLogin' },
+      { text: 'Пользователь', value: 'username' },
+      { text: 'Статус', value: 'status' },
+      { text: 'Номер', value: 'phoneNumber' },
+      { text: 'Дата', value: 'date' },
+      { text: 'Админ', value: 'adminLogin' },
       { text: 'Действия', value: 'actions', sortable: false },
     ],
     editItem: {
       username: '',
       password: '',
       phoneNumber: '',
-    }
+    },
   }),
   created() {
     this.$store.dispatch('getUsers').then(r => {

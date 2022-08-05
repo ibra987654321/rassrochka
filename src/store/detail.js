@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { environment } from '@/environments/environment'
-import { CREDIT, DEVICE} from '@/helpers/endpionts'
+import { CREDIT, DEVICE, PROFILES } from '@/helpers/endpionts'
 import { getToken } from '@/helpers/helpers'
 
 export default {
@@ -64,5 +64,26 @@ export default {
       })
       return data
     },
+    deleteProfile(store, payload) {
+      const data = axios({
+        method: 'POST',
+        url: `${environment.propApi + PROFILES}/deleteStatus`,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getToken()}`,
+        },
+        data: {
+          deleted: true,
+          id: payload,
+        },
+      }).then(r => {
+        store.rootState.loading = false
+        store.commit('setSnackbars', 'Статус успешно удален')
+      }).catch(error => {
+        store.rootState.loading = false
+        store.commit('setError', error.response.status)
+      })
+      return data
+    }
   },
 }

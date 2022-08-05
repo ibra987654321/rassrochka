@@ -75,6 +75,12 @@
         </v-card>
       </v-dialog>
     </template>
+    <template v-slot:item.status="item">
+     {{item.item.status | status}}
+    </template>
+    <template v-slot:item.date="item">
+      {{item.item.date | date}}
+    </template>
     <template v-slot:item.actions="item">
       <v-icon
         small

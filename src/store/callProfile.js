@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { environment } from '@/environments/environment'
-import {BROTHER, PROFILES} from '@/helpers/endpionts'
+import { BROTHER, CREDIT, PROFILES } from '@/helpers/endpionts'
 import { getToken } from '@/helpers/helpers'
 
 export default {
@@ -10,7 +10,7 @@ export default {
     getCallProfile() {
       const data = axios({
         method: 'GET',
-        url: `${environment.propApi + PROFILES}/findCallProfile`,
+        url: `${environment.propApi + PROFILES}/findDistinctCallProfile`,
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${getToken()}`,
@@ -22,6 +22,17 @@ export default {
       const data = axios({
         method: 'GET',
         url: `${environment.propApi + BROTHER}/getBrothersById/${id}`,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getToken()}`,
+        },
+      }).then(r => r.data)
+      return data
+    },
+    getMonthCreditById(_, id) {
+      const data = axios({
+        method: 'GET',
+        url: `${environment.propApi + CREDIT}/month/findAllByCreditId/${id}`,
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${getToken()}`,
