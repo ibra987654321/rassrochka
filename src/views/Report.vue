@@ -12,6 +12,7 @@
           <v-select
             v-model="selectUser"
             dense
+            hide-details
             outlined
             :items="['Все', 'Ibragim', 'Almaz', 'Azamat']"
           ></v-select>
@@ -25,7 +26,11 @@
         :items="data"
         item-key="name"
         class="elevation-1"
-      ></v-data-table>
+      >
+        <template v-slot:item.registrationDate="item">
+          {{ item.item.registrationDate | date }}
+        </template>
+      </v-data-table>
     </v-card-text>
     <v-card-text>
       <p style="font-size: 20px;">{{count.length !== 0 ? `Общая сумма: ${ count } сом` : `Нет данных`}}</p>

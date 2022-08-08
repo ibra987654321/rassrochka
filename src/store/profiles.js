@@ -23,29 +23,32 @@ export default {
   },
   actions: {
     getAllProfiles(_, payload) {
-     const data = axios(`${environment.propApi + PROFILES}/getDtoForMain/${payload.start}/${payload.end}`, {
+      const data = axios(`${environment.propApi + PROFILES}/getDtoForMain/${payload.start}/${payload.end}`, {
         method: 'GET',
-       headers: {
-         'Content-Type': 'application/json',
-         Authorization: `Bearer ${getToken()}`,
-       },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getToken()}`,
+        },
       }).then(r => r.data)
       return data
     },
-    // getAllProfiles() {
-    //   const data = axios(`${environment.propApi + PROFILES}/findAll`, {
-    //     method: 'GET',
-    //       headers: {
-    //       'Content-Type': 'application/json',
-    //       Authorization: `Bearer ${getToken()}`,
-    //     },
-    //   }).then(r => r.data)
-    //   return data
-    // },
+    editProfile(_, payload) {
+      const data = axios(`${environment.propApi + PROFILES}/editProfiles`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getToken()}`,
+        },
+        data: {
+          ...payload,
+        },
+      }).then(r => r.data)
+      return data
+    },
     searchProfilesByName(_, name) {
       const data = axios(`${environment.propApi + PROFILES}/getDtoForMainByFullName/${name}`, {
         method: 'GET',
-          headers: {
+        headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${getToken()}`,
         },

@@ -92,7 +92,10 @@ export default {
     },
   }),
   watch: {
-    dialog (val) {
+    dialog(val) {
+      // eslint-disable-next-line no-unused-expressions
+      !val ? this.initialize() : true
+      // eslint-disable-next-line no-unused-expressions
       val || this.close()
     },
     dialogDelete (val) {

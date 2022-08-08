@@ -20,7 +20,7 @@
             >
               <v-img src="@/assets/images/avatars/1.png"></v-img>
             </v-avatar>
-            <div class="d-flex justify-space-between flex-wrap pt-8">
+            <div class="d-flex flex-column  flex-wrap pt-8">
               <div class="me-2 mb-2">
                 <v-card-title class="pt-0 px-0">
                   {{profile.fullName}}
@@ -32,39 +32,42 @@
                   {{profile.factAddress}}
                 </v-card-subtitle>
               </div>
-              <v-dialog
-                v-model="dialog"
-                width="500"
-              >
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn
-                    color="primary"
-                    v-bind="attrs"
-                    v-on="on"
-                  >
-                    Удалить профиль
-                  </v-btn>
-                </template>
-
-                <v-card>
-                  <v-card-title class="text-h5 grey lighten-2">
-                    Вы уверены что хотите удалить?
-                  </v-card-title>
-
-                  <v-divider></v-divider>
-
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
+              <div class="d-flex flex-column">
+                <v-dialog
+                  v-model="dialog"
+                  width="500"
+                >
+                  <template v-slot:activator="{ on, attrs }">
                     <v-btn
-                      color="primary"
-                      text
-                      @click="deleteProfile(profile.id)"
+                      color="primary mb-3"
+                      v-bind="attrs"
+                      v-on="on"
                     >
-                      Удалить
+                      Удалить профиль
                     </v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
+                  </template>
+
+                  <v-card>
+                    <v-card-title class="text-h5 grey lighten-2">
+                      Вы уверены что хотите удалить?
+                    </v-card-title>
+
+                    <v-divider></v-divider>
+
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn
+                        color="primary"
+                        text
+                        @click="deleteProfile(profile.id)"
+                      >
+                        Удалить
+                      </v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+                <EditProfile :data="profile" @save="save($event)"/>
+              </div>
             </div>
           </v-card-text>
         </v-card>
@@ -188,7 +191,8 @@
         </v-card>
       </v-col>
       <v-col
-        sm="4"
+        sm="6"
+        md="4"
         cols="12"
       >
         <v-card class="d-flex align-center"  >
@@ -229,13 +233,17 @@
 </template>
 
 <script>
+// eslint-disable-next-line import/extensions
 import Dialogs from '@/components/modules/Dialogs'
+// eslint-disable-next-line import/extensions
+import EditProfile from '@/components/modules/EditProfile'
 import { mdiHelpCircleOutline } from '@mdi/js'
 
 export default {
   name: 'Detail',
   components: {
     Dialogs,
+    EditProfile,
   },
   data:() => ({
     dialog: false,
@@ -303,6 +311,9 @@ export default {
     })
   },
   methods: {
+    save(event) {
+      this.profile = { ...event }
+    },
     addStatus() {
       this.$store.dispatch('creditBlackList', this.blackList)
         .then(() => {
