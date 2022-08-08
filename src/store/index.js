@@ -73,7 +73,7 @@ export default new Vuex.Store({
   getters: {
     error: state => state.error,
     createdDate(state) {
-      return state.start.setDate(state.start.getDate() - 30)
+      return state.start.setHours(state.start.getHours() - 20)
     },
   },
   modules: {

@@ -17,9 +17,6 @@ export default function statusFilter(value) {
           DONE: 'Оплачен',
         },
         {
-          DELAY: 'Задержан',
-        },
-        {
           WAIT: 'Ожидание',
         },
         {

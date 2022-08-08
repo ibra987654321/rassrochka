@@ -149,6 +149,7 @@ export default {
     headers: [],
     desserts: [],
     editedIndex: -1,
+    currentDept: '',
     editedItem: {
       comment: '',
       statusType: '',
@@ -192,7 +193,6 @@ export default {
 
   created() {
     // eslint-disable-next-line array-callback-return
-    this.editedItem.debtReport = ''
     this.initialize()
   },
 
@@ -203,6 +203,8 @@ export default {
     editItem(item) {
       this.editedIndex = this.desserts.indexOf(item)
       this.editedItem = { ...item }
+      this.currentDept = this.editedItem.debtReport
+      this.editedItem.debtReport = ''
       this.dialog = true
     },
 
@@ -242,9 +244,7 @@ export default {
     },
     save() {
       const regexp = /[а-яё]/i
-      console.log(Number(this.editedItem.debtReport))
       // eslint-disable-next-line no-restricted-globals
-      console.log(regexp.test(this.editedItem.statusType) && !isNaN(Number(this.editedItem.debtReport)))
       if (regexp.test(this.editedItem.statusType) && !isNaN(Number(this.editedItem.debtReport))) {
         if (this.editedIndex > -1) {
           Object.assign(this.desserts[this.editedIndex], this.editedItem)
@@ -260,6 +260,8 @@ export default {
             statusType: CurrentSelect[0],
           }
           this.$store.dispatch('putCreditInformation', data).then(() => {
+            // Number(this.editedItem.debtReport) + this.currentDept
+            // Object.assign(this.desserts[this.editedIndex], this.editedItem)
             this.close()
           })
         } else {

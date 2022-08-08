@@ -14,7 +14,7 @@
             dense
             hide-details
             outlined
-            :items="['Все', 'Ibragim', 'Almaz', 'Azamat']"
+            :items="userList"
           ></v-select>
         </v-col>
       </v-row>
@@ -61,6 +61,7 @@ export default {
   },
   data: () => ({
     selectUser: 'Все',
+    userList: [],
     data: [],
     count: [],
     headers: [
@@ -71,6 +72,7 @@ export default {
     ],
   }),
   mounted() {
+    this.getUserList()
     this.getReports()
   },
   watch: {
@@ -118,6 +120,14 @@ export default {
           this.count = this.count.reduce((a, b) => a + b)
         }
       })
+    },
+    getUserList() {
+      this.$store.dispatch('getUserList')
+        .then(r => {
+          this.userList = r
+          this.userList.push('Все')
+        })
+        .catch(e => this.$store.commit('setSnackbars', e.message))
     },
   },
 }

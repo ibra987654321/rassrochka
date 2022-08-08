@@ -16,7 +16,6 @@ export default {
     fields: [
       { text: 'Пользователь', value: 'username' },
       { text: 'Статус', value: 'status' },
-      { text: 'Номер', value: 'phoneNumber' },
       { text: 'Дата', value: 'date' },
       { text: 'Админ', value: 'adminLogin' },
       { text: 'Действия', value: 'actions', sortable: false },
