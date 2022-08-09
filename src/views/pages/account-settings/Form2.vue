@@ -45,11 +45,7 @@
           >
             <v-text-field
               v-model="brother.address"
-              label="Адрес прожвания"
-              required
-              @input="$v.brother.address.$touch()"
-              @blur="$v.brother.address.$touch()"
-              :error-messages="addressError"
+              label="ФИО"
               dense
               outlined
             ></v-text-field>
@@ -61,11 +57,7 @@
           >
             <v-text-field
               v-model="brother.brotherType"
-              label="Тип родства"
-              required
-              @input="$v.brother.brotherType.$touch()"
-              @blur="$v.brother.brotherType.$touch()"
-              :error-messages="brotherTypeError"
+              label="Телефон"
               dense
               outlined
             ></v-text-field>

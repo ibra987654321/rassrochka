@@ -110,10 +110,6 @@
               dense
               outlined
               label="Адрес по паспорту"
-              required
-              @input="$v.editedItem.passportAddress.$touch()"
-              @blur="$v.editedItem.passportAddress.$touch()"
-              :error-messages="passportAddressError"
             ></v-text-field>
           </v-col>
 
@@ -126,10 +122,6 @@
               dense
               outlined
               label="Орган выдавший паспорт"
-              required
-              @input="$v.editedItem.passportDepartment.$touch()"
-              @blur="$v.editedItem.passportDepartment.$touch()"
-              :error-messages="passportDepartmentError"
             ></v-text-field>
           </v-col>
           <v-col
@@ -218,8 +210,6 @@ export default {
       factAddress: {required, minLength: minLength(5)},
       passportSeries: {required, minLength: minLength(5), maxLength: maxLength(15)},
       passportInn: {required, minLength: minLength(14), maxLength: maxLength(14)},
-      passportAddress: {required, minLength: minLength(5)},
-      passportDepartment: {required, minLength: minLength(5)},
       workAddress: {required, minLength: minLength(5)},
     },
   },
@@ -295,20 +285,6 @@ export default {
       !this.$v.editedItem.passportInn.minLength && errors.push('Это поле нe должно быть меньше 14. Сейчас ' + this.editedItem.passportInn.length)
       !this.$v.editedItem.passportInn.maxLength && errors.push('Это поле нe должно быть больше 14. Сейчас ' + this.editedItem.passportInn.length)
       !this.$v.editedItem.passportInn.required && errors.push('Поле не должно быть пустым.')
-      return errors
-    },
-    passportAddressError () {
-      const errors = []
-      if (!this.$v.editedItem.passportAddress.$dirty) return errors
-      !this.$v.editedItem.passportAddress.minLength && errors.push('Это поле нe должно быть меньше 5. Сейчас ' + this.editedItem.passportAddress.length)
-      !this.$v.editedItem.passportAddress.required && errors.push('Поле не должно быть пустым.')
-      return errors
-    },
-    passportDepartmentError () {
-      const errors = []
-      if (!this.$v.editedItem.passportDepartment.$dirty) return errors
-      !this.$v.editedItem.passportDepartment.minLength && errors.push('Это поле нe должно быть меньше 5. Сейчас ' + this.editedItem.passportDepartment.length)
-      !this.$v.editedItem.passportDepartment.required && errors.push('Поле не должно быть пустым.')
       return errors
     },
     workAddressError () {

@@ -23,7 +23,7 @@
                     cols="12"
                     sm="8"
                   >
-                    <more-info :detailData="detailData"></more-info>
+                    <more-info v-for="(item, idx) in detailData" :key="idx" :detailData="item"></more-info>
                   </v-col>
                   <v-col
                     cols="12"
@@ -234,7 +234,7 @@ export default {
       const data = this.$store.dispatch('getBrothersById', this.$props.profileId)
       // eslint-disable-next-line no-return-assign,prefer-destructuring
       data.then(r => {
-        this.detailData = r[0]
+        this.detailData = r
         this.$store.state.loading = false
       })
     },

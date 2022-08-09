@@ -3,7 +3,7 @@
     flat
     class="pa-3 mt-2"
   >
-    <h2>Дилер</h2>
+    <h2>Продавец</h2>
     <v-card-text>
       <v-form class="multi-col-validation mt-6">
         <v-row>
@@ -13,7 +13,7 @@
           >
             <v-text-field
               v-model="owner.deviceOwner"
-              label="Название дилера"
+              label="Продавец"
               required
               @input="$v.owner.deviceOwner.$touch()"
               @blur="$v.owner.deviceOwner.$touch()"
@@ -29,7 +29,7 @@
           >
             <v-text-field
               v-model="owner.deviceOwnerIp"
-              label="ИП дилера"
+              label="Отдел продаж"
               required
               @input="$v.owner.deviceOwnerIp.$touch()"
               @blur="$v.owner.deviceOwnerIp.$touch()"

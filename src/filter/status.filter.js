@@ -8,9 +8,6 @@ export default function statusFilter(value) {
           ACTIVE: 'Активный',
         },
         {
-          DEFAULTER: 'Неплательщик',
-        },
-        {
           EXPIRED: 'Истекший',
         },
         {
@@ -42,16 +39,10 @@ export default function statusFilter(value) {
     } else {
       const itemsRu = [
         {
-          Неплательщик: 'DEFAULTER',
-        },
-        {
           Истекший: 'EXPIRED',
         },
         {
           Оплачен: 'DONE',
-        },
-        {
-          Задержан: 'DELAY',
         },
         {
           Ожидание: 'WAIT',

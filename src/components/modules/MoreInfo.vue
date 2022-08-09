@@ -23,9 +23,9 @@
               </p>
               <p class="d-flex align-center mb-0">
                 <v-icon color="primary">
-                  {{ icons.mdiLockOpenOutline }}
+                  {{ icons.mdiAccountOutline }}
                 </v-icon>
-                <span class="ms-3">{{ $props.detailData.address }}</span>
+                <span class="ms-3">{{ $props.detailData.address }} </span>
               </p>
             </div>
 
@@ -36,18 +36,18 @@
             >
             </v-divider>
 
-            <div class="ms-auto ps-4">
-              <p class="d-flex align-center mb-6">
-                <v-icon color="primary">
-                  {{ icons.mdiStarOutline }}
-                </v-icon>
+          <div class="ms-auto ps-4">
+            <p class="d-flex align-center mb-6">
+              <v-icon color="primary">
+                {{ icons.mdiPhone }}
+              </v-icon>
+              <span class="ms-3">{{ $props.detailData.phoneNumber }}</span>
+            </p>
+            <p class="d-flex align-center mb-0">
+              <v-icon color="primary">
+                {{ icons.mdiPhone }}
+              </v-icon>
                 <span class="ms-3">{{ $props.detailData.brotherType }}</span>
-              </p>
-              <p class="d-flex align-center mb-0">
-                <v-icon color="primary">
-                  {{ icons.mdiPhone }}
-                </v-icon>
-                <span class="ms-3">{{ $props.detailData.phoneNumber }}</span>
               </p>
             </div>
           </v-card-actions>

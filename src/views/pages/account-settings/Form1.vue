@@ -137,10 +137,6 @@
               dense
               outlined
               label="Адрес по паспорту"
-              required
-              @input="$v.account.passportAddress.$touch()"
-              @blur="$v.account.passportAddress.$touch()"
-              :error-messages="passportAddressError"
             ></v-text-field>
           </v-col>
 
@@ -153,10 +149,6 @@
               dense
               outlined
               label="Орган выдавший паспорт"
-              required
-              @input="$v.account.passportDepartment.$touch()"
-              @blur="$v.account.passportDepartment.$touch()"
-              :error-messages="passportDepartmentError"
             ></v-text-field>
           </v-col>
           <v-col
@@ -247,8 +239,8 @@ export default {
       factAddress: {required, minLength: minLength(5)},
       passportSeries: {required, minLength: minLength(5), maxLength: maxLength(15)},
       passportInn: {required, minLength: minLength(14), maxLength: maxLength(14)},
-      passportAddress: {required, minLength: minLength(5)},
-      passportDepartment: {required, minLength: minLength(5)},
+      // passportAddress: {required, minLength: minLength(5)},
+      // passportDepartment: {required, minLength: minLength(5)},
       workAddress: {required, minLength: minLength(5)},
     },
   },
@@ -317,20 +309,20 @@ export default {
       !this.$v.account.passportInn.required && errors.push('Поле не должно быть пустым.')
       return errors
     },
-    passportAddressError () {
-      const errors = []
-      if (!this.$v.account.passportAddress.$dirty) return errors
-      !this.$v.account.passportAddress.minLength && errors.push('Это поле нe должно быть меньше 5. Сейчас ' + this.account.passportAddress.length)
-      !this.$v.account.passportAddress.required && errors.push('Поле не должно быть пустым.')
-      return errors
-    },
-    passportDepartmentError () {
-      const errors = []
-      if (!this.$v.account.passportDepartment.$dirty) return errors
-      !this.$v.account.passportDepartment.minLength && errors.push('Это поле нe должно быть меньше 5. Сейчас ' + this.account.passportDepartment.length)
-      !this.$v.account.passportDepartment.required && errors.push('Поле не должно быть пустым.')
-      return errors
-    },
+    // passportAddressError () {
+    //   const errors = []
+    //   if (!this.$v.account.passportAddress.$dirty) return errors
+    //   !this.$v.account.passportAddress.minLength && errors.push('Это поле нe должно быть меньше 5. Сейчас ' + this.account.passportAddress.length)
+    //   !this.$v.account.passportAddress.required && errors.push('Поле не должно быть пустым.')
+    //   return errors
+    // },
+    // passportDepartmentError () {
+    //   const errors = []
+    //   if (!this.$v.account.passportDepartment.$dirty) return errors
+    //   !this.$v.account.passportDepartment.minLength && errors.push('Это поле нe должно быть меньше 5. Сейчас ' + this.account.passportDepartment.length)
+    //   !this.$v.account.passportDepartment.required && errors.push('Поле не должно быть пустым.')
+    //   return errors
+    // },
     workAddressError () {
       const errors = []
       if (!this.$v.account.workAddress.$dirty) return errors
