@@ -4,6 +4,7 @@ import {
   PROFILES, USER,
 } from '@/helpers/endpionts'
 import { getToken } from '@/helpers/helpers'
+import { useISOString } from '@/use/ISOStringDate'
 
 export default {
   state: {
@@ -12,7 +13,7 @@ export default {
   },
   actions: {
     getReportingByDate(store) {
-      const data = axios(`${environment.propApi + PROFILES}/getReportingByDate/${store.rootState.start.toISOString()}/${store.rootState.end.toISOString()}`, {
+      const data = axios(`${environment.propApi + PROFILES}/getReportingByDate/${useISOString(store.rootState.start)}/${useISOString(store.rootState.end)}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -23,7 +24,7 @@ export default {
       return data
     },
     getReportingByDateAndUserName(store, userName) {
-      const data = axios(`${environment.propApi + PROFILES}/getReportingByDateAndUserName/${store.rootState.start.toISOString()}/${store.rootState.end.toISOString()}/${userName}`, {
+      const data = axios(`${environment.propApi + PROFILES}/getReportingByDateAndUserName/${useISOString(store.rootState.start)}/${useISOString(store.rootState.end)}/${userName}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

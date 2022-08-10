@@ -28,7 +28,7 @@
           >
             <v-select
               v-model="selectedMonth"
-              :items="[1,2,3]"
+              :items="[1,2,3,4,5,6]"
               label="Месяцы"
               dense
               outlined
@@ -641,7 +641,7 @@ export default {
           }),
         ],
       })
-      this.saveDocumentToFile(doc, 'vuedoc.docx')
+      this.saveDocumentToFile(doc, 'Заявление.docx')
     },
     saveDocumentToFile(doc, fileName) {
       const mimeType = 'application/vnd.openxmlformatsofficedocument.wordprocessingml.document'
