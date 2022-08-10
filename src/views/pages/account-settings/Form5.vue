@@ -18,6 +18,10 @@
               dense
               label="Первоначальный взнос"
               outlined
+              required
+              @input="$v.zeroPayment.$touch()"
+              @blur="$v.zeroPayment.$touch()"
+              :error-messages="zeroPaymentError"
             ></v-text-field>
           </v-col>
 
@@ -142,6 +146,8 @@ import {
   TextRun, AlignmentType, Table, TableRow, TableCell,
 } from 'docx'
 import { saveAs } from 'file-saver'
+import { validationMixin } from 'vuelidate'
+import { numeric, required } from 'vuelidate/lib/validators'
 
 export default {
   name: 'Form5',
@@ -156,6 +162,10 @@ export default {
     TextRun,
     saveAs,
   },
+  mixins: [validationMixin],
+  validations: {
+    zeroPayment: { required, numeric },
+  },
   data: () => ({
     checkDate: false,
     selectedMonth: null,
@@ -168,7 +178,7 @@ export default {
     brother: '',
     showTable: false,
     creditData: {},
-    monthForPay: ['Первый месяц', 'Второй месяц', 'Третий месяц'],
+    monthForPay: ['Первый месяц', 'Второй месяц', 'Третий месяц', 'Четвертый месяц', 'Пятый месяц', 'Шестой месяц'],
     zeroPayment: '',
     icons: {
       mdiAlertOutline,
@@ -180,6 +190,13 @@ export default {
     doneCard() {
       this.showTable = false
       return this.$store.state.profiles.doneCard
+    },
+    zeroPaymentError() {
+      const errors = []
+      if (!this.$v.zeroPayment.$dirty) return errors
+      !this.$v.zeroPayment.numeric && errors.push('Только цифры')
+      !this.$v.zeroPayment.required && errors.push('Поле не должно быть пустым.')
+      return errors
     },
   },
   watch: {
@@ -205,6 +222,10 @@ export default {
   },
   methods: {
     save() {
+      if (this.$v.$invalid) {
+        this.$v.$touch();
+        return;
+      }
       this.$store.dispatch('postForm5', this.creditData)
     },
     ExportFile() {

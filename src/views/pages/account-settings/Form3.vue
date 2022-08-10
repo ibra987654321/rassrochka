@@ -136,9 +136,9 @@ export default {
   validations: {
     device: {
       deviceImei: {required,numeric, minLength: minLength(12), maxLength: maxLength(20)},
-      deviceMemory: {required,  minLength: minLength(2)},
+      deviceMemory: {required, minLength: minLength(2)},
       deviceModel: {required, minLength: minLength(3)},
-      devicePrice: {required, minLength: minLength(3)},
+      devicePrice: {required, numeric, minLength: minLength(3)},
       cloudLogin: {required, minLength: minLength(3)},
       cloudPass: {required, minLength: minLength(3)},
     },
@@ -193,6 +193,7 @@ export default {
     PriceError () {
       const errors = []
       if (!this.$v.device.devicePrice.$dirty) return errors
+      !this.$v.device.devicePrice.numeric && errors.push('Только цифры')
       !this.$v.device.devicePrice.required && errors.push('Поле не должно быть пустым.')
       return errors
     },

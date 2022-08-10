@@ -51,8 +51,10 @@
                     label="Оплата"
                     dense
                     outlined
-                    aria-required="true"
-                    numeric
+                    required
+                    @input="$v.editedItem.debtReport.$touch()"
+                    @blur="$v.editedItem.debtReport.$touch()"
+                    :error-messages="debtReportError"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -131,6 +133,8 @@
 
 <script>
 import { mdiDelete, mdiPencil } from '@mdi/js'
+import {required, numeric} from 'vuelidate/lib/validators'
+import { validationMixin } from 'vuelidate'
 
 export default {
   name: 'TableClients',
@@ -141,6 +145,12 @@ export default {
     putDispatch: String,
     postDispatch: String,
     editItems: Object,
+  },
+  mixins: [validationMixin],
+  validations: {
+    editedItem: {
+      debtReport: { required, numeric },
+    },
   },
   data: () => ({
     icons: { mdiDelete, mdiPencil },
@@ -177,6 +187,13 @@ export default {
     header() {
       // eslint-disable-next-line no-return-assign,vue/no-side-effects-in-computed-properties
       return this.headers = this.$props.fields
+    },
+    debtReportError() {
+      const errors = []
+      if (!this.$v.editedItem.debtReport.$dirty) return errors
+      !this.$v.editedItem.debtReport.numeric && errors.push('Только цифры')
+      !this.$v.editedItem.debtReport.required && errors.push('Поле не должно быть пустым.')
+      return errors
     },
   },
 
@@ -243,6 +260,10 @@ export default {
       return isFinite(value) && value === parseInt(value, 10)
     },
     save() {
+      if (this.$v.$invalid) {
+        this.$v.$touch();
+        return;
+      }
       const regexp = /[а-яё]/i
       // eslint-disable-next-line no-restricted-globals
       if (regexp.test(this.editedItem.statusType) && !isNaN(Number(this.editedItem.debtReport))) {

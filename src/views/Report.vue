@@ -90,8 +90,12 @@ export default {
         this.getReportsByUser()
       }
     },
-    selectUser() {
-      this.getReportsByUser()
+    selectUser(val) {
+      if (val === 'Все') {
+        this.getReports()
+      } else {
+        this.getReportsByUser()
+      }
     },
   },
   methods: {

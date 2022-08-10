@@ -112,7 +112,6 @@ export default {
       })
     },
     update() {
-      console.log('update')
       this.initialize()
     },
     close() {
