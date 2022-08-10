@@ -3,47 +3,47 @@
     flat
     class="pa-3 mt-2"
   >
-<!--    <v-card-text class="d-flex">-->
-<!--      <v-avatar-->
-<!--        rounded-->
-<!--        size="120"-->
-<!--        class="me-6"-->
-<!--      >-->
-<!--        <v-img :src="account.avatarImg"></v-img>-->
-<!--      </v-avatar>-->
+    <!--    <v-card-text class="d-flex">-->
+    <!--      <v-avatar-->
+    <!--        rounded-->
+    <!--        size="120"-->
+    <!--        class="me-6"-->
+    <!--      >-->
+    <!--        <v-img :src="account.avatarImg"></v-img>-->
+    <!--      </v-avatar>-->
 
-<!--      &lt;!&ndash; upload photo &ndash;&gt;-->
-<!--      <div>-->
-<!--        <v-btn-->
-<!--          color="primary"-->
-<!--          class="me-3 mt-5"-->
-<!--          @click="$refs.refInputEl.click()"-->
-<!--        >-->
-<!--          <v-icon class="d-sm-none">-->
-<!--            {{ icons.mdiCloudUploadOutline }}-->
-<!--          </v-icon>-->
-<!--          <span class="d-none d-sm-block">Upload new photo</span>-->
-<!--        </v-btn>-->
+    <!--      &lt;!&ndash; upload photo &ndash;&gt;-->
+    <!--      <div>-->
+    <!--        <v-btn-->
+    <!--          color="primary"-->
+    <!--          class="me-3 mt-5"-->
+    <!--          @click="$refs.refInputEl.click()"-->
+    <!--        >-->
+    <!--          <v-icon class="d-sm-none">-->
+    <!--            {{ icons.mdiCloudUploadOutline }}-->
+    <!--          </v-icon>-->
+    <!--          <span class="d-none d-sm-block">Upload new photo</span>-->
+    <!--        </v-btn>-->
 
-<!--        <input-->
-<!--          ref="refInputEl"-->
-<!--          type="file"-->
-<!--          accept=".jpeg,.png,.jpg,GIF"-->
-<!--          :hidden="true"-->
-<!--        />-->
+    <!--        <input-->
+    <!--          ref="refInputEl"-->
+    <!--          type="file"-->
+    <!--          accept=".jpeg,.png,.jpg,GIF"-->
+    <!--          :hidden="true"-->
+    <!--        />-->
 
-<!--        <v-btn-->
-<!--          color="error"-->
-<!--          outlined-->
-<!--          class="mt-5"-->
-<!--        >-->
-<!--          Reset-->
-<!--        </v-btn>-->
-<!--        <p class="text-sm mt-5">-->
-<!--          Allowed JPG, GIF or PNG. Max size of 800K-->
-<!--        </p>-->
-<!--      </div>-->
-<!--    </v-card-text>-->
+    <!--        <v-btn-->
+    <!--          color="error"-->
+    <!--          outlined-->
+    <!--          class="mt-5"-->
+    <!--        >-->
+    <!--          Reset-->
+    <!--        </v-btn>-->
+    <!--        <p class="text-sm mt-5">-->
+    <!--          Allowed JPG, GIF or PNG. Max size of 800K-->
+    <!--        </p>-->
+    <!--      </div>-->
+    <!--    </v-card-text>-->
     <h2>Профиль</h2>
     <v-card-text>
       <v-form class="multi-col-validation mt-6">
@@ -56,11 +56,11 @@
               v-model="account.fullName"
               label="ФИО"
               required
-              @input="$v.account.fullName.$touch()"
-              @blur="$v.account.fullName.$touch()"
               :error-messages="nameErrors"
               dense
               outlined
+              @input="$v.account.fullName.$touch()"
+              @blur="$v.account.fullName.$touch()"
             ></v-text-field>
           </v-col>
 
@@ -72,11 +72,11 @@
               v-model="account.phone"
               label="Телефон"
               required
-              @input="$v.account.phone.$touch()"
-              @blur="$v.account.phone.$touch()"
               :error-messages="phoneError"
               dense
               outlined
+              @input="$v.account.phone.$touch()"
+              @blur="$v.account.phone.$touch()"
             ></v-text-field>
           </v-col>
 
@@ -89,10 +89,10 @@
               label="Адрес проживания"
               dense
               required
-              @input="$v.account.factAddress.$touch()"
-              @blur="$v.account.factAddress.$touch()"
               :error-messages="factAddressError"
               outlined
+              @input="$v.account.factAddress.$touch()"
+              @blur="$v.account.factAddress.$touch()"
             ></v-text-field>
           </v-col>
 
@@ -106,9 +106,9 @@
               label="Серия паспорта"
               outlined
               required
+              :error-messages="passportSeriesError"
               @input="$v.account.passportSeries.$touch()"
               @blur="$v.account.passportSeries.$touch()"
-              :error-messages="passportSeriesError"
             ></v-text-field>
           </v-col>
 
@@ -122,9 +122,9 @@
               label="ИНН"
               outlined
               required
+              :error-messages="passportInnError"
               @input="$v.account.passportInn.$touch()"
               @blur="$v.account.passportInn.$touch()"
-              :error-messages="passportInnError"
             ></v-text-field>
           </v-col>
 
@@ -161,9 +161,9 @@
               outlined
               label="Место работы"
               required
+              :error-messages="workAddressError"
               @input="$v.account.workAddress.$touch()"
               @blur="$v.account.workAddress.$touch()"
-              :error-messages="workAddressError"
             ></v-text-field>
           </v-col>
 
@@ -223,27 +223,30 @@
 </template>
 
 <script>
-import {mdiAlertOutline, mdiCloudUploadOutline} from "@mdi/js";
+import { mdiAlertOutline, mdiCloudUploadOutline } from '@mdi/js'
 import { validationMixin } from 'vuelidate'
-import { required, minLength, numeric, maxLength } from 'vuelidate/lib/validators'
-
+import {
+  required, minLength, numeric, maxLength,
+} from 'vuelidate/lib/validators'
 
 export default {
-  name: "Form1",
-  props: ['nextFunction'],
+  name: 'Form1',
   mixins: [validationMixin],
+  props: ['nextFunction'],
   validations: {
     account: {
-      fullName: {required, minLength: minLength(10)},
-      phone: {required, numeric},
-      factAddress: {required, minLength: minLength(5)},
-      passportSeries: {required, minLength: minLength(5), maxLength: maxLength(15)},
-      passportInn: {required, minLength: minLength(14), maxLength: maxLength(14)},
+      fullName: { required, minLength: minLength(10) },
+      phone: { required, numeric },
+      factAddress: { required, minLength: minLength(5) },
+      passportSeries: { required, minLength: minLength(5), maxLength: maxLength(15) },
+      passportInn: { required, minLength: minLength(14), maxLength: maxLength(14) },
+
       // passportAddress: {required, minLength: minLength(5)},
       // passportDepartment: {required, minLength: minLength(5)},
-      workAddress: {required, minLength: minLength(5)},
+      workAddress: { required, minLength: minLength(5) },
     },
   },
+
   // fullName: 'Azamat Bekesov',
   // phone: '0771548785',
   // factAddress: 'bishkek',
@@ -252,7 +255,7 @@ export default {
   // passportAddress: 'Alamedin',
   // passportDepartment: 'MKK=24',
   // workAddress: 'beeline',
-  data:() => ({
+  data: () => ({
     account: {
       fullName: '',
       phone: '',
@@ -262,7 +265,7 @@ export default {
       passportAddress: '',
       passportDepartment: '',
       workAddress: '',
-      passportDate: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)
+      passportDate: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
     },
     menu2: false,
     icons: {
@@ -272,43 +275,44 @@ export default {
 
   }),
   computed: {
-    nameErrors () {
+    nameErrors() {
       const errors = []
       if (!this.$v.account.fullName.$dirty) return errors
-      !this.$v.account.fullName.minLength && errors.push('Это поле не должно быть меньше 10. Сейчас ' + this.account.fullName.length)
+      !this.$v.account.fullName.minLength && errors.push(`Это поле не должно быть меньше 10. Сейчас ${this.account.fullName.length}`)
       !this.$v.account.fullName.required && errors.push('Поле не должно быть пустым.')
       return errors
     },
-    phoneError () {
+    phoneError() {
       const errors = []
       if (!this.$v.account.phone.$dirty) return errors
       !this.$v.account.phone.numeric && errors.push('Только цифры')
       !this.$v.account.phone.required && errors.push('Поле не должно быть пустым.')
       return errors
     },
-    factAddressError () {
+    factAddressError() {
       const errors = []
       if (!this.$v.account.factAddress.$dirty) return errors
-      !this.$v.account.factAddress.minLength && errors.push('Это поле нe должно быть меньше 5. Сейчас ' + this.account.factAddress.length)
+      !this.$v.account.factAddress.minLength && errors.push(`Это поле нe должно быть меньше 5. Сейчас ${this.account.factAddress.length}`)
       !this.$v.account.factAddress.required && errors.push('Поле не должно быть пустым.')
       return errors
     },
-    passportSeriesError () {
+    passportSeriesError() {
       const errors = []
       if (!this.$v.account.passportSeries.$dirty) return errors
-      !this.$v.account.passportSeries.minLength && errors.push('Это поле нe должно быть меньше 5. Сейчас ' + this.account.passportSeries.length)
-      !this.$v.account.passportSeries.maxLength && errors.push('Это поле нe должно быть больше 15. Сейчас ' + this.account.passportSeries.length)
+      !this.$v.account.passportSeries.minLength && errors.push(`Это поле нe должно быть меньше 5. Сейчас ${this.account.passportSeries.length}`)
+      !this.$v.account.passportSeries.maxLength && errors.push(`Это поле нe должно быть больше 15. Сейчас ${this.account.passportSeries.length}`)
       !this.$v.account.passportSeries.required && errors.push('Поле не должно быть пустым.')
       return errors
     },
-    passportInnError () {
+    passportInnError() {
       const errors = []
       if (!this.$v.account.passportInn.$dirty) return errors
-      !this.$v.account.passportInn.minLength && errors.push('Это поле нe должно быть меньше 14. Сейчас ' + this.account.passportInn.length)
-      !this.$v.account.passportInn.maxLength && errors.push('Это поле нe должно быть больше 14. Сейчас ' + this.account.passportInn.length)
+      !this.$v.account.passportInn.minLength && errors.push(`Это поле нe должно быть меньше 14. Сейчас ${this.account.passportInn.length}`)
+      !this.$v.account.passportInn.maxLength && errors.push(`Это поле нe должно быть больше 14. Сейчас ${this.account.passportInn.length}`)
       !this.$v.account.passportInn.required && errors.push('Поле не должно быть пустым.')
       return errors
     },
+
     // passportAddressError () {
     //   const errors = []
     //   if (!this.$v.account.passportAddress.$dirty) return errors
@@ -323,10 +327,10 @@ export default {
     //   !this.$v.account.passportDepartment.required && errors.push('Поле не должно быть пустым.')
     //   return errors
     // },
-    workAddressError () {
+    workAddressError() {
       const errors = []
       if (!this.$v.account.workAddress.$dirty) return errors
-      !this.$v.account.workAddress.minLength && errors.push('Это поле нe должно быть меньше 5. Сейчас ' + this.account.workAddress.length)
+      !this.$v.account.workAddress.minLength && errors.push(`Это поле нe должно быть меньше 5. Сейчас ${this.account.workAddress.length}`)
       !this.$v.account.workAddress.required && errors.push('Поле не должно быть пустым.')
       return errors
     },
@@ -336,8 +340,8 @@ export default {
   methods: {
     save() {
       if (this.$v.$invalid) {
-        this.$v.$touch();
-        return;
+        this.$v.$touch()
+        return
       }
       this.$store.dispatch('postForm1', this.account)
       this.$emit('next')
@@ -351,9 +355,9 @@ export default {
         passportInn: '',
         passportAddress: '',
         passportDepartment: '',
-        passportDate: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)
+        passportDate: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
       }
-    }
+    },
   },
 }
 </script>
