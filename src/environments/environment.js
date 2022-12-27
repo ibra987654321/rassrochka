@@ -5,5 +5,5 @@ export const environment = {
   // propApi: 'http://10.16.230.114:8080/rassrochka/api/v1',
 
   // prodApi: 'http://176.126.164.43:81',
-  propApi: 'http://176.126.164.43:81/rassrochka/api/v1',
+  propApi: 'http://176.126.164.43:85/rassrochka/api/v1',
 }
