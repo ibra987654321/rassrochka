@@ -1,5 +1,5 @@
 <template>
-<table-for-users :data="data" :fields="fields" :edit-items="editItem" :put-dispatch="'putUsers'"></table-for-users>
+  <table-for-users :data="data" :fields="fields" :edit-items="editItem" :put-dispatch="'putUsers'"></table-for-users>
 </template>
 
 <script>

@@ -16,6 +16,21 @@
             @click="isDrawerOpen = !isDrawerOpen"
           ></v-app-bar-nav-icon>
           <v-spacer></v-spacer>
+          <v-btn
+            color="primary"
+            class="me-3 mt-4"
+            @click="$router.push({name: 'pages-account-settings'})"
+          >
+            Новая заявка
+          </v-btn>
+          <v-btn
+            v-if="step > 1"
+            color="primary"
+            class="me-3 mt-4"
+            @click="removeData()"
+          >
+            Сброс данных
+          </v-btn>
           <theme-switcher></theme-switcher>
           <app-bar-user-menu></app-bar-user-menu>
         </div>
@@ -33,7 +48,14 @@
 <script>
 import { ref } from '@vue/composition-api'
 import { mdiMagnify, mdiBellOutline, mdiGithub } from '@mdi/js'
-import dateRangePicker from './components/dateRangePicker/DateRangePicker.vue'
+import {
+  getProfileId,
+  getStep,
+  removeObject1,
+  removeObject2,
+  removeProfileId,
+  setStep,
+} from '@/helpers/helpers'
 import VerticalNavMenu from './components/vertical-nav-menu/VerticalNavMenu.vue'
 import ThemeSwitcher from './components/ThemeSwitcher.vue'
 import AppBarUserMenu from './components/AppBarUserMenu.vue'
@@ -43,14 +65,21 @@ export default {
     VerticalNavMenu,
     ThemeSwitcher,
     AppBarUserMenu,
-    dateRangePicker,
+  },
+  computed: {
+    step() {
+      return getStep()
+    },
   },
   setup() {
     const isDrawerOpen = ref(null)
-
+    function removeData() {
+      this.$store.dispatch('deleteProfileBefore', getProfileId())
+    }
     return {
+      removeData,
       isDrawerOpen,
-
+      getStep,
       // Icons
       icons: {
         mdiMagnify,

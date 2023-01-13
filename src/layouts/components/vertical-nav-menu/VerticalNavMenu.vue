@@ -43,12 +43,12 @@
         :to="{ name: 'dashboard' }"
         :icon="icons.mdiHomeOutline"
       ></nav-menu-link>
-      <nav-menu-link
-        title="Новая заявка"
-        v-if="decode === 'ROLE_USER' || 'ROLE_ADMIN'"
-        :to="{ name: 'pages-account-settings'}"
-        :icon="icons.mdiAccountCogOutline"
-      ></nav-menu-link>
+<!--      <nav-menu-link-->
+<!--        title="Новая заявка"-->
+<!--        v-if="decode === 'ROLE_USER' || 'ROLE_ADMIN'"-->
+<!--        :to="{ name: 'pages-account-settings'}"-->
+<!--        :icon="icons.mdiAccountCogOutline"-->
+<!--      ></nav-menu-link>-->
       <nav-menu-link
         title="Просрочка "
         v-if="decode === 'ROLE_USER' || 'ROLE_ADMIN' "

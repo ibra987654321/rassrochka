@@ -7,14 +7,14 @@ export default {
   state: {},
   mutations: {},
   actions: {
-    getInformation(_,  id) {
+    getInformation(_, id) {
        const data = axios({
           method: 'GET',
           url: `${environment.propApi + DEVICE}/getDeviceByProfileID/${id}`,
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${getToken()}`,
-          },
+          // headers: {
+          //   'Content-Type': 'application/json',
+          //   Authorization: `Bearer ${getToken()}`,
+          // },
         }).then(r => r)
       return data
     },
@@ -33,10 +33,10 @@ export default {
       const data = axios({
         method: 'PUT',
         url: `${environment.propApi + CREDIT}/month/editMontCredit`,
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${getToken()}`,
-        },
+        // headers: {
+        //   'Content-Type': 'application/json',
+        //   Authorization: `Bearer ${getToken()}`,
+        // },
         data: {
           ...payload
         }
@@ -48,10 +48,10 @@ export default {
       const data = axios({
         method: 'POST',
         url: `${environment.propApi + CREDIT}/addBlackList`,
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${getToken()}`,
-        },
+        // headers: {
+        //   'Content-Type': 'application/json',
+        //   Authorization: `Bearer ${getToken()}`,
+        // },
         data: {
           ...payload
         }
@@ -65,17 +65,15 @@ export default {
       return data
     },
     deleteProfile(store, payload) {
+      payload.delete = true
       const data = axios({
-        method: 'POST',
-        url: `${environment.propApi + PROFILES}/deleteStatus`,
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${getToken()}`,
-        },
-        data: {
-          deleted: true,
-          id: payload,
-        },
+        method: 'PUT',
+        url: `${environment.propApi + PROFILES}/editProfiles`,
+        // headers: {
+        //   'Content-Type': 'application/json',
+        //   Authorization: `Bearer ${getToken()}`,
+        // },
+        data: { ...payload },
       }).then(r => {
         store.rootState.loading = false
         store.commit('setSnackbars', 'Статус успешно удален')

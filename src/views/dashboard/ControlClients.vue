@@ -4,34 +4,27 @@
     <v-card-text>
       <div class="d-flex">
         <v-text-field
+          ref="search"
+          v-model="search"
           rounded
           dense
           outlined
-          placeholder="Поиск по ФИО или ИНН"
-          ref="search"
-          v-model="search"
+          placeholder="Поиск по ФИО"
           :prepend-inner-icon="icons.mdiMagnify"
           class="app-bar-search flex-grow-0 mb-3"
           hide-details
         ></v-text-field>
         <v-text-field
+          ref="searchImei"
+          v-model="searchImei"
           rounded
           dense
           outlined
           placeholder="Поиск по IMEI"
-          ref="searchImei"
-          v-model="searchImei"
           :prepend-inner-icon="icons.mdiMagnify"
           class="app-bar-search flex-grow-0 mb-3 ml-3"
           hide-details
         ></v-text-field>
-<!--        <v-btn-->
-<!--          color="blue darken-1"-->
-<!--          text-->
-<!--          @click="searchData()"-->
-<!--        >-->
-<!--          Поиск-->
-<!--        </v-btn>-->
         <v-btn
           color="blue darken-1"
           text
@@ -43,25 +36,25 @@
 
       <v-data-table
         :headers="fields"
-        :items="data"
+        :items="itemsWithIndex"
         :items-per-page="20"
         item-key="itemKey"
         class="elevation-1"
       >
-        <template v-slot:item.actions="item" >
+        <template v-slot:item.actions="item">
           <v-btn
             color="primary"
             small
-            @click="$router.push('/detail/' + item.item.id)"
+            @click="$router.push('/detail/' + item.item.profileId)"
           >
             Подробнее
           </v-btn>
         </template>
-        <template v-slot:item.registrationDate="item" >
-          {{item.item.registrationDate | date}}
+        <template v-slot:item.registrationDate="item">
+          {{ item.item.registrationDate | date }}
         </template>
-        <template v-slot:item.statusType="item" >
-          {{item.item.statusType | status}}
+        <template v-slot:item.statusType="item">
+          {{ item.item.statusType | status }}
         </template>
       </v-data-table>
     </v-card-text>
@@ -81,22 +74,28 @@ export default {
     data: [],
     date: new Date(Date.now()).toISOString(),
     icons: {
-      mdiMagnify
+      mdiMagnify,
     },
     fields: [
-      {text:'№', value: 'id' },
-      {text:'Дата', value: 'registrationDate' },
-      {text:'ФИО', value: 'fullName' },
-      {text:'IMEI', value: 'deviceImei' },
-      {text:'Статус', value: 'statusType' },
-      {text:'Продавец', value: 'salesmanLogin' },
-      {text:'Действия', value: 'actions', sortable: true},
+      { text: '№', value: 'index' },
+      { text: 'Дата', value: 'registrationDate' },
+      { text: 'ФИО', value: 'fullName' },
+      { text: 'Статус', value: 'statusType' },
+      { text: 'Продавец', value: 'salesmanLogin' },
+      { text: 'Действия', value: 'actions', sortable: true },
     ],
     search: '',
-    searchImei: ''
+    searchImei: '',
   }),
-  created() {
-    this.updateData()
+  computed: {
+    itemsWithIndex() {
+      return this.data.map(
+        (items, index) => ({
+          ...items,
+          index: index + 1,
+        }),
+      )
+    },
   },
   watch: {
     search(val) {
@@ -112,38 +111,32 @@ export default {
       } else {
         this.updateData()
       }
-    }
+    },
+  },
+  created() {
+    this.updateData()
   },
   methods: {
     updateData() {
       const date = {
         start: new Date(new Date(this.date).setDate(new Date(this.date).getDay() - 30)).toISOString(),
-        end: this.date
+        end: new Date(new Date(this.date).setDate(new Date(this.date).getDay() + 9)).toISOString(),
       }
       this.$store.dispatch('getAllProfiles', date).then(r => {
         this.data = r
       })
     },
     searchData(val) {
-      const validInp =/^[0-9]+$/;
-      if (validInp.test(val)) {
-        this.$store.dispatch('searchProfilesByInn', val).then(r => {
-          this.data = r
-        })
-      } else {
-        this.$store.dispatch('searchProfilesByName', val).then(r => {
-          this.data = r
-          console.log(r)
-
-        })
-      }
+      this.$store.dispatch('searchProfilesByName', val).then(r => {
+        this.data = r
+      })
     },
     searchByImei(val) {
       this.$store.dispatch('searchProfilesByImei', val).then(r => {
         this.data = r
       })
-    }
-  }
+    },
+  },
 }
 </script>
 

@@ -8,7 +8,7 @@
             :complete="e1 > n"
             :step="n"
           >
-           {{ stepName[n - 1] }}
+            {{ stepName[n - 1] }}
           </v-stepper-step>
 
           <v-divider
@@ -39,37 +39,40 @@
 
 import Form1 from "@/views/pages/account-settings/Form1";
 import Form2 from "@/views/pages/account-settings/Form2";
-import Form3 from "@/views/pages/account-settings/Form3";
-import Form4 from "@/views/pages/account-settings/Form4";
-import Form5 from "@/views/pages/account-settings/Form5";
 
 // demos
 import AccountSettingsAccount from './AccountSettingsAccount.vue'
 
 import AccountSettingsInfo from './AccountSettingsInfo.vue'
+import { getStep, setStep } from '@/helpers/helpers'
 
 export default {
   components: {
     AccountSettingsAccount,
     Form1,
     Form2,
-    Form3,
-    Form4,
-    Form5,
     AccountSettingsInfo,
   },
-  data () {
+  data() {
     return {
       e1: 1,
-      steps: 5,
-      stepName: ['Профиль', 'Поручитель', 'Телефон', 'Дилер', 'Кредит']
+      steps: 2,
+      stepName: ['Профиль', 'Телефон'],
     }
   },
 
+  mounted() {
+    if (getStep() !== null) {
+      this.e1 = getStep()
+      return
+    }
+    setStep(1)
+  },
+
   watch: {
-    steps (val) {
-      if (this.e1 > val) {
-        this.e1 = val
+    steps () {
+      if (this.e1 > getStep()) {
+        this.e1 = getStep()
       }
     },
   },
@@ -77,9 +80,10 @@ export default {
   methods: {
     nextStep (n) {
       if (n === this.steps) {
-        this.e1 = 1
+        this.e1 = getStep
       } else {
-        this.e1 = n + 1
+        setStep(n + 1)
+        this.e1 = getStep()
       }
     },
     prevStep (n) {

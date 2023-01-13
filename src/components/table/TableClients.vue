@@ -261,8 +261,8 @@ export default {
     },
     save() {
       if (this.$v.$invalid) {
-        this.$v.$touch();
-        return;
+        this.$v.$touch()
+        return
       }
       const regexp = /[а-яё]/i
       // eslint-disable-next-line no-restricted-globals

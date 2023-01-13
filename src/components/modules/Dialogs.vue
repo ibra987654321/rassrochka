@@ -53,7 +53,6 @@ export default {
   data:() => ({
     dialog: false,
     fields: [
-      { text: 'Должен', value: 'debt' },
       { text: 'Оплачен', value: 'debtReport' },
       { text: 'Дата закрытия', value: 'payDate' },
       { text: 'Статус', value: 'statusType' },
