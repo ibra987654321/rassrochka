@@ -125,6 +125,7 @@ export default {
       { text: 'ФИО', value: 'fullName' },
       { text: 'Сумма взноса', value: 'debtReport' },
       { text: 'Дата получения взноса', value: 'registrationDate' },
+      { text: 'Месяц', value: 'countMonth' },
       { text: 'Продавец', value: 'salesmanLogin' },
     ],
     headersZero: [
