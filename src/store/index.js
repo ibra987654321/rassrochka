@@ -20,6 +20,7 @@ export default new Vuex.Store({
     start: new Date(),
     end: new Date(Date.now()),
     error: '',
+    steps: 1,
     snackbars: {
       snackbar: false,
       text: '',
@@ -31,6 +32,9 @@ export default new Vuex.Store({
       text: '',
       routeName: '',
     },
+    paymentTypeList: 'OPTIMA',
+    selectedUser: 'ibragim',
+    paymentType: ['OPTIMA', 'МБанк', 'О! Деньги', 'MegaPay', 'Balance KG', 'Элсом', 'Другой перевод', 'Наличные'],
   },
   mutations: {
     setError(state, error) {
@@ -47,7 +51,7 @@ export default new Vuex.Store({
   },
   actions: {
     login({ commit }, payload) {
-      return axios(`${environment.propApi}/login/auth`, {
+      return axios(`${environment.authAPI}/login/auth`, {
         method: 'POST',
         data: {
           ...payload,

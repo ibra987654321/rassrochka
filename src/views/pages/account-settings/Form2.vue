@@ -3,7 +3,7 @@
     flat
     class="pa-3 mt-2"
   >
-    <v-card-text v-if="!doneCard">
+    <v-card-text>
       <v-form class="multi-col-validation mt-6">
         <v-row>
           <v-col
@@ -139,7 +139,7 @@
           >
             <v-select
               v-model="device.paymentType"
-              :items="[1,2,3,4,5,6]"
+              :items="$store.state.paymentType"
               label="Способ оплаты"
               dense
               outlined
@@ -170,24 +170,6 @@
         </v-row>
       </v-form>
     </v-card-text>
-    <div
-      v-else
-      class="d-flex justify-center align-content-center"
-    >
-      <div class="text-center">
-        <h2>Сохранение прошло успешно</h2>
-        <div>
-          <v-btn
-            color="primary"
-            class="me-3 mt-4"
-            :to="'/dashboard'"
-            @click="$store.state.profiles.doneCard = false"
-          >
-            Перейти в список
-          </v-btn>
-        </div>
-      </div>
-    </div>
   </v-card>
 </template>
 
@@ -243,7 +225,6 @@ export default {
     },
     selectedMonth: '',
     items: ['4гб', '8гб', '16гб', '32гб', '64гб', '128гб', '256гб', '512гб', '1тб'],
-
   }),
   computed: {
     doneCard() {
@@ -335,7 +316,7 @@ export default {
         deviceImei: '123287382730',
         deviceMemory: '128гб',
         deviceModel: 'Samsung s10',
-        devicePrice: '40000',
+        devicePrice: 40000,
         cloudLogin: 'login',
         cloudPass: '123456',
         profileId: '',
@@ -349,7 +330,10 @@ export default {
     save() {
       this.device.profileId = getProfileId()
       this.countMonth(this.selectedMonth)
+      this.device.devicePrice = Number(this.device.devicePrice)
+      this.device.zeroPayment = Number(this.device.zeroPayment)
       this.$store.dispatch('postForm3', this.device)
+      this.$emit('next')
       removeObject2()
     },
     countMonth(count) {
@@ -379,6 +363,10 @@ export default {
       }
     },
   },
+  // beforeRouteLeave(to, from, next) {
+  //   this.$store.state.profiles.doneCard = false
+  //   next()
+  // },
 }
 </script>
 

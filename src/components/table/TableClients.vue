@@ -57,6 +57,20 @@
                     :error-messages="debtReportError"
                   ></v-text-field>
                 </v-col>
+                <v-col  cols="12"
+                        sm="6"
+                        md="6">
+                  <v-select
+                    v-model="editedItem.paymentType"
+                    dense
+                    hide-details
+                    outlined
+                    :items="$store.state.paymentType"
+                    @change="$v.editedItem.paymentType.$touch()"
+                    @blur="$v.editedItem.paymentType.$touch()"
+                    :error-messages="paymentTypeError"
+                  ></v-select>
+                </v-col>
               </v-row>
             </v-container>
           </v-card-text>
@@ -150,6 +164,7 @@ export default {
   validations: {
     editedItem: {
       debtReport: { required, numeric },
+      paymentType: { required },
     },
   },
   data: () => ({
@@ -164,6 +179,7 @@ export default {
       comment: '',
       statusType: '',
       debtReport: '',
+      paymentType: '',
     },
     items: [
       {
@@ -192,6 +208,12 @@ export default {
       const errors = []
       if (!this.$v.editedItem.debtReport.$dirty) return errors
       !this.$v.editedItem.debtReport.numeric && errors.push('Только цифры')
+      !this.$v.editedItem.debtReport.required && errors.push('Поле не должно быть пустым.')
+      return errors
+    },
+    paymentTypeError() {
+      const errors = []
+      if (!this.$v.editedItem.debtReport.$dirty) return errors
       !this.$v.editedItem.debtReport.required && errors.push('Поле не должно быть пустым.')
       return errors
     },
@@ -279,6 +301,7 @@ export default {
             debtReport: Number(creditData.debtReport),
             payDate: creditData.payDate,
             statusType: CurrentSelect[0],
+            paymentType: creditData.paymentType,
           }
           this.$store.dispatch('putCreditInformation', data).then(() => {
             // Number(this.editedItem.debtReport) + this.currentDept

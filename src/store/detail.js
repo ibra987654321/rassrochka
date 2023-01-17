@@ -11,14 +11,14 @@ export default {
        const data = axios({
           method: 'GET',
           url: `${environment.propApi + DEVICE}/getDeviceByProfileID/${id}`,
-          // headers: {
-          //   'Content-Type': 'application/json',
-          //   Authorization: `Bearer ${getToken()}`,
-          // },
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getToken()}`,
+          },
         }).then(r => r)
       return data
     },
-    getCreditInformation(_,  id) {
+    getCreditInformation(_, id) {
       const data = axios({
         method: 'GET',
         url: `${environment.propApi + CREDIT}/findCreditByDeviceId/${id}`,
@@ -33,10 +33,10 @@ export default {
       const data = axios({
         method: 'PUT',
         url: `${environment.propApi + CREDIT}/month/editMontCredit`,
-        // headers: {
-        //   'Content-Type': 'application/json',
-        //   Authorization: `Bearer ${getToken()}`,
-        // },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getToken()}`,
+        },
         data: {
           ...payload
         }
@@ -48,10 +48,10 @@ export default {
       const data = axios({
         method: 'POST',
         url: `${environment.propApi + CREDIT}/addBlackList`,
-        // headers: {
-        //   'Content-Type': 'application/json',
-        //   Authorization: `Bearer ${getToken()}`,
-        // },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getToken()}`,
+        },
         data: {
           ...payload
         }
@@ -69,10 +69,10 @@ export default {
       const data = axios({
         method: 'PUT',
         url: `${environment.propApi + PROFILES}/editProfiles`,
-        // headers: {
-        //   'Content-Type': 'application/json',
-        //   Authorization: `Bearer ${getToken()}`,
-        // },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getToken()}`,
+        },
         data: { ...payload },
       }).then(r => {
         store.rootState.loading = false

@@ -39,6 +39,7 @@
 
 import Form1 from "@/views/pages/account-settings/Form1";
 import Form2 from "@/views/pages/account-settings/Form2";
+import Form3 from "@/views/pages/account-settings/Form3";
 
 // demos
 import AccountSettingsAccount from './AccountSettingsAccount.vue'
@@ -51,26 +52,29 @@ export default {
     AccountSettingsAccount,
     Form1,
     Form2,
+    Form3,
     AccountSettingsInfo,
   },
   data() {
     return {
       e1: 1,
-      steps: 2,
-      stepName: ['Профиль', 'Телефон'],
+      steps: 3,
+      stepName: ['Профиль', 'Телефон', 'Завершение'],
     }
   },
 
   mounted() {
     if (getStep() !== null) {
+      this.$store.state.steps = getStep()
       this.e1 = getStep()
       return
     }
+    this.$store.state.steps = 1
     setStep(1)
   },
 
   watch: {
-    steps () {
+    steps() {
       if (this.e1 > getStep()) {
         this.e1 = getStep()
       }
@@ -78,28 +82,19 @@ export default {
   },
 
   methods: {
-    nextStep (n) {
+    nextStep(n) {
       if (n === this.steps) {
         this.e1 = getStep
       } else {
         setStep(n + 1)
+        this.$store.state.steps = n + 1
         this.e1 = getStep()
-      }
-    },
-    prevStep (n) {
-      if (n === 1) {
-        this.e1 = 1
-      } else {
-        this.e1 = n - 1
       }
     },
     newPerson() {
       this.e1 = 1
       this.$store.state.profiles.doneCard = false
     },
-    // dialog() {
-    //   this.$router.push({name: 'calling'})
-    // }
   },
   // beforeRouteLeave(to, from, next) {
   //   if (from.name === 'pages-account-settings' && (to.name === 'calling' || to.name === 'users' || to.name === 'dashboard') ) {

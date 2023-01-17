@@ -4,51 +4,17 @@
     <v-card-text>
       <v-data-table
         :headers="fields"
-        :items="data"
+        :items="itemsWithIndex"
         sort-by="calories"
         class="elevation-1"
       >
-        <template v-slot:top>
-          <v-dialog
-            v-model="dialog"
-              max-width="770px"
-            >
-              <v-card>
-                <v-card-text>
-                  <v-container>
-                    <v-row>
-                      <TableForEdit @update="update()" :id="editedItem.creditId" :profile-id="editedItem.id"/>
-                    </v-row>
-                  </v-container>
-                </v-card-text>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn
-                    color="blue darken-1"
-                    text
-                    @click="close"
-                  >
-                    Закрыть
-                </v-btn>
-              </v-card-actions>
-              </v-card>
-          </v-dialog>
-        </template>
-        <template v-slot:item.actions="{item}">
-          <v-icon
-            small
-            class="mr-2"
-            @click="editItem(item)"
-          >
-            {{ icons.mdiPencil }}
-          </v-icon>
-        </template>
-        <template v-slot:no-data>
+        <template v-slot:item.actions="item">
           <v-btn
             color="primary"
-            @click="initialize"
+            small
+            @click="$router.push('/detail/' + item.item.profileId)"
           >
-            Reset
+            Подробнее
           </v-btn>
         </template>
       </v-data-table>
@@ -73,7 +39,7 @@ export default {
       mdiPencil,
     },
     fields: [
-      { text: '№', value: 'creditId' },
+      { text: '№', value: 'index' },
       { text: 'ФИО', value: 'fullName' },
       { text: 'Номер', value: 'phone' },
       { text: 'Модель', value: 'deviceModel' },
@@ -91,6 +57,16 @@ export default {
       zeroPayment: '',
     },
   }),
+  computed: {
+    itemsWithIndex() {
+      return this.data.map(
+        (items, index) => ({
+          ...items,
+          index: index + 1,
+        }),
+      )
+    },
+  },
   watch: {
     dialog(val) {
       // eslint-disable-next-line no-unused-expressions

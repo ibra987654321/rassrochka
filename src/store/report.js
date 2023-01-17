@@ -1,10 +1,8 @@
 import axios from 'axios'
 import { environment } from '@/environments/environment'
-import {
-  PROFILES, USER,
-} from '@/helpers/endpionts'
-import { getToken } from '@/helpers/helpers'
+import { PROFILES, USER } from '@/helpers/endpionts'
 import { useISOString } from '@/use/ISOStringDate'
+import { getToken } from '@/helpers/helpers'
 
 export default {
   state: {
@@ -13,26 +11,46 @@ export default {
   },
   actions: {
     getReportingByDate(store) {
-      const data = axios(`${environment.propApi + PROFILES}/getReportingByDate/${useISOString(store.rootState.start)}/${useISOString(store.rootState.end)}`, {
-        method: 'GET',
+      return axios(`${environment.propApi + PROFILES}/monthPaymentReport`, {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${getToken()}`,
         },
-      }).then(r => r.data)
-
-      return data
+        data:
+          {
+            end: useISOString(store.rootState.end),
+            paymentTypeList: [
+              store.rootState.paymentTypeList,
+            ],
+            salesmanLoginList: [
+              store.rootState.selectedUser,
+            ],
+            start: useISOString(store.rootState.start),
+          },
+      })
+        .then(r => r.data)
     },
-    getReportingByDateAndUserName(store, userName) {
-      const data = axios(`${environment.propApi + PROFILES}/getReportingByDateAndUserName/${useISOString(store.rootState.start)}/${useISOString(store.rootState.end)}/${userName}`, {
-        method: 'GET',
+    getReportingZeroPayment(store) {
+      return axios(`${environment.propApi + PROFILES}/zeroPaymentReport`, {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${getToken()}`,
         },
-      }).then(r => r.data)
-
-      return data
+        data:
+          {
+            end: useISOString(store.rootState.end),
+            paymentTypeList: [
+              store.rootState.paymentTypeList,
+            ],
+            salesmanLoginList: [
+              store.rootState.selectedUser,
+            ],
+            start: useISOString(store.rootState.start),
+          },
+      })
+        .then(r => r.data)
     },
     getUserList() {
       const data = axios(`${environment.propApi + USER}/getUsersList`, {

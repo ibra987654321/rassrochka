@@ -17,19 +17,28 @@
           ></v-app-bar-nav-icon>
           <v-spacer></v-spacer>
           <v-btn
-            color="primary"
-            class="me-3 mt-4"
-            @click="$router.push({name: 'pages-account-settings'})"
-          >
-            Новая заявка
-          </v-btn>
-          <v-btn
-            v-if="step > 1"
+            v-if="$store.state.steps === 2"
             color="primary"
             class="me-3 mt-4"
             @click="removeData()"
           >
             Сброс данных
+          </v-btn>
+          <v-btn
+            v-else-if="$store.state.steps === 3"
+            color="primary"
+            class="me-3 mt-4"
+            @click="repeat()"
+          >
+            Создать заново
+          </v-btn>
+          <v-btn
+            v-else
+            color="primary"
+            class="me-3 mt-4"
+            @click="$router.push({name: 'pages-account-settings'})"
+          >
+            Новая заявка
           </v-btn>
           <theme-switcher></theme-switcher>
           <app-bar-user-menu></app-bar-user-menu>
@@ -51,10 +60,6 @@ import { mdiMagnify, mdiBellOutline, mdiGithub } from '@mdi/js'
 import {
   getProfileId,
   getStep,
-  removeObject1,
-  removeObject2,
-  removeProfileId,
-  setStep,
 } from '@/helpers/helpers'
 import VerticalNavMenu from './components/vertical-nav-menu/VerticalNavMenu.vue'
 import ThemeSwitcher from './components/ThemeSwitcher.vue'
@@ -66,19 +71,18 @@ export default {
     ThemeSwitcher,
     AppBarUserMenu,
   },
-  computed: {
-    step() {
-      return getStep()
-    },
-  },
   setup() {
     const isDrawerOpen = ref(null)
     function removeData() {
       this.$store.dispatch('deleteProfileBefore', getProfileId())
     }
+    function repeat() {
+      this.$store.dispatch('repeat')
+    }
     return {
       removeData,
       isDrawerOpen,
+      repeat,
       getStep,
       // Icons
       icons: {

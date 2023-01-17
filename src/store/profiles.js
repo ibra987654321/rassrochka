@@ -25,20 +25,20 @@ export default {
     getAllProfiles(_, payload) {
       const data = axios(`${environment.testApi + PROFILES}/getDtoForMain/${payload.start}/${payload.end}`, {
         method: 'GET',
-        // headers: {
-        //   'Content-Type': 'application/json',
-        //   Authorization: `Bearer ${getToken()}`,
-        // },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getToken()}`,
+        },
       }).then(r => r.data)
       return data
     },
     editProfile(_, payload) {
       const data = axios(`${environment.propApi + PROFILES}/editProfiles`, {
         method: 'PUT',
-        // headers: {
-        //   'Content-Type': 'application/json',
-        //   Authorization: `Bearer ${getToken()}`,
-        // },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getToken()}`,
+        },
         data: {
           ...payload,
         },
@@ -48,10 +48,10 @@ export default {
     searchProfilesByName(_, name) {
       const data = axios(`${environment.propApi + PROFILES}/getDtoForMainByFullName/${name}`, {
         method: 'GET',
-        // headers: {
-        //   'Content-Type': 'application/json',
-        //   Authorization: `Bearer ${getToken()}`,
-        // },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getToken()}`,
+        },
       }).then(r => r.data)
       return data
     },
@@ -78,10 +78,10 @@ export default {
     postForm1({commit}, option) {
       axios(`${environment.testApi + PROFILES}/addProfiles`, {
         method: 'POST',
-        // headers: {
-        //   'Content-Type': 'application/json',
-        //   Authorization: `Bearer ${getToken()}`,
-        // },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getToken()}`,
+        },
         data: {
           ...option
         },
@@ -92,10 +92,10 @@ export default {
     postForm3({ state, commit }, option) {
       axios(`${environment.testApi + DEVICE}/addDevice`, {
         method: 'POST',
-        // headers: {
-        //   'Content-Type': 'application/json',
-        //   Authorization: `Bearer ${getToken()}`,
-        // },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getToken()}`,
+        },
         data: {
           ...option,
         },
@@ -122,10 +122,10 @@ export default {
     deleteProfileBefore({ commit }, id) {
       axios(`${environment.propApi + PROFILES}/deleteById/${id}`, {
         method: 'DELETE',
-        // headers: {
-        //   'Content-Type': 'application/json',
-        //   Authorization: `Bearer ${getToken()}`,
-        // },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getToken()}`,
+        },
       }).then(() => {
         removeObject2()
         removeObject1()
@@ -136,5 +136,12 @@ export default {
       })
         .catch(e => commit('setError', e.message))
     },
-  }
+    repeat() {
+      removeObject2()
+      removeObject1()
+      removeProfileId()
+      setStep(1)
+      window.location.reload()
+    },
+  },
 }

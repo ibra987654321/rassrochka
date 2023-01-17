@@ -9,20 +9,9 @@
           rounded
           dense
           outlined
-          placeholder="Поиск по ФИО"
+          placeholder="Поиск по ФИО и по IMEI"
           :prepend-inner-icon="icons.mdiMagnify"
           class="app-bar-search flex-grow-0 mb-3"
-          hide-details
-        ></v-text-field>
-        <v-text-field
-          ref="searchImei"
-          v-model="searchImei"
-          rounded
-          dense
-          outlined
-          placeholder="Поиск по IMEI"
-          :prepend-inner-icon="icons.mdiMagnify"
-          class="app-bar-search flex-grow-0 mb-3 ml-3"
           hide-details
         ></v-text-field>
         <v-btn
@@ -85,7 +74,6 @@ export default {
       { text: 'Действия', value: 'actions', sortable: true },
     ],
     search: '',
-    searchImei: '',
   }),
   computed: {
     itemsWithIndex() {
@@ -105,22 +93,16 @@ export default {
         this.updateData()
       }
     },
-    searchImei(val) {
-      if (val !== '') {
-        this.searchByImei(val)
-      } else {
-        this.updateData()
-      }
-    },
   },
   created() {
     this.updateData()
   },
   methods: {
     updateData() {
+      this.search = ''
       const date = {
         start: new Date(new Date(this.date).setDate(new Date(this.date).getDay() - 30)).toISOString(),
-        end: new Date(new Date(this.date).setDate(new Date(this.date).getDay() + 9)).toISOString(),
+        end: new Date(new Date(this.date).setHours(new Date(this.date).getHours() + 6)).toISOString(),
       }
       this.$store.dispatch('getAllProfiles', date).then(r => {
         this.data = r
@@ -128,11 +110,6 @@ export default {
     },
     searchData(val) {
       this.$store.dispatch('searchProfilesByName', val).then(r => {
-        this.data = r
-      })
-    },
-    searchByImei(val) {
-      this.$store.dispatch('searchProfilesByImei', val).then(r => {
         this.data = r
       })
     },

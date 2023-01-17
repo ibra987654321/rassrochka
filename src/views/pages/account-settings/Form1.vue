@@ -80,7 +80,7 @@
 import { mdiAlertOutline, mdiCloudUploadOutline } from '@mdi/js'
 import { validationMixin } from 'vuelidate'
 import {
-  required, minLength, numeric,
+  required, minLength, numeric, maxLength,
 } from 'vuelidate/lib/validators'
 import { getObject1, removeObject1, setObject1 } from '@/helpers/helpers'
 
@@ -91,8 +91,8 @@ export default {
   validations: {
     account: {
       fullName: { required, minLength: minLength(10) },
-      phone: { required, numeric },
-      phoneSecond: { required, numeric },
+      phone: { required, numeric, minLength: minLength(7), maxlength: maxLength(20) },
+      phoneSecond: { required, numeric, minLength: minLength(7), maxlength: maxLength(20) },
     },
   },
   data: () => ({
@@ -138,6 +138,8 @@ export default {
       if (!this.$v.account.phone.$dirty) return errors
       !this.$v.account.phone.numeric && errors.push('Только цифры')
       !this.$v.account.phone.required && errors.push('Поле не должно быть пустым.')
+      !this.$v.account.phone.minLength && errors.push('Поле не должно быть меньше 7.')
+      !this.$v.account.phone.maxlength && errors.push('Поле не должно быть больше 20.')
       return errors
     },
     secondPhoneError() {
@@ -145,6 +147,8 @@ export default {
       if (!this.$v.account.phoneSecond.$dirty) return errors
       !this.$v.account.phoneSecond.numeric && errors.push('Только цифры')
       !this.$v.account.phoneSecond.required && errors.push('Поле не должно быть пустым.')
+      !this.$v.account.phoneSecond.minLength && errors.push('Поле не должно быть меньше 7.')
+      !this.$v.account.phoneSecond.maxlength && errors.push('Поле не должно быть больше 20.')
       return errors
     },
     // factAddressError() {

@@ -10,7 +10,7 @@ export default {
     getCallProfile() {
       const data = axios({
         method: 'GET',
-        url: `${environment.propApi + PROFILES}/findDistinctCallProfile`,
+        url: `${environment.propApi + PROFILES}/findExpiredProfile`,
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${getToken()}`,
