@@ -48,15 +48,15 @@
                   v-model="dialog"
                   width="500"
                 >
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-btn
-                      color="primary mb-3"
-                      v-bind="attrs"
-                      v-on="on"
-                    >
-                      Удалить профиль
-                    </v-btn>
-                  </template>
+<!--                  <template v-slot:activator="{ on, attrs }">-->
+<!--                    <v-btn-->
+<!--                      color="primary mb-3"-->
+<!--                      v-bind="attrs"-->
+<!--                      v-on="on"-->
+<!--                    >-->
+<!--                      Удалить профиль-->
+<!--                    </v-btn>-->
+<!--                  </template>-->
 
                   <v-card>
                     <v-card-title class="text-h5 grey lighten-2">
@@ -148,7 +148,7 @@
                         x-small
                         @click="addStatus"
                         :loading="$store.state.loading"
-                      >Отправить</v-btn>
+                      >Сохранить</v-btn>
                     </div>
                   </v-card-text>
                 </div>
@@ -189,13 +189,10 @@ export default {
       statusType: '',
     },
     statusType: '',
-    status: ['Добросовестный', 'Подсудимый', 'Аферист', 'Затягивает', 'Ожидание'],
+    status: ['Оплатил', 'Аферист', 'Затягивает', 'Ожидание'],
     statusRu: [
       {
-        Добросовестный: 'DEFAULTER',
-      },
-      {
-        Подсудимый: 'PRISONER',
+        Оплатил: 'DEFAULTER',
       },
       {
         Аферист: 'FRAUD',
@@ -206,10 +203,7 @@ export default {
     ],
     statusEn: [
       {
-        PRISONER: 'Подсудимый',
-      },
-      {
-        DEFAULTER: 'Добросовестный',
+        DEFAULTER: 'Оплатил',
       },
       {
         FRAUD: 'Аферист',

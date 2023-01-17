@@ -5,10 +5,18 @@
     </v-card-title>
     <v-card-subtitle>
       <v-row class="align-center">
-        <v-col md="6">
+        <v-col
+          cols
+          md="6"
+          sm="12"
+        >
           <DateRangePicker/>
         </v-col>
-        <v-col md="3">
+        <v-col
+          cols
+          md="3"
+          sm="12"
+        >
           <v-select
             v-model="$store.state.selectedUser"
             dense
@@ -31,19 +39,14 @@
     <v-card-text>
       <v-tabs
         v-model="tab"
-        background-color="deep-purple accent-4"
         centered
-        dark
         icons-and-text
       >
-        <v-tabs-slider></v-tabs-slider>
-
-        <v-tab href="#tab-1">
-          Месячные платежи
-        </v-tab>
-
-        <v-tab href="#tab-2">
+        <v-tab :class="$vuetify.breakpoint.mobile ? 'fontSize' : ''" href="#tab-2">
           Первоначальный взнос
+        </v-tab>
+        <v-tab :class="$vuetify.breakpoint.mobile ? 'fontSize' : ''" href="#tab-1">
+          Месячные платежи
         </v-tab>
       </v-tabs>
 
@@ -188,8 +191,6 @@ export default {
       this.$store.dispatch('getUserList')
         .then(r => {
           this.userList = r
-          this.userList.push('Все')
-          this.userList.push('anonymousUser')
         })
         .catch(e => this.$store.commit('setSnackbars', e.message))
     },
@@ -198,5 +199,7 @@ export default {
 </script>
 
 <style scoped>
-
+.fontSize {
+  font-size: 10px;
+}
 </style>

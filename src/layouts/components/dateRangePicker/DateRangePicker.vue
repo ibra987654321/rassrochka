@@ -1,7 +1,7 @@
 <template>
   <div class="date_range justify-lg-space-around">
     <v-datetime-picker
-      class="date"
+      class="date mr-2"
       v-model="$store.state.start"
       label="Начало"
       date-format="dd-MM-yyyy"
@@ -24,13 +24,13 @@
           color="error lighten-1"
           @click.native="parent.clearHandler"
         >
-          Cancel
+          Отмена
         </v-btn>
         <v-btn
           color="success darken-1"
           @click="parent.okHandler"
         >
-          Done
+          Готово
         </v-btn>
       </template>
     </v-datetime-picker>
@@ -58,13 +58,13 @@
           color="error lighten-1"
           @click.native="parent.clearHandler"
         >
-          Cancel
+          Отмена
         </v-btn>
         <v-btn
           color="success darken-1"
           @click="parent.okHandler"
         >
-          Done
+          Готово
         </v-btn>
       </template>
     </v-datetime-picker>
@@ -81,7 +81,7 @@ export default {
     textFieldProps: {
       outlined: 'outlined',
       dense: 'dense',
-    }
+    },
   }),
   created() {
     // eslint-disable-next-line no-unused-expressions

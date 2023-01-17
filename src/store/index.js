@@ -32,9 +32,9 @@ export default new Vuex.Store({
       text: '',
       routeName: '',
     },
-    paymentTypeList: 'OPTIMA',
-    selectedUser: 'ibragim',
-    paymentType: ['OPTIMA', 'МБанк', 'О! Деньги', 'MegaPay', 'Balance KG', 'Элсом', 'Другой перевод', 'Наличные'],
+    paymentTypeList: 'Наличные',
+    selectedUser: '',
+    paymentType: ['Оптима', 'МБанк', 'О! Деньги', 'MegaPay', 'Balance KG', 'Элсом', 'Другой перевод', 'Наличные'],
   },
   mutations: {
     setError(state, error) {

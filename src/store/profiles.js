@@ -23,7 +23,7 @@ export default {
   },
   actions: {
     getAllProfiles(_, payload) {
-      const data = axios(`${environment.testApi + PROFILES}/getDtoForMain/${payload.start}/${payload.end}`, {
+      const data = axios(`${environment.propApi + PROFILES}/getDtoForMain/${payload.start}/${payload.end}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -55,28 +55,8 @@ export default {
       }).then(r => r.data)
       return data
     },
-    searchProfilesByInn(_, inn) {
-      const data = axios(`${environment.propApi + PROFILES}/getDtoForMainByPassInn/${inn}`, {
-        method: 'GET',
-        // headers: {
-        //   'Content-Type': 'application/json',
-        //   Authorization: `Bearer ${getToken()}`,
-        // },
-      }).then(r => r.data)
-      return data
-    },
-    searchProfilesByImei(_, imei) {
-      const data = axios(`${environment.propApi + PROFILES}/findProfileByDeviceImei/${imei}`, {
-        method: 'GET',
-        // headers: {
-        //   'Content-Type': 'application/json',
-        //   Authorization: `Bearer ${getToken()}`,
-        // },
-      }).then(r => r.data)
-      return data
-    },
     postForm1({commit}, option) {
-      axios(`${environment.testApi + PROFILES}/addProfiles`, {
+      axios(`${environment.propApi + PROFILES}/addProfiles`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -90,7 +70,7 @@ export default {
       })
     },
     postForm3({ state, commit }, option) {
-      axios(`${environment.testApi + DEVICE}/addDevice`, {
+      axios(`${environment.propApi + DEVICE}/addDevice`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
