@@ -54,6 +54,7 @@ export default {
     dialog: false,
     fields: [
       { text: 'Оплачен', value: 'debtReport' },
+      { text: 'Оплата', value: 'debt' },
       { text: 'Дата закрытия', value: 'payDate' },
       { text: 'Статус', value: 'statusType' },
       { text: 'Комментарии', value: 'comment' },

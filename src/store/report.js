@@ -6,11 +6,13 @@ import { getToken } from '@/helpers/helpers'
 
 export default {
   state: {
+    loading: false,
   },
   mutations: {
   },
   actions: {
     getReportingByDate(store) {
+      store.state.loading = true
       return axios(`${environment.propApi + PROFILES}/monthPaymentReport`, {
         method: 'POST',
         headers: {
@@ -20,18 +22,19 @@ export default {
         data:
           {
             end: useISOString(store.rootState.end),
-            paymentTypeList: [
-              store.rootState.paymentTypeList,
-            ],
-            salesmanLoginList: [
-              store.rootState.selectedUser,
-            ],
+            paymentTypeList: store.rootState.paymentTypeList.length === 0 ? store.rootState.paymentType : store.rootState.paymentTypeList,
+            salesmanLoginList: store.rootState.selectedUser.length === 0 ? store.rootState.userList : store.rootState.selectedUser,
             start: useISOString(store.rootState.start),
           },
       })
-        .then(r => r.data)
+        .then(r => {
+          store.state.loading = false
+          return r.data
+        })
+        .finally(() => store.state.loading = false)
     },
     getReportingZeroPayment(store) {
+      store.state.loading = true
       return axios(`${environment.propApi + PROFILES}/zeroPaymentReport`, {
         method: 'POST',
         headers: {
@@ -41,25 +44,28 @@ export default {
         data:
           {
             end: useISOString(store.rootState.end),
-            paymentTypeList: [
-              store.rootState.paymentTypeList,
-            ],
-            salesmanLoginList: [
-              store.rootState.selectedUser,
-            ],
+            paymentTypeList: store.rootState.paymentTypeList.length === 0 ? store.rootState.paymentType : store.rootState.paymentTypeList,
+            salesmanLoginList: store.rootState.selectedUser.length === 0 ? store.rootState.userList : store.rootState.selectedUser,
             start: useISOString(store.rootState.start),
           },
       })
-        .then(r => r.data)
+        .then(r => {
+          store.state.loading = false
+          return r.data
+        })
+        .finally(() => store.state.loading = false)
     },
-    getUserList() {
+    getUserList({ state }) {
       const data = axios(`${environment.propApi + USER}/getUsersList`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${getToken()}`,
         },
-      }).then(r => r.data)
+      }).then(r => {
+        state.userList = r
+        return r.data
+      })
 
       return data
     },

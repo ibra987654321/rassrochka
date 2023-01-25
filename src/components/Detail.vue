@@ -23,24 +23,24 @@
             <div class="d-flex flex-column  flex-wrap pt-8">
               <div class="me-2 mb-2 d-flex justify-space-between">
                 <div>
-                  <v-card-title class="pt-0 px-0">
+                  <v-card-title class="pt-0 px-0 mb-3">
                     {{profile.fullName}}
                   </v-card-title>
-                  <v-card-subtitle class="text-md pa-0">
+                  <v-card-subtitle class="text-md pa-0 mb-3">
                     {{profile.phone}}
                   </v-card-subtitle>
-                  <v-card-subtitle class="text-md pa-0">
+                  <v-card-subtitle class="text-md pa-0 mb-3">
                     {{profile.phoneSecond}}
                   </v-card-subtitle>
-                  <v-card-subtitle class="text-md pa-0">
+                  <v-card-subtitle class="text-md pa-0 mb-3">
                     {{profile.factAddress}}
                   </v-card-subtitle>
-                </div>
-                <div>
-                  <h6 class="text-sm font-weight-medium">
-                    Дата регистрации | {{ new Date(profile.registrationDate).toLocaleString('ru', {year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric',minute: 'numeric' }) }} <br>
-                    Продавец | {{ profile.salesmanLogin }} <br>
-                  </h6>
+                  <v-card-subtitle class="text-md pa-0 mb-3">
+                    Дата регистрации | {{ new Date(profile.registrationDate).toLocaleString('ru', {year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric',minute: 'numeric' }) }}
+                  </v-card-subtitle>
+                  <v-card-subtitle class="text-md pa-0">
+                    Продавец | {{ profile.salesmanLogin }}
+                  </v-card-subtitle>
                 </div>
               </div>
               <div class="d-flex flex-column">
@@ -48,16 +48,6 @@
                   v-model="dialog"
                   width="500"
                 >
-<!--                  <template v-slot:activator="{ on, attrs }">-->
-<!--                    <v-btn-->
-<!--                      color="primary mb-3"-->
-<!--                      v-bind="attrs"-->
-<!--                      v-on="on"-->
-<!--                    >-->
-<!--                      Удалить профиль-->
-<!--                    </v-btn>-->
-<!--                  </template>-->
-
                   <v-card>
                     <v-card-title class="text-h5 grey lighten-2">
                       Вы уверены что хотите удалить?

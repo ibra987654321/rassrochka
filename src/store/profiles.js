@@ -14,6 +14,7 @@ export default {
   state: {
     profileId: '',
     doneCard: false,
+    loading: false,
   },
   mutations: {
     changeProfiles(state, data) {
@@ -22,14 +23,18 @@ export default {
     },
   },
   actions: {
-    getAllProfiles(_, payload) {
+    getAllProfiles({ state }, payload) {
+      state.loading = true
       const data = axios(`${environment.propApi + PROFILES}/getDtoForMain/${payload.start}/${payload.end}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${getToken()}`,
         },
-      }).then(r => r.data)
+      }).then(r => {
+        state.loading = false
+        return r.data
+      }).finally(() => state.loading = false)
       return data
     },
     editProfile(_, payload) {
@@ -45,14 +50,18 @@ export default {
       }).then(r => r.data)
       return data
     },
-    searchProfilesByName(_, name) {
+    searchProfilesByName({ state }, name) {
+      state.loading = true
       const data = axios(`${environment.propApi + PROFILES}/getDtoForMainByFullName/${name}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${getToken()}`,
         },
-      }).then(r => r.data)
+      }).then(r => {
+        state.loading = false
+        return r.data
+      }).finally(() => state.loading = false)
       return data
     },
     postForm1({commit}, option) {

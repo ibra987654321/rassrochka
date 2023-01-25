@@ -9,9 +9,9 @@
           rounded
           dense
           outlined
-          placeholder="Поиск по ФИО и по IMEI"
+          placeholder="Поиск по ФИО и по Коду клиента"
           :prepend-inner-icon="icons.mdiMagnify"
-          class="app-bar-search flex-grow-0 mb-3"
+          class="app-bar-search flex-grow-0 mb-3 pr-3"
           hide-details
         ></v-text-field>
         <v-btn
@@ -25,6 +25,7 @@
 
       <v-data-table
         :headers="fields"
+        :loading="$store.state.profiles.loading"
         :items="itemsWithIndex"
         :items-per-page="20"
         item-key="itemKey"
@@ -67,10 +68,13 @@ export default {
     },
     fields: [
       { text: '№', value: 'index' },
+      { text: 'Код клиента', value: 'profileNumber' },
       { text: 'Дата', value: 'registrationDate' },
       { text: 'ФИО', value: 'fullName' },
       { text: 'Статус', value: 'statusType' },
+      { text: 'Модель', value: 'deviceModel' },
       { text: 'Продавец', value: 'salesmanLogin' },
+      { text: 'Первоначальный взнос', value: 'zeroPayment' },
       { text: 'Действия', value: 'actions', sortable: true },
     ],
     search: '',

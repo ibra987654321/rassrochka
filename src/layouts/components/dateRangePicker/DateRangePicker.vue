@@ -3,7 +3,7 @@
     <v-datetime-picker
       class="date mr-2"
       v-model="$store.state.start"
-      label="Начало"
+      label="Начальная дата"
       date-format="dd-MM-yyyy"
       time-format="HH:mm:ss"
       :dialog-width="Number(400)"
@@ -37,7 +37,7 @@
     <v-datetime-picker
       class="date"
       v-model="$store.state.end"
-      label="Конец"
+      label="Конечная дата"
       date-format="dd-MM-yyyy"
       time-format="HH:mm:ss"
       :dialog-width="Number(400)"

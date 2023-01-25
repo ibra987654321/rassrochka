@@ -32,8 +32,9 @@ export default new Vuex.Store({
       text: '',
       routeName: '',
     },
-    paymentTypeList: 'Наличные',
-    selectedUser: '',
+    paymentTypeList: [],
+    selectedUser: [],
+    userList: [],
     paymentType: ['Оптима', 'МБанк', 'О! Деньги', 'MegaPay', 'Balance KG', 'Элсом', 'Другой перевод', 'Наличные'],
   },
   mutations: {
@@ -71,7 +72,7 @@ export default new Vuex.Store({
   getters: {
     error: state => state.error,
     createdDate(state) {
-      return state.start.setHours(state.start.getHours() - 20)
+      return state.start.setHours(state.start.getHours() - 72)
     },
   },
   modules: {

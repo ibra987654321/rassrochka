@@ -23,6 +23,21 @@
             ></v-text-field>
           </v-col>
           <v-col
+            cols="12"
+            md="6"
+          >
+            <v-text-field
+              v-model="account.profileNumber"
+              dense
+              label="Код клиента"
+              outlined
+              required
+              :error-messages="profileNumberError"
+              @input="$v.account.profileNumber.$touch()"
+              @blur="$v.account.profileNumber.$touch()"
+            ></v-text-field>
+          </v-col>
+          <v-col
             md="6"
             cols="12"
           >
@@ -93,6 +108,7 @@ export default {
       fullName: { required, minLength: minLength(10) },
       phone: { required, numeric, minLength: minLength(7), maxlength: maxLength(20) },
       phoneSecond: { required, numeric, minLength: minLength(7), maxlength: maxLength(20) },
+      profileNumber: { required, minLength: minLength(1), maxLength: maxLength(10) },
     },
   },
   data: () => ({
@@ -101,6 +117,7 @@ export default {
       phone: '',
       phoneSecond: '',
       delete: false,
+      profileNumber: '',
       passportDate: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
     },
     menu2: false,
@@ -151,13 +168,14 @@ export default {
       !this.$v.account.phoneSecond.maxlength && errors.push('Поле не должно быть больше 20.')
       return errors
     },
-    // factAddressError() {
-    //   const errors = []
-    //   if (!this.$v.account.factAddress.$dirty) return errors
-    //   !this.$v.account.factAddress.minLength && errors.push(`Это поле нe должно быть меньше 5. Сейчас ${this.account.factAddress.length}`)
-    //   !this.$v.account.factAddress.required && errors.push('Поле не должно быть пустым.')
-    //   return errors
-    // },
+    profileNumberError() {
+      const errors = []
+      if (!this.$v.account.profileNumber.$dirty) return errors
+      !this.$v.account.profileNumber.required && errors.push('Поле не должно быть пустым.')
+      !this.$v.account.profileNumber.minLength && errors.push(`Это поле не должно быть меньше 1. Сейчас ${this.device.profileNumber.length}`)
+      !this.$v.account.profileNumber.maxLength && errors.push(`Это поле не должно быть больше 10. Сейчас ${this.device.profileNumber.length}`)
+      return errors
+    },
   },
   watch: {
     account: {
@@ -187,6 +205,7 @@ export default {
         phone: '',
         phoneSecond: '',
         delete: false,
+        profileNumber: '',
         passportDate: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
       }
     },

@@ -148,6 +148,21 @@
               @change="$v.device.paymentType.$touch()"
             ></v-select>
           </v-col>
+          <v-col
+            cols="12"
+            md="6"
+          >
+            <v-text-field
+              v-model="device.allowance"
+              dense
+              label="Надбавка"
+              outlined
+              required
+              :error-messages="allowanceError"
+              @input="$v.device.allowance.$touch()"
+              @blur="$v.device.allowance.$touch()"
+            ></v-text-field>
+          </v-col>
           <v-col cols="12">
             <v-btn
               color="primary"
@@ -197,6 +212,7 @@ export default {
       cloudPass: { required, minLength: minLength(3) },
       paymentType: { required },
       zeroPayment: { required, numeric },
+      allowance: { required, numeric },
     },
     selectedMonth: { required },
   },
@@ -221,6 +237,7 @@ export default {
       profileId: '',
       zeroPayment: '',
       paymentType: '',
+      allowance: '',
       monthCreditDbList: [],
     },
     selectedMonth: '',
@@ -293,6 +310,13 @@ export default {
       !this.$v.selectedMonth.required && errors.push('Поле не должно быть пустым.')
       return errors
     },
+    allowanceError() {
+      const errors = []
+      if (!this.$v.device.allowance.$dirty) return errors
+      !this.$v.device.allowance.required && errors.push('Поле не должно быть пустым.')
+      !this.$v.device.allowance.numeric && errors.push('Только цифры')
+      return errors
+    },
   },
   watch: {
     device: {
@@ -322,6 +346,7 @@ export default {
         profileId: '',
         zeroPayment: '',
         paymentType: '',
+        allowance: '',
         monthCreditDbList: [],
       }
     }, 0)
@@ -343,6 +368,7 @@ export default {
           statusType: 'WAIT',
           registrationDate: new Date(Date.now()).toISOString(),
           countMonth: i,
+          debt: this.device.allowance,
           payDate: new Date(date.setMonth(date.getMonth() + i)).toISOString().slice(0, 10),
         }
         this.device.monthCreditDbList.unshift(obj)
@@ -359,6 +385,7 @@ export default {
         profileId: '',
         zeroPayment: '',
         paymentType: '',
+        allowance: '',
         monthCreditDbList: [],
       }
     },

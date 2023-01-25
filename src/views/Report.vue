@@ -12,6 +12,36 @@
         >
           <DateRangePicker/>
         </v-col>
+        <v-col md="3">
+          <v-select
+            v-model="$store.state.paymentTypeList"
+            dense
+            hide-details
+            outlined
+            multiple
+            :items="$store.state.paymentType"
+          >
+            <template v-slot:prepend-item>
+              <v-list-item
+                ripple
+                @mousedown.prevent
+                @click="toggle()"
+              >
+                <v-list-item-action>
+                  <v-icon :color="$store.state.paymentTypeList.length > 0 ? 'indigo darken-4' : ''">
+                    {{ likesAllFruit ? icons.mdiCloseBox : icons.mdiMinusBox }}
+                  </v-icon>
+                </v-list-item-action>
+                <v-list-item-content>
+                  <v-list-item-title>
+                    Выбрать все
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <v-divider class="mt-2"></v-divider>
+            </template>
+          </v-select>
+        </v-col>
         <v-col
           cols
           md="3"
@@ -22,17 +52,29 @@
             dense
             hide-details
             outlined
-            :items="userList"
-          ></v-select>
-        </v-col>
-        <v-col md="3">
-          <v-select
-            v-model="$store.state.paymentTypeList"
-            dense
-            hide-details
-            outlined
-            :items="$store.state.paymentType"
-          ></v-select>
+            multiple
+            :items="$store.state.userList"
+          >
+            <template v-slot:prepend-item>
+              <v-list-item
+                ripple
+                @mousedown.prevent
+                @click="toggle1()"
+              >
+                <v-list-item-action>
+                  <v-icon :color="$store.state.selectedUser.length > 0 ? 'indigo darken-4' : ''">
+                    {{ likesAllFruit1 ? icons.mdiCloseBox : icons.mdiMinusBox }}
+                  </v-icon>
+                </v-list-item-action>
+                <v-list-item-content>
+                  <v-list-item-title>
+                    Выбрать все
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <v-divider class="mt-2"></v-divider>
+            </template>
+          </v-select>
         </v-col>
       </v-row>
     </v-card-subtitle>
@@ -76,6 +118,7 @@
             dense
             :headers="headersZero"
             :items="dataZero"
+            :loading="$store.state.report.loading"
             item-key="name1"
             class="elevation-1"
           >
@@ -96,6 +139,8 @@
 // eslint-disable-next-line import/extensions
 import DateRangePicker from '@/layouts/components/dateRangePicker/DateRangePicker'
 import { mapState } from 'vuex'
+import { mdiCloseBox, mdiMinusBox } from '@mdi/js'
+
 export default {
   name: 'Report',
   components: {
@@ -112,6 +157,12 @@ export default {
       return this.$store.state
     },
     ...mapState(['snackbars']),
+    likesAllFruit() {
+      return this.$store.state.paymentTypeList.length === this.$store.state.paymentType.length
+    },
+    likesAllFruit1() {
+      return this.$store.state.selectedUser.length === this.$store.state.userList.length
+    },
   },
   data: () => ({
     selectUser: 'Все',
@@ -126,20 +177,24 @@ export default {
       { text: 'Сумма взноса', value: 'debtReport' },
       { text: 'Дата получения взноса', value: 'registrationDate' },
       { text: 'Месяц', value: 'countMonth' },
+      { text: 'Способ оплаты', value: 'paymentType' },
       { text: 'Продавец', value: 'salesmanLogin' },
     ],
     headersZero: [
       { text: 'ФИО', value: 'fullName' },
       { text: 'Первоначальный взнос', value: 'zeroPayment' },
       { text: 'Дата получения взноса', value: 'registrationDate' },
+      { text: 'Способ оплаты', value: 'paymentType' },
       { text: 'Продавец', value: 'salesmanLogin' },
     ],
     tab: null,
+    icons: {
+      mdiCloseBox,
+      mdiMinusBox,
+    },
   }),
   mounted() {
     this.getUserList()
-    this.getReports()
-    this.getReportsZeroPayment()
   },
   watch: {
     done() {
@@ -150,7 +205,7 @@ export default {
       this.getReports()
       this.getReportsZeroPayment()
     },
-    '$store.state.selectedUser': function() {
+    '$store.state.selectedUser': function () {
       this.getReports()
       this.getReportsZeroPayment()
     },
@@ -191,9 +246,29 @@ export default {
     getUserList() {
       this.$store.dispatch('getUserList')
         .then(r => {
-          this.userList = r
+          this.$store.state.userList = r
+          this.getReports()
+          this.getReportsZeroPayment()
         })
         .catch(e => this.$store.commit('setSnackbars', e.message))
+    },
+    toggle() {
+      this.$nextTick(() => {
+        if (this.likesAllFruit) {
+          this.$store.state.paymentTypeList = []
+        } else {
+          this.$store.state.paymentTypeList = this.$store.state.paymentType.slice()
+        }
+      })
+    },
+    toggle1() {
+      this.$nextTick(() => {
+        if (this.likesAllFruit1) {
+          this.$store.state.selectedUser = []
+        } else {
+          this.$store.state.selectedUser = this.$store.state.userList.slice()
+        }
+      })
     },
   },
 }
