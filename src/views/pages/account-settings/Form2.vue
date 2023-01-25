@@ -155,7 +155,7 @@
             <v-text-field
               v-model="device.allowance"
               dense
-              label="Надбавка"
+              label="Ежемесячный платеж"
               outlined
               required
               :error-messages="allowanceError"
@@ -337,12 +337,12 @@ export default {
         return
       }
       this.device = {
-        deviceImei: '123287382730',
-        deviceMemory: '128гб',
-        deviceModel: 'Samsung s10',
-        devicePrice: 40000,
-        cloudLogin: 'login',
-        cloudPass: '123456',
+        deviceImei: '',
+        deviceMemory: '',
+        deviceModel: '',
+        devicePrice: 0,
+        cloudLogin: '',
+        cloudPass: '',
         profileId: '',
         zeroPayment: '',
         paymentType: '',
