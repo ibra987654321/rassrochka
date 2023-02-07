@@ -59,7 +59,7 @@ import { ref } from '@vue/composition-api'
 import { mdiMagnify, mdiBellOutline, mdiGithub } from '@mdi/js'
 import {
   getProfileId,
-  getStep,
+  getStep, setStep,
 } from '@/helpers/helpers'
 import VerticalNavMenu from './components/vertical-nav-menu/VerticalNavMenu.vue'
 import ThemeSwitcher from './components/ThemeSwitcher.vue'
@@ -74,9 +74,11 @@ export default {
   setup() {
     const isDrawerOpen = ref(null)
     function removeData() {
+      setStep(1)
       this.$store.dispatch('deleteProfileBefore', getProfileId())
     }
     function repeat() {
+      setStep(1)
       this.$store.dispatch('repeat')
     }
     return {

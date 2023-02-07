@@ -55,6 +55,7 @@
 import VerticalChart from '@/components/useDashboard/VerticalChart.vue'
 import TableClients from '@/components/table/TableClients'
 import { mdiMagnify } from '@mdi/js'
+import axios from 'axios'
 
 export default {
   name: 'ControlClients',
@@ -94,11 +95,13 @@ export default {
       if (val !== '') {
         this.searchData(val)
       } else {
+        console.log('watch')
         this.updateData()
       }
     },
   },
-  created() {
+  mounted() {
+    console.log('mounted')
     this.updateData()
   },
   methods: {

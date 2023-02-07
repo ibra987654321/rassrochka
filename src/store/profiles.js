@@ -27,10 +27,10 @@ export default {
       state.loading = true
       const data = axios(`${environment.propApi + PROFILES}/getDtoForMain/${payload.start}/${payload.end}`, {
         method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${getToken()}`,
-        },
+        // headers: {
+        //   'Content-Type': 'application/json',
+        //   Authorization: `Bearer ${getToken()}`,
+        // },
       }).then(r => {
         state.loading = false
         return r.data
@@ -65,36 +65,38 @@ export default {
       return data
     },
     postForm1({commit}, option) {
-      axios(`${environment.propApi + PROFILES}/addProfiles`, {
+      return axios(`${environment.propApi + PROFILES}/addProfiles`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${getToken()}`,
-        },
+        // headers: {
+        //   'Content-Type': 'application/json',
+        //   Authorization: `Bearer ${getToken()}`,
+        // },
         data: {
           ...option
         },
       }).then(r => {
         commit('changeProfiles', r.data)
+        return r.data
       })
+        .catch(e => {
+          return e
+        })
     },
     postForm3({ state, commit }, option) {
-      axios(`${environment.propApi + DEVICE}/addDevice`, {
+      return axios(`${environment.propApi + DEVICE}/addDevice`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${getToken()}`,
-        },
+        // headers: {
+        //   'Content-Type': 'application/json',
+        //   Authorization: `Bearer ${getToken()}`,
+        // },
         data: {
           ...option,
         },
-      }).then(() => {
-        state.doneCard = true
+      }).then(data => {
         setStep(1)
-        removeProfileId()
-        removeObject2()
+        return data.data
       })
-        .catch(e => commit('setError', e.message))
+        .catch(e => e)
     },
     postForm4(store, option) {
       axios(`${environment.propApi + OWNER}/addDeviceOwner`, {

@@ -78,7 +78,7 @@ export default {
       val || this.closeDelete()
     },
   },
-  created() {
+  mounted() {
     this.initialize()
   },
   methods: {
@@ -86,9 +86,6 @@ export default {
       this.$store.dispatch('getCallProfile').then(r => {
         this.data = r
       })
-    },
-    update() {
-      this.initialize()
     },
     close() {
       this.dialog = false

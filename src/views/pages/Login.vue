@@ -150,8 +150,6 @@ export default {
       this[l] = !this[l]
       // eslint-disable-next-line no-return-assign
       await this.submit()
-
-      this.loader = null
     },
   },
   computed: {

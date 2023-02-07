@@ -71,6 +71,8 @@
             <v-btn
               color="primary"
               class="me-3 mt-4"
+              :loading="loading"
+              :disabled="loading"
               @click="save()"
             >
               Сохранить
@@ -98,6 +100,7 @@ import {
   required, minLength, numeric, maxLength,
 } from 'vuelidate/lib/validators'
 import { getObject1, removeObject1, setObject1 } from '@/helpers/helpers'
+import axios from 'axios'
 
 export default {
   name: 'Form1',
@@ -106,19 +109,19 @@ export default {
   validations: {
     account: {
       fullName: { required, minLength: minLength(10) },
-      phone: { required, numeric, minLength: minLength(7), maxlength: maxLength(20) },
-      phoneSecond: { required, numeric, minLength: minLength(7), maxlength: maxLength(20) },
-      profileNumber: { required, minLength: minLength(1), maxLength: maxLength(10) },
+      phone: { required, minLength: minLength(7), maxlength: maxLength(50) },
+      phoneSecond: { required, minLength: minLength(7), maxlength: maxLength(50) },
+      profileNumber: { required, minLength: minLength(1), maxLength: maxLength(20) },
     },
   },
   data: () => ({
+    loading: false,
     account: {
       fullName: '',
       phone: '',
       phoneSecond: '',
       delete: false,
       profileNumber: '',
-      passportDate: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
     },
     menu2: false,
     icons: {
@@ -138,7 +141,7 @@ export default {
         phone: '',
         phoneSecond: '',
         delete: false,
-        passportDate: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+        profileNumber: '',
       }
     }, 0)
   },
@@ -153,27 +156,25 @@ export default {
     phoneError() {
       const errors = []
       if (!this.$v.account.phone.$dirty) return errors
-      !this.$v.account.phone.numeric && errors.push('Только цифры')
       !this.$v.account.phone.required && errors.push('Поле не должно быть пустым.')
       !this.$v.account.phone.minLength && errors.push('Поле не должно быть меньше 7.')
-      !this.$v.account.phone.maxlength && errors.push('Поле не должно быть больше 20.')
+      !this.$v.account.phone.maxlength && errors.push('Поле не должно быть больше 60.')
       return errors
     },
     secondPhoneError() {
       const errors = []
       if (!this.$v.account.phoneSecond.$dirty) return errors
-      !this.$v.account.phoneSecond.numeric && errors.push('Только цифры')
       !this.$v.account.phoneSecond.required && errors.push('Поле не должно быть пустым.')
       !this.$v.account.phoneSecond.minLength && errors.push('Поле не должно быть меньше 7.')
-      !this.$v.account.phoneSecond.maxlength && errors.push('Поле не должно быть больше 20.')
+      !this.$v.account.phoneSecond.maxlength && errors.push('Поле не должно быть больше 60.')
       return errors
     },
     profileNumberError() {
       const errors = []
       if (!this.$v.account.profileNumber.$dirty) return errors
       !this.$v.account.profileNumber.required && errors.push('Поле не должно быть пустым.')
-      !this.$v.account.profileNumber.minLength && errors.push(`Это поле не должно быть меньше 1. Сейчас ${this.device.profileNumber.length}`)
-      !this.$v.account.profileNumber.maxLength && errors.push(`Это поле не должно быть больше 10. Сейчас ${this.device.profileNumber.length}`)
+      !this.$v.account.profileNumber.minLength && errors.push(`Это поле не должно быть меньше 1. Сейчас ${this.account.profileNumber.length}`)
+      !this.$v.account.profileNumber.maxLength && errors.push(`Это поле не должно быть больше 20. Сейчас ${this.account.profileNumber.length}`)
       return errors
     },
   },
@@ -195,9 +196,18 @@ export default {
         this.$v.$touch()
         return
       }
-      removeObject1()
+      this.loading = true
       this.$store.dispatch('postForm1', this.account)
-      this.$emit('next')
+        .then(data => {
+          if (data.id === undefined) {
+            this.$store.commit('setError', 'Ошибка! Проверьте интернет')
+            this.loading = false
+            return
+          }
+          removeObject1()
+          this.loading = false
+          this.$emit('next')
+        })
     },
     resetForm() {
       this.account = {
@@ -206,7 +216,6 @@ export default {
         phoneSecond: '',
         delete: false,
         profileNumber: '',
-        passportDate: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
       }
     },
   },

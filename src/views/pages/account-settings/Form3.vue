@@ -24,11 +24,14 @@
 </template>
 
 <script>
+import { setStep } from '@/helpers/helpers'
+
 export default {
   name: 'Form3',
   methods: {
     close() {
       this.$store.state.steps = 1
+      setStep(1)
       this.$router.push({ name: 'dashboard' })
     },
   },

@@ -163,11 +163,51 @@
               @blur="$v.device.allowance.$touch()"
             ></v-text-field>
           </v-col>
+          <v-col
+            cols="12"
+            md="6"
+          >
+            <v-datetime-picker
+              class="date mr-2"
+              v-model="device.registrationDate"
+              label="Дата выдачи"
+              date-format="dd-MM-yyyy"
+              time-format="HH:mm:ss"
+              :dialog-width="Number(400)"
+              :time-picker-props="dateTimeOptions"
+              :text-field-props="textFieldProps"
+            >
+              <template slot="dateIcon">
+                Дата
+              </template>
+              <template slot="timeIcon">
+                Вермя
+              </template>
+              <template
+                slot="actions"
+                slot-scope="{ parent }"
+              >
+                <v-btn
+                  color="error lighten-1"
+                  @click.native="parent.clearHandler"
+                >
+                  Отмена
+                </v-btn>
+                <v-btn
+                  color="success darken-1"
+                  @click="parent.okHandler"
+                >
+                  Готово
+                </v-btn>
+              </template>
+            </v-datetime-picker>
+          </v-col>
           <v-col cols="12">
             <v-btn
               color="primary"
               class="me-3 mt-4"
-              :disabled="$v.$invalid"
+              :disabled="$v.$invalid || loading"
+              :loading="loading"
               @click="save()"
             >
               Сохранить
@@ -194,8 +234,16 @@ import {
   required, minLength, numeric, maxLength,
 } from 'vuelidate/lib/validators'
 import {
-  getObject2, getProfileId, removeObject2, setObject2,
+  getObject2,
+  getProfileId,
+  removeObject1,
+  removeObject2,
+  removeProfileId,
+  removeStep,
+  setObject2,
+  setStep,
 } from '@/helpers/helpers'
+import moment from 'moment'
 
 export default {
   name: 'Form3',
@@ -203,10 +251,10 @@ export default {
   validations: {
     device: {
       deviceImei: {
-        required, numeric, minLength: minLength(12), maxLength: maxLength(20),
+        required, minLength: minLength(12), maxLength: maxLength(100),
       },
       deviceMemory: { required, minLength: minLength(2) },
-      deviceModel: { required, minLength: minLength(3) },
+      deviceModel: { required, minLength: minLength(1) },
       devicePrice: { required, numeric, minLength: minLength(3) },
       cloudLogin: { required, minLength: minLength(3) },
       cloudPass: { required, minLength: minLength(3) },
@@ -238,10 +286,20 @@ export default {
       zeroPayment: '',
       paymentType: '',
       allowance: '',
+      registrationDate: new Date(),
       monthCreditDbList: [],
     },
     selectedMonth: '',
+    menu: false,
+    loading: false,
     items: ['4гб', '8гб', '16гб', '32гб', '64гб', '128гб', '256гб', '512гб', '1тб'],
+    dateTimeOptions: {
+      format: '24hr',
+    },
+    textFieldProps: {
+      outlined: 'outlined',
+      dense: 'dense',
+    },
   }),
   computed: {
     doneCard() {
@@ -257,16 +315,15 @@ export default {
     ImeiError() {
       const errors = []
       if (!this.$v.device.deviceImei.$dirty) return errors
-      !this.$v.device.deviceImei.numeric && errors.push('Только цифры')
       !this.$v.device.deviceImei.minLength && errors.push(`Это поле не должно быть меньше 12. Сейчас ${this.device.deviceImei.length}`)
-      !this.$v.device.deviceImei.maxLength && errors.push(`Это поле нe должно быть больше 20. Сейчас ${this.device.deviceImei.length}`)
+      !this.$v.device.deviceImei.maxLength && errors.push(`Это поле нe должно быть больше 100. Сейчас ${this.device.deviceImei.length}`)
       !this.$v.device.deviceImei.required && errors.push('Поле не должно быть пустым.')
       return errors
     },
     ModelError() {
       const errors = []
       if (!this.$v.device.deviceModel.$dirty) return errors
-      !this.$v.device.deviceModel.minLength && errors.push(`Это поле не должно быть меньше 3. Сейчас ${this.device.deviceModel.length}`)
+      !this.$v.device.deviceModel.minLength && errors.push(`Это поле не должно быть меньше 1. Сейчас ${this.device.deviceModel.length}`)
       !this.$v.device.deviceModel.required && errors.push('Поле не должно быть пустым.')
       return errors
     },
@@ -319,54 +376,37 @@ export default {
     },
   },
   watch: {
-    device: {
-      handler(val) {
-        if (val === null) {
-          setObject2(this.device)
-          return
-        }
-        setObject2(val)
-      },
-      deep: true,
-    },
   },
   mounted() {
-    setTimeout(() => {
-      if (getObject2() !== null) {
-        this.device = getObject2()
-        return
-      }
-      this.device = {
-        deviceImei: '',
-        deviceMemory: '',
-        deviceModel: '',
-        devicePrice: 0,
-        cloudLogin: '',
-        cloudPass: '',
-        profileId: '',
-        zeroPayment: '',
-        paymentType: '',
-        allowance: '',
-        monthCreditDbList: [],
-      }
-    }, 0)
   },
   methods: {
     save() {
+      this.loading = true
       this.device.profileId = getProfileId()
       this.countMonth(this.selectedMonth)
       this.device.devicePrice = Number(this.device.devicePrice)
       this.device.zeroPayment = Number(this.device.zeroPayment)
+      this.device.registrationDate = moment(this.device.registrationDate).format().slice(0, 19)
       this.$store.dispatch('postForm3', this.device)
-      this.$emit('next')
-      removeObject2()
+        .then(async data => {
+          if (data.id) {
+            this.loading = false
+            await removeProfileId()
+            await removeObject2()
+            await this.$emit('next')
+            return
+          }
+          this.$store.commit('setError', 'Ошибка! Проверьте интернет')
+          this.loading = false
+        })
     },
     countMonth(count) {
+      this.device.monthCreditDbList = []
       for (let i = 1; i <= count; i++) {
-        const date = new Date(Date.now())
+        const date = new Date(this.device.registrationDate)
         const obj = {
           statusType: 'WAIT',
-          registrationDate: new Date(Date.now()).toISOString(),
+          registrationDate: new Date(this.device.registrationDate).toISOString(),
           countMonth: i,
           debt: this.device.allowance,
           payDate: new Date(date.setMonth(date.getMonth() + i)).toISOString().slice(0, 10),
@@ -386,14 +426,11 @@ export default {
         zeroPayment: '',
         paymentType: '',
         allowance: '',
+        registrationDate: new Date(Date.now()),
         monthCreditDbList: [],
       }
     },
   },
-  // beforeRouteLeave(to, from, next) {
-  //   this.$store.state.profiles.doneCard = false
-  //   next()
-  // },
 }
 </script>
 

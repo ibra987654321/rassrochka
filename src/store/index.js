@@ -42,7 +42,7 @@ export default new Vuex.Store({
       state.error = error
       state.snackbars.snackbar = true
       state.snackbars.text = error
-      state.snackbars.timeout = 1000
+      state.snackbars.timeout = 3000
     },
     setSnackbars(state, text) {
       state.snackbars.snackbar = true
