@@ -65,13 +65,13 @@ export default {
       }).finally(() => state.loading = false)
       return data
     },
-    postForm1({commit}, option) {
+    postForm1({ commit }, option) {
       return axios(`${environment.propApi + PROFILES}/addProfiles`, {
         method: 'POST',
-        // headers: {
-        //   'Content-Type': 'application/json',
-        //   Authorization: `Bearer ${getToken()}`,
-        // },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getToken()}`,
+        },
         data: {
           ...option
         },
@@ -86,10 +86,10 @@ export default {
     postForm3({ state, commit }, option) {
       return axios(`${environment.propApi + DEVICE}/addDevice`, {
         method: 'POST',
-        // headers: {
-        //   'Content-Type': 'application/json',
-        //   Authorization: `Bearer ${getToken()}`,
-        // },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getToken()}`,
+        },
         data: {
           ...option,
         },

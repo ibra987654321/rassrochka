@@ -11,7 +11,7 @@
           outlined
           placeholder="Поиск по ФИО и по Коду клиента"
           :prepend-inner-icon="icons.mdiMagnify"
-          class="app-bar-search flex-grow-0 mb-3 pr-3"
+          class="app-bar-search  flex-grow-0 mb-3 pr-3"
           hide-details
         ></v-text-field>
         <v-btn
