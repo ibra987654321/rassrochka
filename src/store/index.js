@@ -72,10 +72,12 @@ export default new Vuex.Store({
   getters: {
     error: state => state.error,
     createdDate(state) {
+      state.end.setHours(state.end.getHours() + 1)
       return state.start.setHours(state.start.getHours() - 72)
     },
 
     minusThirtyDays(state) {
+      state.end.setMinutes(state.end.getMinutes() + 1)
       return state.start.setDate(state.start.getDay() - 30)
     },
   },
