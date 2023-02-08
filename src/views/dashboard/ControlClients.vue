@@ -21,6 +21,8 @@
         >
           Сброс
         </v-btn>
+        <v-spacer></v-spacer>
+        <DateRangePicker/>
       </div>
 
       <v-data-table
@@ -55,15 +57,14 @@
 import VerticalChart from '@/components/useDashboard/VerticalChart.vue'
 import TableClients from '@/components/table/TableClients'
 import { mdiMagnify } from '@mdi/js'
-import axios from 'axios'
+import DateRangePicker from '@/layouts/components/dateRangePicker/DateRangePicker'
 
 export default {
   name: 'ControlClients',
   // eslint-disable-next-line vue/no-unused-components
-  components: { VerticalChart, TableClients },
+  components: { VerticalChart, TableClients, DateRangePicker },
   data: () => ({
     data: [],
-    date: new Date(Date.now()).toISOString(),
     icons: {
       mdiMagnify,
     },
@@ -89,29 +90,38 @@ export default {
         }),
       )
     },
+    done() {
+      return this.date.end
+    },
+    start() {
+      return this.date.start
+    },
+    date() {
+      return this.$store.state
+    },
   },
   watch: {
     search(val) {
       if (val !== '') {
         this.searchData(val)
       } else {
-        console.log('watch')
         this.updateData()
       }
     },
+    done() {
+      this.updateData()
+    },
+    start() {
+      this.updateData()
+    },
   },
   mounted() {
-    console.log('mounted')
     this.updateData()
   },
   methods: {
     updateData() {
       this.search = ''
-      const date = {
-        start: new Date(new Date(this.date).setDate(new Date(this.date).getDay() - 30)).toISOString(),
-        end: new Date(new Date(this.date).setHours(new Date(this.date).getHours() + 6)).toISOString(),
-      }
-      this.$store.dispatch('getAllProfiles', date).then(r => {
+      this.$store.dispatch('getAllProfiles').then(r => {
         this.data = r
       })
     },

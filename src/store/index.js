@@ -74,6 +74,10 @@ export default new Vuex.Store({
     createdDate(state) {
       return state.start.setHours(state.start.getHours() - 72)
     },
+
+    minusThirtyDays(state) {
+      return state.start.setDate(state.start.getDay() - 30)
+    },
   },
   modules: {
     profiles,

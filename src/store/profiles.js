@@ -1,6 +1,6 @@
-import axios from "axios";
-import {environment} from "@/environments/environment";
-import { BROTHER, CREDIT, DEVICE, OWNER, PROFILES} from "@/helpers/endpionts";
+import axios from 'axios'
+import { environment } from '@/environments/environment'
+import { DEVICE, OWNER, PROFILES } from '@/helpers/endpionts'
 import {
   getToken,
   removeObject1,
@@ -9,6 +9,7 @@ import {
   setProfileId,
   setStep,
 } from '@/helpers/helpers'
+import moment from 'moment'
 
 export default {
   state: {
@@ -23,18 +24,18 @@ export default {
     },
   },
   actions: {
-    getAllProfiles({ state }, payload) {
-      state.loading = true
-      const data = axios(`${environment.propApi + PROFILES}/getDtoForMain/${payload.start}/${payload.end}`, {
+    getAllProfiles(store) {
+      store.state.loading = true
+      const data = axios(`${environment.propApi + PROFILES}/getDtoForMain/${moment(store.rootState.start).format().slice(0, 19)}/${moment(store.rootState.end).format().slice(0, 19)}`, {
         method: 'GET',
-        // headers: {
-        //   'Content-Type': 'application/json',
-        //   Authorization: `Bearer ${getToken()}`,
-        // },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getToken()}`,
+        },
       }).then(r => {
-        state.loading = false
+        store.state.loading = false
         return r.data
-      }).finally(() => state.loading = false)
+      }).finally(() => store.state.loading = false)
       return data
     },
     editProfile(_, payload) {

@@ -85,7 +85,7 @@ export default {
   }),
   created() {
     // eslint-disable-next-line no-unused-expressions
-    this.$store.getters.createdDate
+    this.$store.getters.minusThirtyDays
   },
 }
 </script>
