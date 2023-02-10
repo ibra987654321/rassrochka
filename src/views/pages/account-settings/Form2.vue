@@ -21,7 +21,17 @@
               @blur="$v.device.deviceImei.$touch()"
             ></v-text-field>
           </v-col>
-
+          <v-col
+            cols="12"
+            md="6"
+          >
+            <v-text-field
+              v-model="device.deviceOwner"
+              dense
+              label="Владелец телефона"
+              outlined
+            ></v-text-field>
+          </v-col>
           <v-col
             md="6"
             cols="12"
@@ -286,6 +296,7 @@ export default {
       zeroPayment: '',
       paymentType: '',
       allowance: '',
+      deviceOwner: '',
       registrationDate: new Date(),
       monthCreditDbList: [],
     },
@@ -426,6 +437,7 @@ export default {
         zeroPayment: '',
         paymentType: '',
         allowance: '',
+        deviceOwner: '',
         registrationDate: new Date(Date.now()),
         monthCreditDbList: [],
       }

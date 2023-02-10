@@ -74,6 +74,7 @@ export default {
       { text: 'Дата', value: 'registrationDate' },
       { text: 'ФИО', value: 'fullName' },
       { text: 'Статус', value: 'statusType' },
+      { text: 'Владелец телефона', value: 'deviceOwner' },
       { text: 'Модель', value: 'deviceModel' },
       { text: 'Продавец', value: 'salesmanLogin' },
       { text: 'Первоначальный взнос', value: 'zeroPayment' },

@@ -48,6 +48,17 @@
                   v-model="dialog"
                   width="500"
                 >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                      color="primary "
+                      class="mb-3"
+                      v-bind="attrs"
+                      v-on="on"
+                    >
+                      Удалить профиль
+                    </v-btn>
+                  </template>
+
                   <v-card>
                     <v-card-title class="text-h5 grey lighten-2">
                       Вы уверены что хотите удалить?
@@ -182,7 +193,7 @@ export default {
     status: ['Оплатил', 'Аферист', 'Затягивает', 'Ожидание'],
     statusRu: [
       {
-        Оплатил: 'DEFAULTER',
+        Оплатил: 'DONE',
       },
       {
         Аферист: 'FRAUD',
@@ -193,7 +204,7 @@ export default {
     ],
     statusEn: [
       {
-        DEFAULTER: 'Оплатил',
+        DONE: 'Оплатил',
       },
       {
         FRAUD: 'Аферист',
@@ -212,15 +223,6 @@ export default {
       this.credit = r.data
       this.item = r.data
       this.profile = r.data[0].profileDb
-      // eslint-disable-next-line array-callback-return
-      // r.data.map(i => {
-      //   this.$store.dispatch('getCreditInformation', i.id).then(s => {
-      //     this.blackList.comments = s.data[0].comments
-      //     this.generatorEn(s.data[0].statusType)
-      //     this.blackList.id = s.data[0].id
-      //     this.item.push(s.data)
-      //   })
-      // })
     })
   },
   methods: {

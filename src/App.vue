@@ -1,9 +1,11 @@
 <template>
-  <component :is="resolveLayout">
-    <router-view></router-view>
-    <TheSnackbars/>
-    <DynamicModal/>
-  </component>
+  <div @mousemove="onMouseMove">
+    <component :is="resolveLayout">
+      <router-view></router-view>
+      <TheSnackbars/>
+      <DynamicModal/>
+    </component>
+  </div>
 </template>
 
 <script>
@@ -11,7 +13,7 @@ import { computed } from '@vue/composition-api'
 import { useRouter } from '@/utils'
 import LayoutBlank from '@/layouts/Blank.vue'
 import LayoutContent from '@/layouts/Content.vue'
-import {getDarkTheme, setDarkTheme} from '@/helpers/helpers'
+import { getDarkTheme, removeToken, setDarkTheme } from '@/helpers/helpers'
 import TheSnackbars from "@/components/TheSnackbars";
 import DynamicModal from '@/components/modules/DynamicModal'
 
@@ -33,10 +35,29 @@ export default {
     }
   },
   setup() {
-    const { route } = useRouter()
+    const { route, router } = useRouter()
+    let mouseWait = null
+    function onMouseMove() {
+      // eslint-disable-next-line no-use-before-define
+      runTiming()
+    }
+    function runTiming() {
+      // всегда очищаем предыдущий таймер
+      // при вызове метода.
+      clearTimeout(mouseWait)
+
+      // запускаем новый отсчет.
+      mouseWait = setTimeout(() => {
+        hideControls()
+      }, 900000)
+    }
+    function hideControls() {
+      removeToken()
+      router.push({ name: 'pages-login' })
+    }
 
     const resolveLayout = computed(() => {
-      // Handles initial route
+      // handles initial route
       if (route.value.name === null) return null
 
       if (route.value.meta.layout === 'blank') return 'layout-blank'
@@ -46,6 +67,7 @@ export default {
 
     return {
       resolveLayout,
+      onMouseMove,
     }
   },
 }
