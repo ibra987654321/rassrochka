@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/prefer-default-export
 export const environment = {
-  // authAPI: 'http://10.16.230.114:8585/rassrochka/api/v1',
-  // propApi: 'http://10.16.230.114:8585/rassrochka/api/v1',
-  authAPI: 'http://176.126.166.91:86/rassrochka/api/v1',
-  propApi: 'http://176.126.166.91:86/rassrochka/api/v1',
+  authAPI: 'http://10.16.230.114:8585/rassrochka/api/v1',
+  propApi: 'http://10.16.230.114:8585/rassrochka/api/v1',
+  // authAPI: 'http://176.126.166.91:86/rassrochka/api/v1',
+  // propApi: 'http://176.126.166.91:86/rassrochka/api/v1',
 }
