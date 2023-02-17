@@ -94,6 +94,81 @@
               outlined
             ></v-text-field>
           </v-col>
+          <v-col
+            md="6"
+            cols="12"
+          >
+            <v-text-field
+              v-model="data[0].zeroPayment"
+              label="Первоначальный взнос "
+              required
+              dense
+              outlined
+            ></v-text-field>
+          </v-col>
+          <v-col
+            md="6"
+            cols="12"
+          >
+            <v-text-field
+              v-model="data[0].paymentType"
+              label="Тип оплаты"
+              required
+              dense
+              outlined
+            ></v-text-field>
+          </v-col>
+          <v-col
+            md="6"
+            cols="12"
+          >
+            <v-text-field
+              v-model="data[0].deviceOwner"
+              label="Владелец телефона"
+              required
+              dense
+              outlined
+            ></v-text-field>
+          </v-col>
+          <v-col
+            md="6"
+            cols="12"
+          >
+            <v-datetime-picker
+              v-model="date"
+              class="date mr-2"
+              label="Дата выдачи"
+              date-format="dd-MM-yyyy"
+              time-format="HH:mm:ss"
+              :dialog-width="Number(400)"
+              :time-picker-props="dateTimeOptions"
+              :text-field-props="textFieldProps"
+            >
+              <template slot="dateIcon">
+                Дата
+              </template>
+              <template slot="timeIcon">
+                Вермя
+              </template>
+              <template
+                slot="actions"
+                slot-scope="{ parent }"
+              >
+                <v-btn
+                  color="error lighten-1"
+                  @click.native="parent.clearHandler"
+                >
+                  Отмена
+                </v-btn>
+                <v-btn
+                  color="success darken-1"
+                  @click="parent.okHandler"
+                >
+                  Готово
+                </v-btn>
+              </template>
+            </v-datetime-picker>
+          </v-col>
         </v-row>
       </v-card-text>
 
@@ -126,7 +201,19 @@ export default {
   props: ['data'],
   data: () => ({
     dialog: false,
+    dateTimeOptions: {
+      format: '24hr',
+    },
+    textFieldProps: {
+      outlined: 'outlined',
+      dense: 'dense',
+    },
   }),
+  computed: {
+    date() {
+      return new Date(this.data[0].registrationDate)
+    },
+  },
   methods: {
     close() {
       this.dialog = false
@@ -139,6 +226,9 @@ export default {
           this.close()
         })
         .catch(e => this.$store.commit('setSnackbars', e.message))
+    },
+    dateFilter(v) {
+      return new Date(v)
     },
   },
 }

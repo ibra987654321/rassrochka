@@ -8,11 +8,13 @@ import App from './App.vue'
 import vuetify from './plugins/vuetify'
 import router from './router'
 import store from './store'
+import filterDate from '@/filter/filter.date'
 
 Vue.config.productionTip = false
 Vue.use(DatetimePicker)
 Vue.filter('status', statusFilter)
 Vue.filter('date', dateFilter)
+Vue.filter('filterDate', filterDate)
 new Vue({
   router,
   store,
