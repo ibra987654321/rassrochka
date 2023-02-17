@@ -8,14 +8,14 @@ export default {
   mutations: {},
   actions: {
     getInformation(_, id) {
-       const data = axios({
-          method: 'GET',
-          url: `${environment.propApi + DEVICE}/getDeviceByProfileID/${id}`,
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${getToken()}`,
-          },
-        }).then(r => r)
+      const data = axios({
+        method: 'GET',
+        url: `${environment.propApi + DEVICE}/getDeviceByProfileID/${id}`,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getToken()}`,
+        },
+      }).then(r => r)
       return data
     },
     getCreditInformation(_, id) {
@@ -29,7 +29,21 @@ export default {
       }).then(r => r)
       return data
     },
-    putCreditInformation(_,  payload) {
+    putDeviceInformation(_, payload) {
+      const data = axios({
+        method: 'PUT',
+        url: `${environment.propApi + DEVICE}/editDevice`,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getToken()}`,
+        },
+        data: {
+          ...payload,
+        },
+      }).then(r => r)
+      return data
+    },
+    putCreditInformation(_, payload) {
       const data = axios({
         method: 'PUT',
         url: `${environment.propApi + CREDIT}/month/editMontCredit`,
@@ -38,12 +52,12 @@ export default {
           Authorization: `Bearer ${getToken()}`,
         },
         data: {
-          ...payload
-        }
+          ...payload,
+        },
       }).then(r => r)
       return data
     },
-    creditBlackList(store,  payload) {
+    creditBlackList(store, payload) {
       store.rootState.loading = true
       const data = axios({
         method: 'POST',
@@ -53,13 +67,13 @@ export default {
           Authorization: `Bearer ${getToken()}`,
         },
         data: {
-          ...payload
-        }
+          ...payload,
+        },
       }).then(r => {
-         store.rootState.loading = false
+        store.rootState.loading = false
         store.commit('setSnackbars', 'Статус успешно изменен')
       }).catch(error => {
-         store.rootState.loading = false
+        store.rootState.loading = false
         store.commit('setError', error.response.status)
       })
       return data
@@ -82,6 +96,6 @@ export default {
         store.commit('setError', error.response.status)
       })
       return data
-    }
+    },
   },
 }

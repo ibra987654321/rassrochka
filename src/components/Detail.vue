@@ -117,8 +117,9 @@
                   <v-card-text class="text--primary text-base">
                     <span>Цена :</span> <span class="font-weight-bold">{{i.devicePrice}} сом</span>
                   </v-card-text>
-                  <v-card-actions class="d-flex justify-space-between dense">
+                  <v-card-actions class="d-flex justify-space-between ">
                     <Dialogs :data="i.monthCreditDb"/>
+                    <EditDevice :data="item" @save="saveDevice($event)"/>
                   </v-card-actions>
                 </div>
               </div>
@@ -168,12 +169,14 @@ import Dialogs from '@/components/modules/Dialogs'
 // eslint-disable-next-line import/extensions
 import EditProfile from '@/components/modules/EditProfile'
 import { mdiHelpCircleOutline } from '@mdi/js'
+import EditDevice from '@/components/modules/EditDevice'
 
 export default {
   name: 'Detail',
   components: {
     Dialogs,
     EditProfile,
+    EditDevice,
   },
   data:() => ({
     dialog: false,
@@ -228,6 +231,9 @@ export default {
   methods: {
     save(event) {
       this.profile = { ...event }
+    },
+    saveDevice(event) {
+      this.item = { ...event }
     },
     addStatus() {
       this.blackList.id = this.item[0].id
