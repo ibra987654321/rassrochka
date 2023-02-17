@@ -110,13 +110,14 @@
             md="6"
             cols="12"
           >
-            <v-text-field
+            <v-select
               v-model="data[0].paymentType"
               label="Тип оплаты"
+              :items="$store.state.paymentType"
               required
               dense
               outlined
-            ></v-text-field>
+            ></v-select>
           </v-col>
           <v-col
             md="6"
@@ -196,6 +197,8 @@
 </template>
 
 <script>
+import moment from 'moment'
+
 export default {
   name: 'EditDevice',
   props: ['data'],
@@ -210,8 +213,13 @@ export default {
     },
   }),
   computed: {
-    date() {
-      return new Date(this.data[0].registrationDate)
+    date: {
+      get() {
+        return new Date(this.data[0].registrationDate)
+      },
+      set(v) {
+        this.data[0].registrationDate = moment(v).format().slice(0, 19)
+      },
     },
   },
   methods: {
@@ -226,9 +234,6 @@ export default {
           this.close()
         })
         .catch(e => this.$store.commit('setSnackbars', e.message))
-    },
-    dateFilter(v) {
-      return new Date(v)
     },
   },
 }
