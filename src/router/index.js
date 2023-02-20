@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import {getToken, Role} from '@/helpers/helpers'
-import {decodeJWT} from "@/use/auth";
 
 Vue.use(VueRouter)
 
@@ -40,31 +39,6 @@ const routes = [
     meta: { layout: 'main', auth: true, authorize: [Role.Admin] },
     component: () => import('../views/Report.vue'),
   },
-
-  {
-    path: '/icons',
-    name: 'icons',
-    meta: { layout: 'main', auth: true },
-    component: () => import('../views/icons/Icons.vue'),
-  },
-  {
-    path: '/cards',
-    name: 'cards',
-    meta: { layout: 'main', auth: true },
-    component: () => import('../views/cards/Card.vue'),
-  },
-  {
-    path: '/simple-table',
-    name: 'simple-table',
-    meta: { layout: 'main', auth: true },
-    component: () => import('../views/simple-table/SimpleTable.vue'),
-  },
-  {
-    path: '/form-layouts',
-    name: 'form-layouts',
-    meta: { layout: 'main', auth: true },
-    component: () => import('../views/form-layouts/FormLayouts.vue'),
-  },
   {
     path: '/pages/account-settings',
     name: 'pages-account-settings',
@@ -75,14 +49,6 @@ const routes = [
     path: '/pages/login',
     name: 'pages-login',
     component: () => import('../views/pages/Login.vue'),
-    meta: {
-      layout: 'blank',
-    },
-  },
-  {
-    path: '/pages/register',
-    name: 'pages-register',
-    component: () => import('../views/pages/Register.vue'),
     meta: {
       layout: 'blank',
     },

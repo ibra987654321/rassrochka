@@ -83,7 +83,7 @@ import {
   mdiHelpCircleOutline,
   mdiLogoutVariant,
 } from '@mdi/js'
-import { decodeJWT, logOut } from '@/use/auth'
+import { decodeJWT, logOut } from '@/filter/jwt'
 
 export default {
   setup() {

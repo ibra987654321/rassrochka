@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { environment } from '@/environments/environment'
-import {BROTHER, PROFILES} from '@/helpers/endpionts'
+import { BROTHER, PROFILES } from '@/helpers/endpionts'
 import { getToken } from '@/helpers/helpers'
 
 export default {
@@ -15,7 +15,8 @@ export default {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${getToken()}`,
         },
-      }).then(r => r.data)
+      })
+        .then(r => r.data)
       return data
     },
     getBrothersById(_, id) {
@@ -26,7 +27,8 @@ export default {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${getToken()}`,
         },
-      }).then(r => r.data)
+      })
+        .then(r => r.data)
       return data
     },
   },

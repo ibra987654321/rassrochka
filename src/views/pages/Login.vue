@@ -157,8 +157,9 @@ export default {
   computed: {
     textNotification() {
       this.loading = false
+      // eslint-disable-next-line no-return-assign
       return this.text = this.$store.state.error = 401 ? 'Неверный логин или пароль' : 'Серверная ошибка'
-    }
+    },
   },
   methods: {
     submit() {

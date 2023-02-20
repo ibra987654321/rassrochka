@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { environment } from '@/environments/environment'
-import {CREDIT, USER} from '@/helpers/endpionts'
+import { USER } from '@/helpers/endpionts'
 import { getToken } from '@/helpers/helpers'
 
 export default {

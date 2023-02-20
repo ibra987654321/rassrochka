@@ -83,15 +83,11 @@ import {
   mdiFormSelect,
   mdiAccountCogOutline,
 } from '@mdi/js'
-import NavMenuSectionTitle from './components/NavMenuSectionTitle.vue'
-import NavMenuGroup from './components/NavMenuGroup.vue'
+import { decodeJWT } from '@/filter/jwt'
 import NavMenuLink from './components/NavMenuLink.vue'
-import {decodeJWT} from "@/use/auth";
 
 export default {
   components: {
-    NavMenuSectionTitle,
-    NavMenuGroup,
     NavMenuLink,
   },
   props: {

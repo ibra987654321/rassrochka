@@ -42,7 +42,7 @@
 
 <script>
 // eslint-disable-next-line import/extensions
-import TableClients from '@/components/table/TableClients';
+import TableClients from '@/components/table/TableClients'
 
 export default {
   name: 'Dialogs',

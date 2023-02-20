@@ -132,8 +132,9 @@
 </template>
 
 <script>
-import {mdiDelete, mdiPencil} from "@mdi/js";
-import MoreInfo from "@/components/modules/MoreInfo";
+import { mdiDelete, mdiPencil } from '@mdi/js'
+// eslint-disable-next-line import/extensions
+import MoreInfo from '@/components/modules/MoreInfo'
 
 export default {
   props: {
@@ -267,7 +268,6 @@ export default {
           CurrentSelect = ['WAIT']
         }
         const creditData = Object.assign(this.desserts[this.editedIndex], this.editedItem)
-        console.log(creditData)
         const data = {
           comment: creditData.comment,
           debt: creditData.debt,

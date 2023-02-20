@@ -3,47 +3,6 @@
     flat
     class="pa-3 mt-2"
   >
-<!--    <v-card-text class="d-flex">-->
-<!--      <v-avatar-->
-<!--        rounded-->
-<!--        size="120"-->
-<!--        class="me-6"-->
-<!--      >-->
-<!--        <v-img :src="account.avatarImg"></v-img>-->
-<!--      </v-avatar>-->
-
-<!--      &lt;!&ndash; upload photo &ndash;&gt;-->
-<!--      <div>-->
-<!--        <v-btn-->
-<!--          color="primary"-->
-<!--          class="me-3 mt-5"-->
-<!--          @click="$refs.refInputEl.click()"-->
-<!--        >-->
-<!--          <v-icon class="d-sm-none">-->
-<!--            {{ icons.mdiCloudUploadOutline }}-->
-<!--          </v-icon>-->
-<!--          <span class="d-none d-sm-block">Upload new photo</span>-->
-<!--        </v-btn>-->
-
-<!--        <input-->
-<!--          ref="refInputEl"-->
-<!--          type="file"-->
-<!--          accept=".jpeg,.png,.jpg,GIF"-->
-<!--          :hidden="true"-->
-<!--        />-->
-
-<!--        <v-btn-->
-<!--          color="error"-->
-<!--          outlined-->
-<!--          class="mt-5"-->
-<!--        >-->
-<!--          Reset-->
-<!--        </v-btn>-->
-<!--        <p class="text-sm mt-5">-->
-<!--          Allowed JPG, GIF or PNG. Max size of 800K-->
-<!--        </p>-->
-<!--      </div>-->
-<!--    </v-card-text>-->
     <h2>Профиль</h2>
     <v-card-text>
       <v-form class="multi-col-validation mt-6">
@@ -344,8 +303,8 @@ export default {
   methods: {
     save() {
       if (this.$v.$invalid) {
-        this.$v.$touch();
-        return;
+        this.$v.$touch()
+        return
       }
       this.$store.dispatch('postForm1', this.account)
       this.$emit('next')

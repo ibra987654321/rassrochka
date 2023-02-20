@@ -2,21 +2,15 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 
-import profiles from "@/store/profiles";
-import detail from "@/store/detail";
-import callProfile from "@/store/callProfile";
+import profiles from '@/store/profiles'
+import detail from '@/store/detail'
+import callProfile from '@/store/callProfile'
 
-import table from '@/store/table'
-import createTask from '@/store/createTask'
-import personalTasks from '@/store/personalTasks'
-import GSKO from '@/store/GSKO/GSKO'
-import Monitoring from "@/store/monitoring";
 import { environment } from '@/environments/environment'
 import { setToken } from '@/helpers/helpers'
 import router from '@/router'
-import userController from "@/store/userController";
+import userController from '@/store/userController'
 import report from '@/store/report'
-
 
 Vue.use(Vuex)
 
@@ -34,9 +28,9 @@ export default new Vuex.Store({
     dialog: {
       dialog: false,
       title: '',
-      text:'',
-      routeName: ''
-    }
+      text: '',
+      routeName: '',
+    },
   },
   mutations: {
     setError(state, error) {
@@ -49,25 +43,25 @@ export default new Vuex.Store({
       state.snackbars.snackbar = true
       state.snackbars.text = text
       state.snackbars.timeout = 3000
-    }
+    },
   },
   actions: {
     login({ commit }, payload) {
-      const login = axios(`${environment.propApi}/login/auth`, {
+      return axios(`${environment.propApi}/login/auth`, {
         method: 'POST',
         data: {
-          ...payload
+          ...payload,
         },
-      }).then(res => {
-        if (res.data.token) {
-          setToken(res.data.token)
-          router.push({name: 'dashboard'})
-        }
-      }).catch(error => {
-        commit('setError', error.response.status)
       })
-
-      return login
+        .then(res => {
+          if (res.data.token) {
+            setToken(res.data.token)
+            router.push({ name: 'dashboard' })
+          }
+        })
+        .catch(error => {
+          commit('setError', error.response.status)
+        })
     },
   },
   getters: {
@@ -77,15 +71,10 @@ export default new Vuex.Store({
     },
   },
   modules: {
-    table,
-    createTask,
-    personalTasks,
-    GSKO,
-    Monitoring,
     profiles,
     detail,
     callProfile,
     userController,
-    report
+    report,
   },
 })

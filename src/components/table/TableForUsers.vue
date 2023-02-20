@@ -96,29 +96,23 @@
 </template>
 
 <script>
-// import { required, minLength } from 'vuelidate/lib/validators'
-import {mdiDelete, mdiPencil} from "@mdi/js";
+import { mdiDelete, mdiPencil } from '@mdi/js'
 
 export default {
   props: {
     data: Array,
     fields: Array,
     putDispatch: String,
-    editItems: Object
+    editItems: Object,
   },
-  // validations: {
-  //   USER: {
-  //     username: {required, minLength: minLength(5)},
-  //     password: {required, minLength: minLength(5)},
-  //     phoneNumber: {required},
-  //   },
-  // },
-  name: "TableForUsers",
-  components: {
-  },
+  name: 'TableForUsers',
+  components: {},
   data: () => ({
     statusType: 0,
-    icons: {mdiDelete, mdiPencil},
+    icons: {
+      mdiDelete,
+      mdiPencil,
+    },
     dialog: false,
     dialogDelete: false,
     headers: [],
@@ -130,42 +124,35 @@ export default {
     header() {
       this.initialize()
       this.editedItem.password = ''
+      // eslint-disable-next-line no-return-assign
       return this.headers = this.$props.fields
     },
-    // nameErrors () {
-    //   const errors = []
-    //   if (!this.$v.USER.username.$dirty) return errors
-    //   !this.$v.USER.username.minLength && errors.push('Это поле не должно быть меньше 5. Сейчас ' + this.USER.username.length)
-    //   !this.$v.USER.username.required && errors.push('Поле не должно быть пустым.')
-    //   return errors
-    // },
   },
 
   watch: {
-    dialog (val) {
+    dialog(val) {
       val || this.close()
     },
-    dialogDelete (val) {
+    dialogDelete(val) {
       val || this.closeDelete()
     },
   },
 
-  created () {
+  created() {
     this.editItems = this.$props.editItems
   },
 
   methods: {
-    initialize () {
+    initialize() {
       this.desserts = this.$props.data
     },
-    editItem (item) {
+    editItem(item) {
       this.editedIndex = this.desserts.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialog = true
     },
 
-
-    close () {
+    close() {
       this.dialog = false
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem)
@@ -173,8 +160,7 @@ export default {
       })
     },
 
-
-    save () {
+    save() {
       if (this.editedIndex > -1) {
         Object.assign(this.desserts[this.editedIndex], this.editedItem)
         const users = Object.assign(this.desserts[this.editedIndex], this.editedItem)
