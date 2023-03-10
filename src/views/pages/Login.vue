@@ -28,7 +28,7 @@
             Добро пожаловать в Rassrochka.kg! 👋🏻
           </p>
           <p class="mb-2">
-            Пожалуйста, войдите в свою учетную запись и начните приключение
+            Нажмине кнопку ВОЙТИ
           </p>
         </v-card-text>
 
@@ -133,8 +133,8 @@ export default {
     loader: null,
     loading: false,
     isPasswordVisible: false,
-    email: '',
-    password: '',
+    email: 'admin',
+    password: 'admin123',
     errorMessages: '',
     icons: {
       mdiEyeOutline,
